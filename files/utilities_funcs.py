@@ -2,6 +2,13 @@ import os
 import json
 
 
+def write_file(deck_choice):
+    with open(f"{deck_choice}/flashcard.json", "w") as cards:
+        flashcards = {}
+        json.dump(flashcards, cards)
+        print(f"\n{deck_choice} has been created, go add flashcards!")
+
+
 def check_if_flashcard_exists(question, answer, json_data):
     """
     Function checks if flashcard is already apart of user specified deck.

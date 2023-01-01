@@ -1,5 +1,5 @@
 import os
-import json
+from files.utilities_funcs import write_file
 
 
 def create_deck():
@@ -9,15 +9,11 @@ def create_deck():
     """
 
     print("\n### Deck will be saved all lowercase")
-    userInput = input(f"\nName your new deck: ").lower()
+    user_input = input(f"\nName your new deck: ").lower()
 
     # Check to see if directory exists.
-    if not os.path.exists(userInput):
-        os.mkdir(userInput)
-        with open(f"{userInput}/flashcard.json", "w") as cards:
-            flashcards = {}
-            json.dump(flashcards, cards)
-            print(f"\n{userInput} has been created, go add flashcards!")
-
+    if not os.path.exists(user_input):
+        os.mkdir(user_input)
+        write_file(user_input)
     else:
-        print(f"\n### {userInput} already exists! returning you to menu")
+        print(f"\n### {user_input} already exists! returning you to menu")

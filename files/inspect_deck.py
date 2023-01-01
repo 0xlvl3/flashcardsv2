@@ -1,5 +1,6 @@
 import os
 import json
+from files.utilities_funcs import write_file
 
 
 def inspect_deck():
@@ -36,9 +37,6 @@ def inspect_deck():
         ).lower()
         if user_answer.lower() == "y":
             os.mkdir(deck_choice)
-            with open(f"{deck_choice}/flashcard.json", "w") as cards:
-                flashcards = {}
-                json.dump(flashcards, cards)
-                print(f"\n### {deck_choice} has been created, go add flashcards!")
+            write_file(deck_choice)
         else:
             print("\n### Returning to menu")
