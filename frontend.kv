@@ -1,0 +1,38 @@
+<StartScreen>:
+	GridLayout:
+		cols: 1
+		Label:
+			text: 'Start Screen'
+		Button:
+			text: 'Go to Deck Viewer'
+			on_press: root.switch_deck_viewer()
+
+<DeckViewer>:
+	GridLayout:
+		cols: 1
+		Label:
+			text: 'Deck Viewer'
+		Button:
+			text: 'Go to cards screen'
+			on_press: root.switch_cards_screen()
+
+<CardsScreen>:
+	GridLayout:
+		cols: 1
+		Label:
+			text: 'Cards screen'
+		Button:
+			text: 'Go back to start'
+			on_press: root.back_to_start()
+
+
+<RootWidget>:
+	StartScreen:
+		id: start_screen
+		name: 'start_screen'
+	DeckViewer:
+		id: deck_viewer
+		name: 'deck_viewer'
+	CardsScreen:
+		id: cards_screen
+		name: 'cards_screen'

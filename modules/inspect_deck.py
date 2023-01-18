@@ -1,6 +1,6 @@
 import os
 import json
-from files.utilities_funcs import write_file
+from modules.utilities_funcs import write_file
 
 
 def inspect_deck():

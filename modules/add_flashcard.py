@@ -1,7 +1,7 @@
 import os
 import json
-from files.utilities_funcs import check_if_flashcard_exists
-from files.utilities_funcs import user_choice_deck
+from modules.utilities_funcs import check_if_flashcard_exists
+from modules.utilities_funcs import user_choice_deck
 
 
 def add_flashcard():
