@@ -3,18 +3,77 @@
 		cols: 1
 		Label:
 			text: 'Start Screen'
-		Button:
-			text: 'Go to Deck Viewer'
-			on_press: root.switch_deck_viewer()
+		
+		# Startscreen Buttons.
+		GridLayout:
+			cols: 2
+			spacing: 50
+			padding: 50
+			Button:
+				size_hint: (None, None)
+				width: 300
+				height: 125
+				text: 'Create an account'
+				on_press: root.create_account()
+			Button:
+				size_hint: (None, None)
+				width: 300
+				height: 125
+				text: 'Have an account, go to login'
+				on_press: root.go_to_login()
 
-<DeckViewer>:
+<CreateScreen>:
+	GridLayout:
+		cols: 1
+		TextInput:
+			multiline: False
+			write_tab: False
+			id: user_email
+			text: "Email"
+		TextInput:
+			id: user_password
+			multiline: False
+			write_tab: False
+			text: "Password"
+		Label:
+			text: "Create Account"
+		Button:
+			text: "Create Account"
+			on_press: root.create()
+
+<LoginScreen>:
+	GridLayout:
+		cols: 1
+		TextInput:
+			id: login_email
+			text: "Email"
+		TextInput:
+			id: login_password
+			text: "Password"
+		Label:
+			text: "Login"
+		Button:
+			text: "Login"
+			on_press: root.login()
+
+<HomeScreen>:
 	GridLayout:
 		cols: 1
 		Label:
-			text: 'Deck Viewer'
+			text: 'Home'
 		Button:
-			text: 'Go to cards screen'
+			text: 'Go to flashcards'
 			on_press: root.switch_cards_screen()
+		Button:
+			text: 'Create a new deck'
+		Button:
+			text: 'Add flashcards to deck'
+		Button:
+			text: 'Show deck flashcards'
+		Button:
+			text: 'Delete a deck'
+		Button:
+			text: 'Play through a deck'
 
 <CardsScreen>:
 	GridLayout:
@@ -30,9 +89,15 @@
 	StartScreen:
 		id: start_screen
 		name: 'start_screen'
-	DeckViewer:
-		id: deck_viewer
-		name: 'deck_viewer'
+	CreateScreen:
+		id: create_screen
+		name: 'create_screen'
+	LoginScreen:
+		id: login_screen
+		name: 'login_screen'
+	HomeScreen:
+		id: home_screen
+		name: 'home_screen'
 	CardsScreen:
 		id: cards_screen
 		name: 'cards_screen'
