@@ -1,0 +1,38 @@
+Design:
+	-----
+	Following from my CLI Flashcards application I want to create,
+	the same application but now with a GUI. Flashcards V2 will
+	have a GUI with a authentication and database for the cards.
+	You will be able to create an account, that will have it's own
+	database to save Decks and flashcards. You will be able to create
+	a deck, delete a deck, list flashcards from the deck, add flashcards,
+	play through a deck and maybe more.
+
+GUI:
+	-----
+	Kivy
+
+
+Backend:
+	-----
+	Firebase, will also do authentication through firebase
+
+
+Classes:
+	-----
+	Deck:
+		Methods:
+			create()
+			delete()
+			play()
+			list()
+	
+	Flashcards:
+		Vars:
+			Deck
+
+		Methods:
+			add_flashcard()
+			
+	
+	
