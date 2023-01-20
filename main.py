@@ -58,6 +58,12 @@ class HomeScreen(Screen):
     def go_to_inspect_deck(self):
         self.manager.current = "inspect_deck_screen"
 
+    def go_to_delete(self):
+        self.manager.current = "delete_deck_screen"
+
+    def go_to_play(self):
+        self.manager.current = "play_deck_screen"
+
 
 class CreateDeckScreen(Screen):
     def create(self):
@@ -107,6 +113,49 @@ class InspectDeckScreen(Screen):
                     f"Card:{card_count} Question: {key}"
                 )
                 self.manager.current_screen.ids.ins_answer.text = f"Answer: {value}"
+
+    def return_home(self):
+        self.manager.current = "home_screen"
+
+
+class DeleteDeckScreen(Screen):
+    def gui_delete_deck(self):
+        deck = self.manager.current_screen.ids.deck_to_delete.text
+        user_deck.delete_deck(deck)
+
+    def return_home(self):
+        self.manager.current = "home_screen"
+
+
+class PlayDeckScreen(Screen):
+    def play(self):
+        user_choice = self.manager.current_screen.ids.deck_play.text
+        get_cards = db.child(user_choice).child("flashcards").get()
+        card_total = len(list(get_cards.val()))
+        index = 0
+        card_counter = 0
+
+        # Score counters.
+        correct = 0
+        incorrect = 0
+
+        while index != card_total:
+            start = list(get_cards.val().keys())[index]
+            flashcards = get_cards.val()[start]
+
+            # Iterate
+            card_counter += 1
+            index += 1
+
+            for key, value in flashcards.items():
+                self.manager.current_screen.ids.question.text = f"{card_counter}. {key}"
+                user_answer = self.manager.current_screen.ids.answer.text
+                if user_answer == key:
+                    self.manager.current_screen.ids.after_answer.text = f"{value}"
+                    correct += 1
+                else:
+                    self.manager.current_screen.ids.after_answer.text = f"{value}"
+                    incorrect += 1
 
     def return_home(self):
         self.manager.current = "home_screen"

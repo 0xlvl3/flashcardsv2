@@ -72,8 +72,10 @@
 			on_press: root.go_to_inspect_deck()
 		Button:
 			text: 'Delete a deck'
+			on_press: root.go_to_delete()
 		Button:
 			text: 'Play through a deck'
+			on_press: root.go_to_play()
 
 <CreateDeckScreen>:
 	GridLayout:
@@ -158,11 +160,58 @@
 					text: ''
 					id: ins_answer
 				Button:
+					id: next_btn
 					text: 'Go next' 
 				Button:
 					text: 'Exit inspect mode and go home'
 					on_press: root.return_home()
 
+<DeleteDeckScreen>:
+	GridLayout:
+		cols: 1 
+		Label:
+			text: 'Delete deck'
+		TextInput:
+			multiline: False
+			write_tab: False
+			id: deck_to_delete
+			text: 'Choose which deck you want to delete'
+		GridLayout:
+			cols: 2 
+			Button:
+				text: 'Delete deck'
+				on_press: root.gui_delete_deck()
+			Button:
+				text: 'Go to home screen'
+				on_press: root.return_home()
+
+<PlayDeckScreen>:
+	GridLayout:
+		cols: 1
+		Label:
+			text: 'Questions appear here'
+			id: question
+		Label:
+			text: 'Answer will appear here after answer'
+			id: after_answer
+		TextInput:
+			id: answer
+			write_tab: False
+			multiline: False
+			text: "Answer here"
+		TextInput:
+			write_tab: False
+			multiline: False
+			id: deck_play
+			text: "Type Deck to play"
+		GridLayout:
+			cols: 2 
+			Button:
+				text: 'Play deck'
+				on_press: root.play()
+			Button:
+				text: 'Back to home'
+				on_press: root.return_home()
 
 
 
@@ -189,3 +238,9 @@
 	InspectDeckScreen:
 		id: inspect_deck_screen
 		name: 'inspect_deck_screen'
+	DeleteDeckScreen:
+		id: delete_deck_screen
+		name: 'delete_deck_screen'
+	PlayDeckScreen:
+		id: play_deck_screen
+		name: 'play_deck_screen'
