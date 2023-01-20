@@ -62,29 +62,111 @@
 		Label:
 			text: 'Home'
 		Button:
-			text: 'Go to flashcards'
-			on_press: root.switch_cards_screen()
-		Button:
 			text: 'Create a new deck'
+			on_press: root.create_deck_screen() 
 		Button:
 			text: 'Add flashcards to deck'
+			on_press: root.go_to_add_flashcard()
 		Button:
-			text: 'Show deck flashcards'
+			text: 'Inspect a deck'
+			on_press: root.go_to_inspect_deck()
 		Button:
 			text: 'Delete a deck'
 		Button:
 			text: 'Play through a deck'
 
-<CardsScreen>:
+<CreateDeckScreen>:
+	GridLayout:
+		cols: 1 
+		Label:
+			text: "Here you can create a new deck"
+			id: create_success
+		TextInput:
+			id: deck_to_create
+			multiline: False
+			write_tab: False
+			text: "Deck name here"	
+		GridLayout:
+			cols: 1 
+			Button:
+				text: 'Exit to home'
+				on_press: root.return_home()
+			Button:
+				text: 'Create new deck'
+				on_press: root.create()
+			GridLayout:
+				cols: 2
+				Button:
+					text: 'Add flashcards'
+					on_press: root.go_to_add_flashcard() 
+
+<AddFlashcardScreen>:
+	GridLayout:
+		cols: 1 
+		Label:
+			text: 'Add flashcards here'
+			id: add_label
+		TextInput:
+			multiline: False
+			write_tab: False
+			id: deck_to_add_card
+			text: "Deck to add card"
+		TextInput:
+			multiline: False
+			write_tab: False
+			id: add_question
+			text: "Question for your flashcard"
+		TextInput:
+			multiline: False
+			write_tab: False
+			id: add_answer
+			text: "Answer for that flashcard"
+		GridLayout:
+			cols: 2 
+			Button:
+				text: 'Add flashcard'
+				on_press: root.add_flashcard_to()
+			Button:
+				text: "Go back to home"
+				on_press: root.return_home()
+
+
+<InspectDeckScreen>:
 	GridLayout:
 		cols: 1
 		Label:
-			text: 'Cards screen'
-		Button:
-			text: 'Go back to start'
-			on_press: root.back_to_start()
+			text: 'Which deck will you inspect?'
+		TextInput:
+			multiline: False
+			write_tab: False
+			id: deck_to_inspect
+			text: 'Deck name'
+		GridLayout:
+			cols: 2 
+			Button:
+				text: 'Inspect deck'
+				on_press: root.inspect()
+			Button:
+				text: "Back to home"
+				on_press: root.return_home()
+			GridLayout:
+				cols: 2 
+				Label:
+					text: ''
+					id: ins_question
+				Label:
+					text: ''
+					id: ins_answer
+				Button:
+					text: 'Go next' 
+				Button:
+					text: 'Exit inspect mode and go home'
+					on_press: root.return_home()
 
 
+
+
+# Root ids and names.
 <RootWidget>:
 	StartScreen:
 		id: start_screen
@@ -98,6 +180,12 @@
 	HomeScreen:
 		id: home_screen
 		name: 'home_screen'
-	CardsScreen:
-		id: cards_screen
-		name: 'cards_screen'
+	CreateDeckScreen:
+		id: create_deck_screen
+		name: 'create_deck_screen'
+	AddFlashcardScreen:
+		id: add_flashcard_screen
+		name: 'add_flashcard_screen'
+	InspectDeckScreen:
+		id: inspect_deck_screen
+		name: 'inspect_deck_screen'

@@ -6,9 +6,8 @@ class Deck:
     def __init__(self):
         pass
 
-    def create_deck(self):
-        deck_name = input("Name your new deck: ")
-        db.child(deck_name).set("flashcards")
+    def create_deck(self, deck):
+        db.child(deck).set("flashcards")
 
     def add_flashcards(self):
         user_deck = input("Which deck are we placing these in: ")
@@ -44,7 +43,7 @@ class Deck:
             print(e)
 
 
-deck = Deck()
+# deck = Deck()
 
 # Create a deck.
 # deck.create_deck()
@@ -57,5 +56,5 @@ deck = Deck()
 # deck.delete_deck(user_input)
 
 # Inspect deck.
-user_input = input("What deck will you view: ")
-deck.inspect_deck(user_input)
+# user_input = input("What deck will you view: ")
+# deck.inspect_deck(user_input)

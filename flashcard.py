@@ -6,10 +6,7 @@ class Flashcards:
     def __init__(self):
         pass
 
-    def add_flashcards(self, deck):
-        user_question = input("Question: ")
-        user_answer = input("Answer: ")
-
+    def add_flashcards(self, deck, user_question, user_answer):
         data = {user_question: user_answer}
         current_time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
 
@@ -75,7 +72,7 @@ class Flashcards:
             print(e)
 
 
-flashcard = Flashcards()
+# flashcard = Flashcards()
 
 # Add flashcards.
 # user_input = input("What deck: ")
@@ -87,5 +84,5 @@ flashcard = Flashcards()
 
 
 # Remove a flashcard.
-user_input = input("Which deck do you want to delete cards from? ")
-flashcard.remove_flashcard(user_input)
+# user_input = input("Which deck do you want to delete cards from? ")
+# flashcard.remove_flashcard(user_input)
