@@ -1,0 +1,33 @@
+<PlayDeckScreen>:
+	GridLayout:
+		cols: 1
+		Label:
+			text: 'Questions appear here'
+			id: question
+		Label:
+			text: 'Answer will appear here after answer'
+			id: after_answer
+		TextInput:
+			id: answer
+			write_tab: False
+			multiline: False
+			text: "Answer here"
+		TextInput:
+			write_tab: False
+			multiline: False
+			id: deck_play
+			text: "Type Deck to play"
+		GridLayout:
+			cols: 2 
+			Button:
+				text: 'Play deck'
+				on_press: root.play()
+			Button:
+				id: next_btn
+				on_release: root.next_answer()
+				text: 'press me' 
+			#	on_state: print("my current state is {}".format(self.state))
+			Button:
+				text: 'Back to home'
+				on_press: root.return_home()
+

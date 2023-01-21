@@ -6,13 +6,14 @@ from kivy.lang import Builder
 
 
 # Modules.
+from itertools import cycle
 from firebase import signup
 from firebase import user_login
 from test_fb import db
 from deck import Deck
 from flashcard import Flashcards
 
-Builder.load_file("frontend.kv")
+Builder.load_file("kv/frontend.kv")
 
 # Global classes.
 user_deck = Deck()
@@ -148,14 +149,12 @@ class PlayDeckScreen(Screen):
             index += 1
 
             for key, value in flashcards.items():
-                self.manager.current_screen.ids.question.text = f"{card_counter}. {key}"
-                user_answer = self.manager.current_screen.ids.answer.text
-                if user_answer == key:
-                    self.manager.current_screen.ids.after_answer.text = f"{value}"
-                    correct += 1
-                else:
-                    self.manager.current_screen.ids.after_answer.text = f"{value}"
-                    incorrect += 1
+                self.questions = cycle(
+                    [f"{card_counter}. {key} {value}" for i in range(index, card_total)]
+                )
+
+    def next_answer(self):
+        self.text = next(self.questions)
 
     def return_home(self):
         self.manager.current = "home_screen"

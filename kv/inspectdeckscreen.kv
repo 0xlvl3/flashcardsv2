@@ -1,0 +1,33 @@
+<InspectDeckScreen>:
+	GridLayout:
+		cols: 1
+		Label:
+			text: 'Which deck will you inspect?'
+		TextInput:
+			multiline: False
+			write_tab: False
+			id: deck_to_inspect
+			text: 'Deck name'
+		GridLayout:
+			cols: 2 
+			Button:
+				text: 'Inspect deck'
+				on_press: root.inspect()
+			Button:
+				text: "Back to home"
+				on_press: root.return_home()
+			GridLayout:
+				cols: 2 
+				Label:
+					text: ''
+					id: ins_question
+				Label:
+					text: ''
+					id: ins_answer
+				Button:
+					id: next_btn
+					text: 'Go next' 
+				Button:
+					text: 'Exit inspect mode and go home'
+					on_press: root.return_home()
+

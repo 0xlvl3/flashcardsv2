@@ -1,0 +1,21 @@
+<HomeScreen>:
+	GridLayout:
+		cols: 1
+		Label:
+			text: 'Home'
+		Button:
+			text: 'Create a new deck'
+			on_press: root.create_deck_screen() 
+		Button:
+			text: 'Add flashcards to deck'
+			on_press: root.go_to_add_flashcard()
+		Button:
+			text: 'Inspect a deck'
+			on_press: root.go_to_inspect_deck()
+		Button:
+			text: 'Delete a deck'
+			on_press: root.go_to_delete()
+		Button:
+			text: 'Play through a deck'
+			on_press: root.go_to_play()
+

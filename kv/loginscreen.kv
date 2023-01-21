@@ -1,0 +1,15 @@
+<LoginScreen>:
+	GridLayout:
+		cols: 1
+		TextInput:
+			id: login_email
+			text: "Email"
+		TextInput:
+			id: login_password
+			text: "Password"
+		Label:
+			text: "Login"
+		Button:
+			text: "Login"
+			on_press: root.login()
+
