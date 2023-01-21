@@ -24,6 +24,7 @@ class Deck:
     def inspect_deck(self, deck):
 
         try:
+            flashcards_indexed = []
             ins = db.child(deck).child("flashcards").get()
             card_total = len(list(ins.val()))
             index = 0
@@ -35,8 +36,9 @@ class Deck:
                 index += 1
                 flashcards = ins.val()[start]
                 for key, value in flashcards.items():
-                    print(f"{card_count}. Question: {key}")
-                    print(f"Answer: {value}\n")
+                    flashcards_indexed.append((card_count, key, value))
+
+            return flashcards_indexed
 
         except Exception as e:
             e = "You've entered a deck that doesn't exist"
@@ -57,4 +59,5 @@ class Deck:
 
 # Inspect deck.
 # user_input = input("What deck will you view: ")
-# deck.inspect_deck(user_input)
+# inspect_deck(user_input)
+# print(flashcards_indexed[0][2])

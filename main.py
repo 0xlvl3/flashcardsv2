@@ -96,24 +96,15 @@ class AddFlashcardScreen(Screen):
 
 
 class InspectDeckScreen(Screen):
-    def inspect(self):
-        deck = self.manager.current_screen.ids.deck_to_inspect.text
+    def index_cards(self):
+        user_choice = self.manager.current_screen.ids.deck_to_inspect.text
+        self.manager.current_screen.ids.load_deck.text = f"{user_choice} deck loaded"
+        flashcards_indexed = user_deck.inspect_deck(user_choice)
 
-        ins = db.child(deck).child("flashcards").get()
-        card_total = len(list(ins.val()))
-        index = 0
-        card_count = 0
-
-        while index != card_total:
-            start = list(ins.val().keys())[index]
-            card_count += 1
-            index += 1
-            flashcards = ins.val()[start]
-            for key, value in flashcards.items():
-                self.manager.current_screen.ids.ins_question.text = (
-                    f"Card:{card_count} Question: {key}"
-                )
-                self.manager.current_screen.ids.ins_answer.text = f"Answer: {value}"
+        for card_index, question, answer in flashcards_indexed:
+            self.manager.current_screen.ids.question.text = (
+                f"{card_index}. Question: {question}, Answer: {answer}"
+            )
 
     def return_home(self):
         self.manager.current = "home_screen"
