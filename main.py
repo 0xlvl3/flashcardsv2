@@ -98,15 +98,15 @@ class InspectDeckScreen(Screen):
         user_choice = self.manager.current_screen.ids.deck_to_inspect.text
         self.manager.current_screen.ids.load_deck.text = f"{user_choice} deck loaded"
         self.flashcards_indexed = user_deck.inspect_deck(user_choice)
-        self.index = 0
+        self.ins_index = 0
 
     def show_next(self):
-        if self.index < len(self.flashcards_indexed):
-            card_index, question, answer = self.flashcards_indexed[self.index]
+        if self.ins_index < len(self.flashcards_indexed):
+            card_index, question, answer = self.flashcards_indexed[self.ins_index]
             self.manager.current_screen.ids.question.text = (
                 f"{card_index} {question} {answer}"
             )
-            self.index += 1
+            self.ins_index += 1
         else:
             self.manager.current_screen.ids.question.text = (
                 "All flashcards have been shown"
