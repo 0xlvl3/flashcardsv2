@@ -15,7 +15,7 @@
 		TextInput:
 			write_tab: False
 			multiline: False
-			id: deck_play
+			id: deck_to_play
 			text: "Type Deck to play"
 		GridLayout:
 			cols: 2 
@@ -23,11 +23,12 @@
 				text: 'Play deck'
 				on_press: root.play()
 			Button:
-				id: next_btn
-				on_release: root.next_answer()
-				text: 'press me' 
-			#	on_state: print("my current state is {}".format(self.state))
+				id: show_next
+				on_press: root.check_answer()
+				text: 'Check answer' 
 			Button:
 				text: 'Back to home'
 				on_press: root.return_home()
-
+			Button:
+				text: 'Go next card'
+				on_press: root.next_card()

@@ -6,10 +6,8 @@ from kivy.lang import Builder
 
 
 # Modules.
-from itertools import cycle
 from firebase import signup
 from firebase import user_login
-from test_fb import db
 from deck import Deck
 from flashcard import Flashcards
 
@@ -99,11 +97,19 @@ class InspectDeckScreen(Screen):
     def index_cards(self):
         user_choice = self.manager.current_screen.ids.deck_to_inspect.text
         self.manager.current_screen.ids.load_deck.text = f"{user_choice} deck loaded"
-        flashcards_indexed = user_deck.inspect_deck(user_choice)
+        self.flashcards_indexed = user_deck.inspect_deck(user_choice)
+        self.index = 0
 
-        for card_index, question, answer in flashcards_indexed:
+    def show_next(self):
+        if self.index < len(self.flashcards_indexed):
+            card_index, question, answer = self.flashcards_indexed[self.index]
             self.manager.current_screen.ids.question.text = (
-                f"{card_index}. Question: {question}, Answer: {answer}"
+                f"{card_index} {question} {answer}"
+            )
+            self.index += 1
+        else:
+            self.manager.current_screen.ids.question.text = (
+                "All flashcards have been shown"
             )
 
     def return_home(self):
@@ -121,31 +127,55 @@ class DeleteDeckScreen(Screen):
 
 class PlayDeckScreen(Screen):
     def play(self):
-        user_choice = self.manager.current_screen.ids.deck_play.text
-        get_cards = db.child(user_choice).child("flashcards").get()
-        card_total = len(list(get_cards.val()))
-        index = 0
-        card_counter = 0
+        user_choice = self.manager.current_screen.ids.deck_to_play.text
+        self.manager.current_screen.ids.deck_to_play.text = f"{user_choice} deck loaded"
+        self.flashcards_indexed = user_deck.inspect_deck(user_choice)
+        self.index = 0
+        self.correct = 0
+        self.incorrect = 0
+        if self.index < len(self.flashcards_indexed):
+            self.card_index, self.question, self.answer = self.flashcards_indexed[
+                self.index
+            ]
+            self.manager.current_screen.ids.question.text = (
+                f"{user_choice} loaded click go next card to start!"
+            )
+        else:
+            self.manager.current_screen.ids.question.text = (
+                "All flashcards have been shown"
+            )
 
-        # Score counters.
-        correct = 0
-        incorrect = 0
+    def check_answer(self):
+        user_answer = self.manager.current_screen.ids.answer.text
+        if user_answer == self.answer:
+            self.manager.current_screen.ids.after_answer.text = (
+                f"Correct! answer was {self.answer}"
+            )
+            self.correct += 1
+        else:
+            self.manager.current_screen.ids.after_answer.text = (
+                f"Incorrect the answer was: {self.answer}"
+            )
+            self.incorrect += 1
 
-        while index != card_total:
-            start = list(get_cards.val().keys())[index]
-            flashcards = get_cards.val()[start]
-
-            # Iterate
-            card_counter += 1
-            index += 1
-
-            for key, value in flashcards.items():
-                self.questions = cycle(
-                    [f"{card_counter}. {key} {value}" for i in range(index, card_total)]
-                )
-
-    def next_answer(self):
-        self.text = next(self.questions)
+    def next_card(self):
+        if self.index < len(self.flashcards_indexed):
+            self.card_index, self.question, self.answer = self.flashcards_indexed[
+                self.index
+            ]
+            self.manager.current_screen.ids.question.text = (
+                f"{self.card_index}. Question: {self.question}"
+            )
+            self.manager.current_screen.ids.after_answer.text = f"What is the answer?"
+            self.index += 1
+        else:
+            self.manager.current_screen.ids.question.text = f"""
+All flashcards have been shown.
+You got {self.correct} correct and {self.incorrect} incorrect.
+Load another deck in the deck text input.
+"""
+            self.manager.current_screen.ids.after_answer.text = ""
+            self.manager.current_screen.ids.deck_to_play.text = "Type deck to load here"
 
     def return_home(self):
         self.manager.current = "home_screen"
