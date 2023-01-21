@@ -4,6 +4,9 @@ from deck import user_deck
 
 class PlayDeckScreen(Screen):
     def play(self):
+        """
+        Function will load deck and place it within an indexed array.
+        """
         user_choice = self.manager.current_screen.ids.deck_to_play.text
         self.manager.current_screen.ids.deck_to_play.text = f"{user_choice} deck loaded"
         self.flashcards_indexed = user_deck.inspect_deck(user_choice)
@@ -23,6 +26,9 @@ class PlayDeckScreen(Screen):
             )
 
     def check_answer(self):
+        """
+        Function will check to see if answer is equal to the user input.
+        """
         user_answer = self.manager.current_screen.ids.answer.text
         if user_answer == self.answer:
             self.manager.current_screen.ids.after_answer.text = (
@@ -36,6 +42,9 @@ class PlayDeckScreen(Screen):
             self.incorrect += 1
 
     def next_card(self):
+        """
+        Function will go to the next card in the indexed array.
+        """
         if self.index < len(self.flashcards_indexed):
             self.card_index, self.question, self.answer = self.flashcards_indexed[
                 self.index
@@ -55,4 +64,7 @@ Load another deck in the deck text input.
             self.manager.current_screen.ids.deck_to_play.text = "Type deck to load here"
 
     def return_home(self):
+        """
+        Function will take user to the home screen.
+        """
         self.manager.current = "home_screen"

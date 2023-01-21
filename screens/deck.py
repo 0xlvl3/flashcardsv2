@@ -3,13 +3,27 @@ from datetime import datetime
 
 
 class Deck:
+    """
+    Deck has methods create_deck, add_flashcards, delete_deck and
+    inspect_deck. All methods are attached to screens within app.
+    """
+
     def __init__(self):
         pass
 
     def create_deck(self, deck):
+        """
+        Function will create a deck from deck variable. Deck is stored
+        within backend database.
+        """
         db.child(deck).set("flashcards")
 
     def add_flashcards(self):
+        """
+        Function will add a flashcard to a specified deck.
+        User will be prompted for question and answer, that data
+        will be stored in backend database under specified deck.
+        """
         user_deck = input("Which deck are we placing these in: ")
         user_question = input("Question: ")
         user_answer = input("Answer: ")
@@ -19,10 +33,16 @@ class Deck:
         db.child(user_deck).child("flashcards").child(current_time).set(data)
 
     def delete_deck(self, deck):
+        """
+        Function will delete user specified deck.
+        """
         db.child(deck).remove()
 
     def inspect_deck(self, deck):
-
+        """
+        Function will load a user specifed deck, once loaded
+        user will be able to cycle through cards of specifed deck.
+        """
         try:
             flashcards_indexed = []
             ins = db.child(deck).child("flashcards").get()
@@ -45,7 +65,11 @@ class Deck:
             print(e)
 
 
+# user_deck is used within multiple screens.
 user_deck = Deck()
+
+# Testing.
+# -------
 
 # deck = Deck()
 
