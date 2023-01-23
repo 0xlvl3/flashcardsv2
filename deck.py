@@ -6,8 +6,9 @@ class Deck:
     def __init__(self):
         pass
 
-    def create_deck(self, deck):
-        db.child(deck).set("flashcards")
+    def create_deck(self, user_str, deck):
+        self.user_str = user_str
+        db.child(user_str).child(deck).set("flashcards")
 
     def add_flashcards(self):
         user_deck = input("Which deck are we placing these in: ")
@@ -16,7 +17,9 @@ class Deck:
 
         data = {user_question: user_answer}
         current_time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-        db.child(user_deck).child("flashcards").child(current_time).set(data)
+        db.child(self.user_str).child(user_deck).child("flashcards").child(
+            current_time
+        ).set(data)
 
     def delete_deck(self, deck):
         db.child(deck).remove()

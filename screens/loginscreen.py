@@ -1,5 +1,7 @@
 from kivy.uix.screenmanager import Screen
 from fire_admin import log_user
+from fire_admin import decode_uid
+from kivy.app import App
 
 
 class LoginScreen(Screen):
@@ -16,6 +18,11 @@ class LoginScreen(Screen):
         password = self.manager.current_screen.ids.login_password.text
         logged_user = log_user(email, password)
         self.token = logged_user["idToken"]
+        the_user = decode_uid(self.token)
+
+        check = App.get_running_app().logged_token = the_user
+
+        print("logged_token " + check)
         print(f"\n{self.token}")
         self.manager.current_screen.ids.home.text = "Click to go to home"
 

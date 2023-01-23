@@ -8,15 +8,12 @@ class Deck:
     inspect_deck. All methods are attached to screens within app.
     """
 
-    def __init__(self):
-        pass
-
-    def create_deck(self, deck):
+    def create_deck(self, user_str, deck):
         """
         Function will create a deck from deck variable. Deck is stored
         within backend database.
         """
-        db.child(deck).set("flashcards")
+        db.child(user_str).child(deck).set("flashcards")
 
     def add_flashcards(self):
         """

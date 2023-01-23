@@ -1,7 +1,6 @@
 # Kivy / GUI.
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager
-from kivy.uix.screenmanager import Screen
 from kivy.lang import Builder
 
 from fire_admin import logout
@@ -28,6 +27,10 @@ class RootWidget(ScreenManager):
 
 
 class MainApp(App):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.logged_token = ""
+
     def build(self):
         return RootWidget()
 
