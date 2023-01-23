@@ -1,5 +1,5 @@
 from kivy.uix.screenmanager import Screen
-from firebase import signup
+from test_fb import signup
 
 
 class CreateScreen(Screen):
