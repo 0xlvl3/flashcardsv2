@@ -7,9 +7,12 @@
 		TextInput:
 			id: login_password
 			text: "Password"
-		Label:
-			text: "Login"
+		Button:
+			id: home
+			text: ""
+			on_press: root.go_to_home()
 		Button:
 			text: "Login"
 			on_press: root.login()
+			on_release: root.get_token()
 
