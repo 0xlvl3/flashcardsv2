@@ -28,3 +28,31 @@ class CreateDeckScreen(Screen):
         Function will take user to add flashcard screen.
         """
         self.manager.current = "add_flashcard_screen"
+
+
+kv_createdeckscreen = """
+<CreateDeckScreen>:
+	GridLayout:
+		cols: 1 
+		Label:
+			text: "Here you can create a new deck"
+			id: create_success
+		TextInput:
+			id: deck_to_create
+			multiline: False
+			write_tab: False
+			text: "Deck name here"	
+		GridLayout:
+			cols: 1 
+			Button:
+				text: 'Exit to home'
+				on_press: root.return_home()
+			Button:
+				text: 'Create new deck'
+				on_press: root.create()
+			GridLayout:
+				cols: 2
+				Button:
+					text: 'Add flashcards'
+					on_press: root.go_to_add_flashcard() 
+"""

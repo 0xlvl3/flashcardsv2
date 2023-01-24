@@ -1,19 +1,35 @@
-from test_fb import db
+from fire_admin import db_system
 from datetime import datetime
 
 
 class Flashcards:
+    """
+    Flashcards class stores methods related to flashcards.
+    Such as add_flashcards, play_deck and remove_flashcard.
+    """
+
     def __init__(self):
         pass
 
-    def add_flashcards(self, deck, user_question, user_answer):
+    def add_flashcards(self, deck, user_question, user_answer, user_code):
+        """
+        Function will add a flashcard to a user specified deck.
+        Flashcard will take question and answer as data.
+        """
         data = {user_question: user_answer}
         current_time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
 
-        db.child(deck).child("flashcards").child(current_time).set(data)
+        db_system.child(user_code).child(deck).child("flashcards").child(
+            current_time
+        ).set(data)
 
     def play_deck(self, deck):
-        get_cards = db.child(deck).child("flashcards").get()
+        """
+        Function will load a user specified deck then prompt the user with
+        a question it wil then wait for user input of answer to see if it matches
+        with answer stored to the card.
+        """
+        get_cards = db_system.child(deck).child("flashcards").get()
         card_total = len(list(get_cards.val()))
         index = 0
         card_counter = 0
@@ -46,9 +62,12 @@ class Flashcards:
         print(f"Correct: {correct}, incorrect: {incorrect}")
 
     def remove_flashcard(self, deck):
+        """
+        Function will remove a specified flashcard from a specified user deck.
+        """
 
         try:
-            ins = db.child(deck).child("flashcards").get()
+            ins = db_system.child(deck).child("flashcards").get()
             card_total = len(list(ins.val()))
             index = 0
             card_count = 0
@@ -63,7 +82,7 @@ class Flashcards:
                     print(f"{card_count}. Question: {key}")
                     remove_card = input("Remove this card? (y/n): ").lower()
                     if remove_card == "y":
-                        db.child(deck).child("flashcards").child(start).remove()
+                        db_system.child(deck).child("flashcards").child(start).remove()
                     else:
                         pass
 
@@ -71,8 +90,6 @@ class Flashcards:
             e = "You've entered a deck that doesn't exist"
             print(e)
 
-
-# flashcard = Flashcards()
 
 # Add flashcards.
 # user_input = input("What deck: ")

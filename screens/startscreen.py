@@ -1,5 +1,4 @@
 from kivy.uix.screenmanager import Screen
-from kivy.lang import Builder
 
 
 class StartScreen(Screen):
@@ -38,6 +37,5 @@ kv_startscreen = """
 			Button:
 				text: 'Have an account, go to login'
 				on_press: root.go_to_login()
-"""
 
-Builder.load_string(kv_startscreen)
+"""

@@ -14,3 +14,25 @@ class CreateScreen(Screen):
         signup(email, password)
         print("Account created")
         self.manager.current = "login_screen"
+
+
+kv_createscreen = """
+<CreateScreen>:
+	GridLayout:
+		cols: 1
+		TextInput:
+			multiline: False
+			write_tab: False
+			id: user_email
+			text: "Email"
+		TextInput:
+			id: user_password
+			multiline: False
+			write_tab: False
+			text: "Password"
+		Label:
+			text: "Create Account"
+		Button:
+			text: "Create Account"
+			on_press: root.create()
+"""

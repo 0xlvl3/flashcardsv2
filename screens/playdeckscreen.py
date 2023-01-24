@@ -70,3 +70,41 @@ Load another deck in the deck text input.
         Function will take user to the home screen.
         """
         self.manager.current = "home_screen"
+
+
+kv_playdeckscreen = """
+<PlayDeckScreen>:
+	GridLayout:
+		cols: 1
+		Label:
+			text: 'Questions appear here'
+			id: question
+		Label:
+			text: 'Answer will appear here after answer'
+			id: after_answer
+		TextInput:
+			id: answer
+			write_tab: False
+			multiline: False
+			text: "Answer here"
+		TextInput:
+			write_tab: False
+			multiline: False
+			id: deck_to_play
+			text: "Type Deck to play"
+		GridLayout:
+			cols: 2 
+			Button:
+				text: 'Play deck'
+				on_press: root.play()
+			Button:
+				id: show_next
+				on_press: root.check_answer()
+				text: 'Check answer' 
+			Button:
+				text: 'Back to home'
+				on_press: root.return_home()
+			Button:
+				text: 'Go next card'
+				on_press: root.next_card()
+"""

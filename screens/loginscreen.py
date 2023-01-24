@@ -32,3 +32,24 @@ class LoginScreen(Screen):
     def go_to_home(self):
         self.manager.current = "home_screen"
         self.manager.get_screen("home_screen").token = self.token
+
+
+kv_loginscreen = """
+<LoginScreen>:
+	GridLayout:
+		cols: 1
+		TextInput:
+			id: login_email
+			text: "Email"
+		TextInput:
+			id: login_password
+			text: "Password"
+		Button:
+			id: home
+			text: ""
+			on_press: root.go_to_home()
+		Button:
+			text: "Login"
+			on_press: root.login()
+			on_release: root.get_token()
+"""

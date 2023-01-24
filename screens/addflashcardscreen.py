@@ -27,3 +27,36 @@ class AddFlashcardScreen(Screen):
         Function will take user to home screen.
         """
         self.manager.current = "home_screen"
+
+
+kv_addflashcardscreen = """
+<AddFlashcardScreen>:
+	GridLayout:
+		cols: 1 
+		Label:
+			text: 'Add flashcards here'
+			id: add_label
+		TextInput:
+			multiline: False
+			write_tab: False
+			id: deck_to_add_card
+			text: "Deck to add card"
+		TextInput:
+			multiline: False
+			write_tab: False
+			id: add_question
+			text: "Question for your flashcard"
+		TextInput:
+			multiline: False
+			write_tab: False
+			id: add_answer
+			text: "Answer for that flashcard"
+		GridLayout:
+			cols: 2 
+			Button:
+				text: 'Add flashcard'
+				on_press: root.add_flashcard_to()
+			Button:
+				text: "Go back to home"
+				on_press: root.return_home()
+"""

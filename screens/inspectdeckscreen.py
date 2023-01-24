@@ -36,3 +36,30 @@ class InspectDeckScreen(Screen):
         Function will return the user back to the home screen.
         """
         self.manager.current = "home_screen"
+
+
+kv_inspectdeckscreen = """
+<InspectDeckScreen>:
+	GridLayout:
+		cols: 1
+		Label:
+			id: question
+			text: 'Which deck will you inspect?'
+		TextInput:
+			multiline: False
+			write_tab: False
+			id: deck_to_inspect
+			text: 'Deck name'
+		GridLayout:
+			cols: 2 
+			Button:
+				id: load_deck
+				text: 'Load deck'
+				on_press: root.index_cards()
+			Button:
+				text: "Back to home"
+				on_press: root.return_home()
+			Button:
+				text: "Go next card"
+				on_press: root.show_next()
+"""

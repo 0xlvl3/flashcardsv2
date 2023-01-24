@@ -1,34 +1,33 @@
-from test_fb import db
-from datetime import datetime
+from fire_admin import db_system
 
 
 class Deck:
-    def __init__(self):
-        pass
+    """
+    Deck has methods create_deck, add_flashcards, delete_deck and
+    inspect_deck. All methods are attached to screens within app.
+    """
 
-    def create_deck(self, user_str, deck):
-        self.user_str = user_str
-        db.child(user_str).child(deck).set("flashcards")
+    def create_deck(self, uid, deck):
+        """
+        Function will create a deck from deck variable. Deck is stored
+        within backend database.
+        """
+        db_system.child(uid).child(deck).set("flashcards")
 
-    def add_flashcards(self):
-        user_deck = input("Which deck are we placing these in: ")
-        user_question = input("Question: ")
-        user_answer = input("Answer: ")
+    def delete_deck(self, uid, deck):
+        """
+        Function will delete user specified deck.
+        """
+        db_system.child(uid).child(deck).remove()
 
-        data = {user_question: user_answer}
-        current_time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-        db.child(self.user_str).child(user_deck).child("flashcards").child(
-            current_time
-        ).set(data)
-
-    def delete_deck(self, deck):
-        db.child(deck).remove()
-
-    def inspect_deck(self, deck):
-
+    def inspect_deck(self, uid, deck):
+        """
+        Function will load a user specifed deck, once loaded
+        user will be able to cycle through cards of specifed deck.
+        """
         try:
             flashcards_indexed = []
-            ins = db.child(deck).child("flashcards").get()
+            ins = db_system.child(uid).child(deck).child("flashcards").get()
             card_total = len(list(ins.val()))
             index = 0
             card_count = 0
@@ -48,7 +47,11 @@ class Deck:
             print(e)
 
 
+# user_deck is used within multiple screens.
 user_deck = Deck()
+
+# Testing.
+# -------
 
 # deck = Deck()
 
