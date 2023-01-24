@@ -1,3 +1,4 @@
+from kivy.app import App
 from kivy.uix.screenmanager import Screen
 from deck import user_deck
 
@@ -8,8 +9,9 @@ class PlayDeckScreen(Screen):
         Function will load deck and place it within an indexed array.
         """
         user_choice = self.manager.current_screen.ids.deck_to_play.text
+        token = App.get_running_app().logged_token
         self.manager.current_screen.ids.deck_to_play.text = f"{user_choice} deck loaded"
-        self.flashcards_indexed = user_deck.inspect_deck(user_choice)
+        self.flashcards_indexed = user_deck.inspect_deck(token, user_choice)
         self.index = 0
         self.correct = 0
         self.incorrect = 0

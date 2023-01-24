@@ -1,3 +1,4 @@
+from kivy.app import App
 from kivy.uix.screenmanager import Screen
 from flashcard import Flashcards
 
@@ -13,8 +14,9 @@ class AddFlashcardScreen(Screen):
         deck = self.manager.current_screen.ids.deck_to_add_card.text
         user_question = self.manager.current_screen.ids.add_question.text
         user_answer = self.manager.current_screen.ids.add_answer.text
+        uid = App.get_running_app().logged_token
 
-        user_flashcards.add_flashcards(deck, user_question, user_answer)
+        user_flashcards.add_flashcards(deck, user_question, user_answer, uid)
 
         self.manager.current_screen.ids.add_label.text = (
             f"{user_question} question added to {deck} deck"
