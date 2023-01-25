@@ -16,26 +16,24 @@ class StartScreen(Screen):
 
 
 kv_startscreen = """
-<StartScreen>:
-	GridLayout:
-		spacing: 30
-		padding: 
-		cols: 1
-		Label:
-			font_size: 32
-			text: 'Start Screen'
-		
-		# Startscreen Buttons.
-		GridLayout:
-			cols: 2
-			size_hint_y: 0.45
-			spacing: 30 
-			padding: 20
-			Button:
-				text: 'Create an account'
-				on_press: root.create_account()
-			Button:
-				text: 'Have an account, go to login'
-				on_press: root.go_to_login()
+<StartScreen>
+    FloatLayout:
 
+        Label:
+            text: "kv Flashcards"
+            font_size: 48
+            size_hint: .2, .4
+            pos_hint:{'center_x':0.5, 'center_y':0.6}
+        Button:
+            on_press: root.create_account()
+            text: "Create Account"
+            font_size: 24
+            size_hint: .35, .1
+		    pos_hint: {'center_x': .5, 'center_y': .45}
+        Button:
+            on_press: root.go_to_login()
+            text: "Login"
+            font_size: 24
+            pos_hint: {'center_x': .5, 'center_y': .3}
+            size_hint: .35, .1
 """

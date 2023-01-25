@@ -18,21 +18,40 @@ class CreateScreen(Screen):
 
 kv_createscreen = """
 <CreateScreen>:
-	GridLayout:
-		cols: 1
-		TextInput:
-			multiline: False
-			write_tab: False
-			id: user_email
-			text: "Email"
-		TextInput:
-			id: user_password
-			multiline: False
-			write_tab: False
-			text: "Password"
-		Label:
-			text: "Create Account"
-		Button:
-			text: "Create Account"
-			on_press: root.create()
+    FloatLayout:
+        Label:
+            text: "Create Account"
+            font_size: 48
+            size_hint: .2, .4
+            pos_hint:{'center_x':0.5, 'center_y':0.8}
+        TextInput:
+            id: username
+            multiline: False
+            write_tab: False
+            hint_text: "Username"
+            font_size: 16
+            size_hint: .4, .05
+            pos_hint: {'center_x': .5, 'center_y': .65}
+        TextInput:
+            id: user_email
+            multiline: False
+            write_tab: False
+            hint_text: "Email"
+            size_hint: .4, .05
+            font_size: 16
+            pos_hint: {'center_x': .5, 'center_y': .55}
+        TextInput:
+            id: user_password
+            multiline: False
+            write_tab: False
+            hint_text: "Password"
+            font_size: 16
+            size_hint: .4, .05
+            pos_hint: {'center_x': .5, 'center_y': .45}
+        Button:
+            on_press: root.create()
+            text: "Submit"
+            font_size: 32
+            pos_hint: {'center_x': .5, 'center_y': .3}
+            size_hint: .35, .1
 """
