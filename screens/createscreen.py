@@ -3,17 +3,28 @@ from fire_admin import signup
 
 
 class CreateScreen(Screen):
+    def __init__(self, **kw):
+        super().__init__(**kw)
+        self.username = ""
+
     def create(self):
         """
         Function will create a user giving them authentication and
         will a backend for Decks to be saved that are created by that
         user.
         """
+        self.username = self.manager.current_screen.ids.username.text
         email = self.manager.current_screen.ids.user_email.text
         password = self.manager.current_screen.ids.user_password.text
         signup(email, password)
         print("Account created")
         self.manager.current = "login_screen"
+
+    def return_home(self):
+        """
+        Function will return the user back to the start screen.
+        """
+        self.manager.current = "start_screen"
 
 
 kv_createscreen = """
@@ -51,7 +62,13 @@ kv_createscreen = """
         Button:
             on_press: root.create()
             text: "Submit"
-            font_size: 32
+            font_size: 20
             pos_hint: {'center_x': .5, 'center_y': .3}
-            size_hint: .35, .1
+            size_hint: .4, .1
+        Button:
+            text: "Home"
+            pos_hint:{'center_x': .5, 'center_y': .15}
+            font_size: 20
+            size_hint: .4, 0.1
+            on_press: root.return_home()
 """

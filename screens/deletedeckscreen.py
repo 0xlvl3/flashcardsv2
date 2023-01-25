@@ -5,18 +5,20 @@ from deck import user_deck
 
 class DeleteDeckScreen(Screen):
     def load_deck(self):
-        pass
-        # load deck to be deleted
-        # return it as a var
+        loaded_deck = self.manager.current_screen.ids.loaded_deck.text
+        self.manager.current_screen.ids.confirm.text = (
+            f"Are you sure you want to delete {loaded_deck}?"
+        )
+        self.deck = loaded_deck
 
     def gui_delete_deck(self):
         # Will take loaded deck and delete in popup
         """
         Function will delete a specified user deck.
         """
-        deck = self.manager.current_screen.ids.deck_to_delete.text
         token = App.get_running_app().logged_token
-        user_deck.delete_deck(token, deck)
+        user_deck.delete_deck(token, self.deck)
+        self.manager.current_screen.ids.loaded_deck.text = ""
 
     def return_home(self):
         """
@@ -35,6 +37,7 @@ kv_deletedeckscreen = """
             pos_hint: {'center_x': .5, 'center_y': .7}
             size_hint: .35, .1
         TextInput:
+            id: loaded_deck
             hint_text: "Deck to Delete"
             font_size: 16
             pos_hint: {'center_x': .5, 'center_y': .5}
@@ -44,6 +47,7 @@ kv_deletedeckscreen = """
             font_size: 24
             pos_hint: {'center_x': .5, 'center_y': .35}
             size_hint: .35, .1
+            on_press: root.load_deck()
             on_release: popup.open()
         Button:
             text: "Home"
@@ -56,7 +60,7 @@ kv_deletedeckscreen = """
             on_parent: if self.parent == d_screen: d_screen.remove_widget(self)
             title: 'Deck Player'
             content: popupcontent
-            size_hint: .5, .5
+            size_hint: .75, .75
             pos_hint: {'center_x': .5, 'center_y': .5}
             auto_dismiss: False
             FloatLayout:
@@ -71,7 +75,7 @@ kv_deletedeckscreen = """
                     text: "Confirm"
                     font_size: 24
                     size_hint: .3, .15
-                    pos_hint: {'center_x': .25, 'center_y': .2}
+                    pos_hint: {'center_x': .5, 'center_y': .5}
                     on_press: root.gui_delete_deck()
                     on_release: popup.dismiss()
                 Button:

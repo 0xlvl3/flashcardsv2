@@ -18,6 +18,8 @@ class LoginScreen(Screen):
         password = self.manager.current_screen.ids.login_password.text
         logged_user = log_user(email, password)
         self.token = logged_user["idToken"]
+        username = logged_user["displayName"]
+        print(f"this is the username: {username}")
         the_user = decode_uid(self.token)
 
         check = App.get_running_app().logged_token = the_user
@@ -60,7 +62,7 @@ kv_loginscreen = """
             pos_hint: {'center_x': .5, 'center_y': .45}
         Button:
             text: "Submit"
-            font_size: 36
+            font_size: 24
             pos_hint: {'center_x': .5, 'center_y': .3}
             size_hint: .35, .1
             on_press: root.login()
