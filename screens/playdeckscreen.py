@@ -20,7 +20,7 @@ class PlayDeckScreen(Screen):
                 self.index
             ]
             self.manager.current_screen.ids.question.text = (
-                f"{user_choice} loaded click go next card to start!"
+                f"{user_choice} loaded. Click next to start!"
             )
         else:
             self.manager.current_screen.ids.question.text = (
@@ -74,37 +74,80 @@ Load another deck in the deck text input.
 
 kv_playdeckscreen = """
 <PlayDeckScreen>:
-	GridLayout:
-		cols: 1
-		Label:
-			text: 'Questions appear here'
-			id: question
-		Label:
-			text: 'Answer will appear here after answer'
-			id: after_answer
-		TextInput:
-			id: answer
-			write_tab: False
-			multiline: False
-			text: "Answer here"
-		TextInput:
-			write_tab: False
-			multiline: False
-			id: deck_to_play
-			text: "Type Deck to play"
-		GridLayout:
-			cols: 2 
-			Button:
-				text: 'Play deck'
-				on_press: root.play()
-			Button:
-				id: show_next
-				on_press: root.check_answer()
-				text: 'Check answer' 
-			Button:
-				text: 'Back to home'
-				on_press: root.return_home()
-			Button:
-				text: 'Go next card'
-				on_press: root.next_card()
+    FloatLayout:
+        id: play_screen
+        Label:
+            text: 'Deck Player'
+            font_size: 32
+            pos_hint: {'center_x': .5, 'center_y': .7}
+            size_hint: .35, .1
+        TextInput:
+            text: "Load deck"
+            font_size: 18
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            size_hint: .4, .07
+            hint_text: "Deck to Play"
+            id: deck_to_play
+            write_tab: False
+            multiline: False
+        Button:
+            text: "Load deck"
+            font_size: 24
+            pos_hint: {'center_x': .5, 'center_y': .3}
+            size_hint: .35, .1
+            on_press: root.play()
+            on_release: popup.open()
+        Button:
+            text: "Return to Homescreen"
+            font_size: 24
+            pos_hint: {'center_x': .5, 'center_y': .15}
+            size_hint: .35, .1
+            on_press: root.return_home()
+        Popup:
+            id: popup
+            on_parent: if self.parent == play_screen: play_screen.remove_widget(self)
+            title: 'Deck Player'
+            content: popupcontent
+            size_hint: .8, .8
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            auto_dismiss: False
+            FloatLayout:
+                id:popupcontent
+                Label:
+                    text: 'Deck loaded'
+                    id: after_answer
+                    pos_hint: {'center_x': .5, 'center_y': .9}
+                    size_hint: .2, .2
+                Label:
+                    text: 'Question'
+                    id: question
+                    font_size: 24
+                    pos_hint: {'center_x': .5, 'center_y': .8}
+                    size_hint: .2, .2
+                TextInput:
+                    id: answer
+                    write_tab: False
+                    multiline: False
+                    hint_text: 'Answer here'
+                    font_size: 16
+                    pos_hint: {'center_x': .5, 'center_y': .5}
+                    size_hint: .7, .1
+                Button:
+                    text: "Next"
+                    font_size: 20
+                    size_hint: .3, .15
+                    pos_hint: {'center_x': .75, 'center_y': .2}
+                    on_press: root.next_card()
+                Button:
+                    text: "Check Answer"
+                    font_size: 20
+                    size_hint: .3, .15
+                    pos_hint: {'center_x': .25, 'center_y': .2}
+                    on_press: root.check_answer()
+                Button:
+                    text: "X"
+                    font_size: 20
+                    size_hint: .05, .07
+                    pos_hint: {'center_x': .975, 'center_y': .96}
+                    on_press: popup.dismiss()
 """

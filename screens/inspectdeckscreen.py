@@ -11,7 +11,7 @@ class InspectDeckScreen(Screen):
         """
         user_choice = self.manager.current_screen.ids.deck_to_inspect.text
         token = App.get_running_app().logged_token
-        self.manager.current_screen.ids.load_deck.text = f"{user_choice} deck loaded"
+        # self.manager.current_screen.ids.load_deck.text = f"{user_choice} deck loaded"
         self.flashcards_indexed = user_deck.inspect_deck(token, user_choice)
         self.ins_index = 0
 
@@ -40,26 +40,58 @@ class InspectDeckScreen(Screen):
 
 kv_inspectdeckscreen = """
 <InspectDeckScreen>:
-	GridLayout:
-		cols: 1
-		Label:
-			id: question
-			text: 'Which deck will you inspect?'
-		TextInput:
-			multiline: False
-			write_tab: False
-			id: deck_to_inspect
-			text: 'Deck name'
-		GridLayout:
-			cols: 2 
-			Button:
-				id: load_deck
-				text: 'Load deck'
-				on_press: root.index_cards()
-			Button:
-				text: "Back to home"
-				on_press: root.return_home()
-			Button:
-				text: "Go next card"
-				on_press: root.show_next()
+    FloatLayout:
+        id: ins_screen
+        Label:
+            text: 'Deck Inspector'
+            font_size: 32
+            pos_hint: {'center_x': .5, 'center_y': .7}
+        TextInput:
+            multiline: False
+            write_tab: False
+            id: deck_to_inspect
+            hint_text: 'Deck name'
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            size_hint: .4, .05
+        Button:
+            text: "Load deck"
+            font_size: 24
+            pos_hint: {'center_x': .5, 'center_y': .35}
+            size_hint: .35, .1
+            on_press: root.index_cards()
+            on_release: popup.open()
+        Button:
+            text: "Home"
+            pos_hint:{'center_x': .5, 'center_y': .2}
+            font_size: 24
+            size_hint: .35, .1
+            on_press: root.return_home()
+        Popup:
+            id: popup
+            on_parent: if self.parent == ins_screen: ins_screen.remove_widget(self)
+            title: 'Deck Inspector'
+            content: popupcontent
+            size_hint: .5, .5
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            auto_dismiss: False
+            FloatLayout:
+                id:popupcontent
+                Label:
+                    text: 'Deck loaded! click next to see first card'
+                    id: question 
+                    font_size: 18
+                    pos_hint: {'center_x': .5, 'center_y': .7}
+                    size_hint: .2, .2
+                Button:
+                    text: "Go next"
+                    font_size: 24
+                    size_hint: .5, .2
+                    pos_hint: {'center_x': .5, 'center_y': .4}
+                    on_press: root.show_next()
+                Button:
+                    text: "X"
+                    font_size: 16
+                    size_hint: .05, .07
+                    pos_hint: {'center_x': .975, 'center_y': .96}
+                    on_press: popup.dismiss()
 """

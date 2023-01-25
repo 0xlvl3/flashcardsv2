@@ -19,7 +19,7 @@ class AddFlashcardScreen(Screen):
         user_flashcards.add_flashcards(deck, user_question, user_answer, uid)
 
         self.manager.current_screen.ids.add_label.text = (
-            f"{user_question} question added to {deck} deck"
+            f"{user_question} question added to {deck} deck, add another?"
         )
 
     def return_home(self):
@@ -31,32 +31,50 @@ class AddFlashcardScreen(Screen):
 
 kv_addflashcardscreen = """
 <AddFlashcardScreen>:
-	GridLayout:
-		cols: 1 
-		Label:
-			text: 'Add flashcards here'
-			id: add_label
-		TextInput:
-			multiline: False
-			write_tab: False
-			id: deck_to_add_card
-			text: "Deck to add card"
-		TextInput:
-			multiline: False
-			write_tab: False
-			id: add_question
-			text: "Question for your flashcard"
-		TextInput:
-			multiline: False
-			write_tab: False
-			id: add_answer
-			text: "Answer for that flashcard"
-		GridLayout:
-			cols: 2 
-			Button:
-				text: 'Add flashcard'
-				on_press: root.add_flashcard_to()
-			Button:
-				text: "Go back to home"
-				on_press: root.return_home()
+    FloatLayout:
+        Label:
+            text: 'Add Flashcards'
+            font_size: 28
+            pos_hint: {'center_x':.5, 'center_y':.8}
+        Label:
+            id: add_label
+            text: 'Deck you want to add card'
+            font_size: 16
+            pos_hint: {'center_x': .5, 'center_y': .7}
+        TextInput:
+            multiline: False
+            write_tab: False
+            id: deck_to_add_card
+            hint_text: "Deck name"
+            font_size: 18
+            pos_hint: {'center_x': .5, 'center_y': .65}
+            size_hint: .4, .05
+        TextInput:
+            multiline: False
+            write_tab: False
+            id: add_question
+            hint_text: "Question"
+            font_size: 18
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            size_hint: .8, .05
+        TextInput:
+            multiline: False
+            write_tab: False
+            id: add_answer
+            hint_text: "Answer"
+            font_size: 18
+            pos_hint: {'center_x': .5, 'center_y': .4}
+            size_hint: .8, .05
+        Button:
+            text: "Home"
+            pos_hint:{'center_x': .75, 'center_y': .2}
+            font_size: 20
+            size_hint: .4, 0.1
+            on_press: root.return_home()
+        Button:
+            text: "Add flashcard"
+            on_press: root.add_flashcard_to()
+            pos_hint:{'center_x': .25, 'center_y': .2}
+            font_size: 20
+            size_hint: .4, 0.1
 """

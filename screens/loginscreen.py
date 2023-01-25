@@ -70,21 +70,26 @@ kv_loginscreen = """
         Popup:
             id: popup
             on_parent: if self.parent == l_screen: l_screen.remove_widget(self)
-            title: 'Successful login'
+            title: 'Successful Login'
             content: popupcontent
             size_hint: .5, .5
             pos_hint: {'center_x': .5, 'center_y': .5}
             auto_dismiss: False
-            Button:
-                text: "Go to home"
-                font_size: 24
-                size_hint: .5, .3
-                pos_hint: {'center_x': .5, 'center_y': .5}
+            FloatLayout:
                 id: popupcontent
-                text: 'Proceed to home'
-                on_press:
-                    root.go_to_home()
-                    popup.dismiss()
+                Label:
+                    text: "Success!"
+                    size_hint: .5, .3
+                    font_size: 16
+                    pos_hint: {'center_x': .5, 'center_y': .6}
+                Button:
+                    text: "Home"
+                    font_size: 24
+                    size_hint: .5, .3
+                    pos_hint: {'center_x': .5, 'center_y': .5}
+                    on_press:
+                        root.go_to_home()
+                        popup.dismiss()
         Label:
             font_size: 16
             size_hint: .4, .05

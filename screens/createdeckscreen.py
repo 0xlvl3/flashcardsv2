@@ -32,27 +32,41 @@ class CreateDeckScreen(Screen):
 
 kv_createdeckscreen = """
 <CreateDeckScreen>:
-	GridLayout:
-		cols: 1 
-		Label:
-			text: "Here you can create a new deck"
-			id: create_success
-		TextInput:
-			id: deck_to_create
+    FloatLayout:
+        Label:
+            text: 'Create a Deck'
+            font_size: 28
+            pos_hint: {'center_x':.5, 'center_y':.7}
+        Label:
+            text: 'Name your deck'
+            id: create_success
+            font_size: 16
+            pos_hint: {'center_x': .5, 'center_y': .55}
+        TextInput:
+            hint_text: "Deck name"
+            id: deck_to_create
 			multiline: False
 			write_tab: False
-			text: "Deck name here"	
-		GridLayout:
-			cols: 1 
-			Button:
-				text: 'Exit to home'
-				on_press: root.return_home()
-			Button:
-				text: 'Create new deck'
-				on_press: root.create()
-			GridLayout:
-				cols: 2
-				Button:
-					text: 'Add flashcards'
-					on_press: root.go_to_add_flashcard() 
+            font_size: 18
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            size_hint: .4, .05
+        Button:
+            text: "Create"
+            font_size: 20
+            pos_hint: {'center_x': .5, 'center_y': .35}
+            size_hint: .4, .1
+            on_press: root.create()
+        Button:
+            text: "Home"
+            pos_hint:{'center_x': .75, 'center_y': .2}
+            font_size: 20
+            size_hint: .4, 0.1
+            on_press: root.return_home()
+        Button:
+            text: "Add flashcards"
+            pos_hint:{'center_x': .25, 'center_y': .2}
+            font_size: 20
+            size_hint: .4, 0.1
+            on_press: root.go_to_add_flashcard()
+
 """
