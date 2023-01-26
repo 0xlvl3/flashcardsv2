@@ -1,6 +1,7 @@
 from kivy.app import App
 from kivy.uix.screenmanager import Screen
 from flashcard import Flashcards
+from fire_admin import db_system
 
 user_flashcards = Flashcards()
 
@@ -17,6 +18,14 @@ class AddFlashcardScreen(Screen):
         uid = App.get_running_app().logged_token
 
         user_flashcards.add_flashcards(deck, user_question, user_answer, uid)
+        deck_check = db_system.child(uid).child(deck).child("flashcards").get()
+        data = deck_check.val()
+        pair = list(data.items())
+        for key, value in pair:
+            print(key)
+            print(value)
+
+        print(pair)
 
         self.manager.current_screen.ids.add_label.text = (
             f"{user_question} question added to {deck} deck, add another?"

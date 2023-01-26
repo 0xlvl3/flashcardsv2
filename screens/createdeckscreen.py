@@ -1,6 +1,7 @@
 from kivy.app import App
 from kivy.uix.screenmanager import Screen
 from deck import user_deck
+from fire_admin import db_system
 
 
 class CreateDeckScreen(Screen):
@@ -15,6 +16,7 @@ class CreateDeckScreen(Screen):
 
         # Will check for empty value.
         # Bug if there is no value and user creates it will clear all decks.
+
         deck = self.manager.current_screen.ids.deck_to_create.text
         if deck == "":
             self.manager.current_screen.ids.create_success.text = (
@@ -22,8 +24,28 @@ class CreateDeckScreen(Screen):
             )
         else:
             try:
-                user_deck.create_deck(_token, deck)
-                self.manager.current_screen.ids.create_success.text = f"{_token} Your new deck {deck} is created! go back to the home screen and add flashcards!"
+                # This block will check to see if deck already exists.
+
+                print(_token)
+                deck_check = db_system.child(_token).get()
+                data = deck_check.val()
+                keys = list(data.keys())
+                found = False
+                for key in keys:
+                    if deck == key:
+                        found = True
+                        print(key)
+                        self.manager.current_screen.ids.create_success.text = (
+                            f"{deck} already exists!"
+                        )
+                        self.manager.current_screen.ids.deck_to_create.text = ""
+                        break
+
+                    # Block will create deck.
+
+                    if not found:
+                        user_deck.create_deck(_token, deck)
+                        self.manager.current_screen.ids.create_success.text = f"{_token} Your new deck {deck} is created! go back to the home screen and add flashcards!"
             except Exception as e:
                 print(e)
 
