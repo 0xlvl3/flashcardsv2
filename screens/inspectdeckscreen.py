@@ -30,6 +30,7 @@ class InspectDeckScreen(Screen):
             self.manager.current_screen.ids.question.text = (
                 "All flashcards have been shown"
             )
+            self.manager.current_screen.ids.deck_to_inspect.text = ""
 
     def return_home(self):
         """

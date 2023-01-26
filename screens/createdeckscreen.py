@@ -13,9 +13,19 @@ class CreateDeckScreen(Screen):
         """
         _token = App.get_running_app().logged_token
 
+        # Will check for empty value.
+        # Bug if there is no value and user creates it will clear all decks.
         deck = self.manager.current_screen.ids.deck_to_create.text
-        user_deck.create_deck(_token, deck)
-        self.manager.current_screen.ids.create_success.text = f"{_token} Your new deck {deck} is created! go back to the home screen and add flashcards!"
+        if deck == "":
+            self.manager.current_screen.ids.create_success.text = (
+                "Try again no deck was specified"
+            )
+        else:
+            try:
+                user_deck.create_deck(_token, deck)
+                self.manager.current_screen.ids.create_success.text = f"{_token} Your new deck {deck} is created! go back to the home screen and add flashcards!"
+            except Exception as e:
+                print(e)
 
     def return_home(self):
         """

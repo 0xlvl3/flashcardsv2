@@ -19,11 +19,12 @@ class PlayDeckScreen(Screen):
             self.card_index, self.question, self.answer = self.flashcards_indexed[
                 self.index
             ]
-            self.manager.current_screen.ids.question.text = (
+            self.manager.current_screen.ids.question_message.text = (
                 f"{user_choice} loaded. Click next to start!"
             )
+            self.manager.current_screen.ids.popup.open()
         else:
-            self.manager.current_screen.ids.question.text = (
+            self.manager.current_screen.ids.question_message.text = (
                 "All flashcards have been shown"
             )
 
@@ -51,13 +52,13 @@ class PlayDeckScreen(Screen):
             self.card_index, self.question, self.answer = self.flashcards_indexed[
                 self.index
             ]
-            self.manager.current_screen.ids.question.text = (
+            self.manager.current_screen.ids.question_message.text = (
                 f"{self.card_index}. Question: {self.question}"
             )
             self.manager.current_screen.ids.after_answer.text = f"What is the answer?"
             self.index += 1
         else:
-            self.manager.current_screen.ids.question.text = f"""
+            self.manager.current_screen.ids.question_message.text = f"""
 All flashcards have been shown.
 You got {self.correct} correct and {self.incorrect} incorrect.
 Load another deck in the deck text input.
@@ -95,7 +96,6 @@ kv_playdeckscreen = """
             pos_hint: {'center_x': .5, 'center_y': .3}
             size_hint: .35, .1
             on_press: root.play()
-            on_release: popup.open()
         Button:
             text: "Home"
             font_size: 24
@@ -118,8 +118,8 @@ kv_playdeckscreen = """
                     pos_hint: {'center_x': .5, 'center_y': .9}
                     size_hint: .2, .2
                 Label:
-                    text: 'Question'
-                    id: question
+                    text: 'Deck'
+                    id: question_message
                     font_size: 24
                     pos_hint: {'center_x': .5, 'center_y': .8}
                     size_hint: .2, .2

@@ -45,7 +45,7 @@ class MainApp(App):
     def on_stop(self):
         home_screen = self.root.get_screen("home_screen")
         user_token = home_screen.token
-        print(f"This is from the log out screen: logged out: {user_token}")
+        print(f"This is from the log out screen: {user_token}")
         logout(user_token)
 
 

@@ -14,6 +14,9 @@ class LoginScreen(Screen):
     def error_message(self, message):
         self.manager.current_screen.ids.error.text = message
 
+    def get_token(self):
+        return self.token
+
     def login(self):
         """
         Function will authenticate users who have already created an account.
@@ -30,6 +33,8 @@ class LoginScreen(Screen):
 
             print("logged_token " + check)
             print(f"\n{self.token}")
+
+            self.get_token()
 
             self.ids.popup.open()
 
@@ -51,9 +56,6 @@ class LoginScreen(Screen):
                 )
             else:
                 print(message)
-
-    def get_token(self):
-        return self.token
 
     def go_to_home(self):
         self.manager.current = "home_screen"
