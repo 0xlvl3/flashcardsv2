@@ -28,7 +28,7 @@ class AddFlashcardScreen(Screen):
             pair = list(data.items())
             for key, value in pair:
                 for k, v in value.items():
-                    if user_question in k:
+                    if user_question == k:
                         found = True
                         self.manager.current_screen.ids.add_label.text = f"{user_question} question exists in {deck} deck? Try adding another."
                         self.manager.current_screen.ids.add_question.text = ""
