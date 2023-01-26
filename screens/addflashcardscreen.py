@@ -9,14 +9,20 @@ user_flashcards = Flashcards()
 
 
 class AddFlashcardScreen(Screen):
+    def update_text(self, widget_id, message):
+        self.manager.current_screen.ids[widget_id].text = message
+
+    def get_text(self, widget_id):
+        return self.manager.current_screen.ids[widget_id].text
+
     def add_flashcard_to(self):
         """
         Function will take user input for a deck, then a question and answer
         to add to that specified deck.
         """
-        deck = self.manager.current_screen.ids.deck_to_add_card.text
-        user_question = self.manager.current_screen.ids.add_question.text
-        user_answer = self.manager.current_screen.ids.add_answer.text
+        deck = self.get_text("deck_to_add_card")
+        user_question = self.get_text("add_question")
+        user_answer = self.get_text("add_answer")
         uid = App.get_running_app().logged_token
         found = False
 
@@ -32,29 +38,38 @@ class AddFlashcardScreen(Screen):
                 for k, v in value.items():
                     if user_question == k:
                         found = True
-                        self.manager.current_screen.ids.add_label.text = f"{user_question} question exists in {deck} deck? Try adding another."
-                        self.manager.current_screen.ids.add_question.text = ""
-                        self.manager.current_screen.ids.add_answer.text = ""
+                        self.update_text(
+                            "add_label",
+                            f"{user_question} question exists in {deck} deck? Try adding another.",
+                        )
+                        self.update_text("add_question", "")
+                        self.update_text("add_answer", "")
                         break
         if not found:
             try:
                 user_flashcards.add_flashcards(deck, user_question, user_answer, uid)
-                self.manager.current_screen.ids.add_label.text = (
-                    f"{user_question} question added to {deck} deck! Add another?"
+                self.update_text(
+                    "add_label",
+                    f"{user_question} question added to {deck} deck! Add another?",
                 )
-                self.manager.current_screen.ids.add_question.text = ""
-                self.manager.current_screen.ids.add_answer.text = ""
+                self.update_text("add_question", "")
+                self.update_text("add_answer", "")
 
             except requests.exceptions.HTTPError as e:
                 error_json = e.args[1]
                 error = json.loads(error_json)["error"]
-                message = error["message"]
-                self.manager.current_screen.ids.add_label.text = message
+                if "Invalid data" in error:
+                    self.update_text(
+                        "add_label", "Please place data in all fields and try again."
+                    )
+                else:
+                    self.update_text("add_label", error)
 
     def return_home(self):
         """
         Function will take user to home screen.
         """
+        self.update_text("add_label", "Deck you wish to add card to.")
         self.manager.current = "home_screen"
 
 
@@ -67,7 +82,7 @@ kv_addflashcardscreen = """
             pos_hint: {'center_x':.5, 'center_y':.8}
         Label:
             id: add_label
-            text: 'Deck you want to add card'
+            text: 'Deck you wish to add card to'
             font_size: 16
             pos_hint: {'center_x': .5, 'center_y': .7}
         TextInput:

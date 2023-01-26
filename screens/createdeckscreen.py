@@ -5,8 +5,11 @@ from fire_admin import db_system
 
 
 class CreateDeckScreen(Screen):
-    def __init__(self, **kw):
-        super().__init__(**kw)
+    def update_text(self, widget_id, message):
+        self.manager.current_screen.ids[widget_id].text = message
+
+    def get_text(self, widget_id):
+        return self.manager.current_screen.ids[widget_id].text
 
     def create(self):
         """
@@ -17,11 +20,9 @@ class CreateDeckScreen(Screen):
         # Will check for empty value.
         # Bug if there is no value and user creates it will clear all decks.
 
-        deck = self.manager.current_screen.ids.deck_to_create.text
+        deck = self.get_text("deck_to_create")
         if deck == "":
-            self.manager.current_screen.ids.create_success.text = (
-                "Try again no deck was specified"
-            )
+            self.update_text("create_success", "Try again no deck was specified")
         else:
             try:
                 # This block will check to see if deck already exists.
@@ -35,17 +36,19 @@ class CreateDeckScreen(Screen):
                     if deck == key:
                         found = True
                         print(key)
-                        self.manager.current_screen.ids.create_success.text = (
-                            f"{deck} already exists!"
-                        )
-                        self.manager.current_screen.ids.deck_to_create.text = ""
+                        self.update_text("create_success", f"{deck} already exists!")
+                        self.update_text("deck_to_create", "")
                         break
 
                     # Block will create deck.
 
                 if not found:
                     user_deck.create_deck(_token, deck)
-                    self.manager.current_screen.ids.create_success.text = f"{_token} Your new deck {deck} is created! go back to the home screen and add flashcards!"
+                    self.update_text(
+                        "create_success",
+                        f"{_token} Your new deck {deck} is created! go back to the home screen and add flashcards!",
+                    )
+                    self.update_text("deck_to_create", "")
             except Exception as e:
                 print(e)
 
@@ -53,12 +56,14 @@ class CreateDeckScreen(Screen):
         """
         Function will take user to home screen.
         """
+        self.update_text("create_success", "")
         self.manager.current = "home_screen"
 
     def go_to_add_flashcard(self):
         """
         Function will take user to add flashcard screen.
         """
+        self.update_text("create_success", "")
         self.manager.current = "add_flashcard_screen"
 
 

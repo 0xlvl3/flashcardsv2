@@ -1,36 +1,68 @@
 from kivy.uix.screenmanager import Screen
+from kivy.clock import Clock
 from kivy.app import App
 from deck import user_deck
+import requests
+import json
 
 
 class InspectDeckScreen(Screen):
+    def update_text(self, widget_id, message):
+        self.manager.current_screen.ids[widget_id].text = message
+
+    def get_text(self, widget_id):
+        return self.manager.current_screen.ids[widget_id].text
+
     def index_cards(self):
         """
         Function will load user specified deck, deck will be saved to
         an index that will be iterated over.
         """
-        user_choice = self.manager.current_screen.ids.deck_to_inspect.text
+        user_choice = self.get_text("deck_to_inspect")
         token = App.get_running_app().logged_token
         # self.manager.current_screen.ids.load_deck.text = f"{user_choice} deck loaded"
-        self.flashcards_indexed = user_deck.inspect_deck(token, user_choice)
-        self.ins_index = 0
+        if user_choice == "":
+            self.update_text(
+                "error", "Text field is empty, please enter a deck and try again."
+            )
+        else:
+            try:
+                self.flashcards_indexed = user_deck.inspect_deck(token, user_choice)
+                self.ins_index = 0
+                self.ids.popup.open()
+            except requests.exceptions.HTTPError as e:
+                error_json = e.args[1]
+                error = json.loads(error_json)["error"]
+                message = error["message"]
+                print(message)
 
     def show_next(self):
         """
         Function will be used to iterate over our indexed flashcards through
         a button. When we press button we iterate bringing the next flashcard up.
         """
-        if self.ins_index < len(self.flashcards_indexed):
+        if len(self.flashcards_indexed) == 0:
+            print("No cards")
+            self.ids.popup.dismiss()
+        elif self.ins_index < len(self.flashcards_indexed):
             card_index, question, answer = self.flashcards_indexed[self.ins_index]
             self.manager.current_screen.ids.question.text = (
                 f"{card_index} {question} {answer}"
             )
             self.ins_index += 1
         else:
-            self.manager.current_screen.ids.question.text = (
-                "All flashcards have been shown"
+            self.update_text(
+                "question", "All flashcards have been shown. Resetting please wait."
             )
-            self.manager.current_screen.ids.deck_to_inspect.text = ""
+            Clock.schedule_once(self.reset_flashcards, 2)
+
+    def reset_flashcards(self, time):
+        """
+        Function is used at the end of card loop, placed in Clock callback.
+        """
+        self.manager.current_screen.ids.deck_to_inspect.text = ""
+        self.update_text("error", "")
+        self.ids.popup.dismiss()
 
     def return_home(self):
         """
@@ -47,9 +79,16 @@ kv_inspectdeckscreen = """
             text: 'Deck Inspector'
             font_size: 32
             pos_hint: {'center_x': .5, 'center_y': .7}
+        Label:
+            text: ''
+            id: error
+            font_size: 16
+            pos_hint: {'center_x': .5, 'center_y': .55}
+            size_hint: .4, .05
         TextInput:
             multiline: False
             write_tab: False
+            front_size: 18
             id: deck_to_inspect
             hint_text: 'Deck name'
             pos_hint: {'center_x': .5, 'center_y': .5}
@@ -60,7 +99,6 @@ kv_inspectdeckscreen = """
             pos_hint: {'center_x': .5, 'center_y': .35}
             size_hint: .35, .1
             on_press: root.index_cards()
-            on_release: popup.open()
         Button:
             text: "Home"
             pos_hint:{'center_x': .5, 'center_y': .2}
@@ -72,14 +110,14 @@ kv_inspectdeckscreen = """
             on_parent: if self.parent == ins_screen: ins_screen.remove_widget(self)
             title: 'Deck Inspector'
             content: popupcontent
-            size_hint: .5, .5
+            size_hint: .7, .7
             pos_hint: {'center_x': .5, 'center_y': .5}
             auto_dismiss: False
             FloatLayout:
                 id:popupcontent
                 Label:
                     text: 'Deck loaded! click next to see first card'
-                    id: question 
+                    id: question
                     font_size: 18
                     pos_hint: {'center_x': .5, 'center_y': .7}
                     size_hint: .2, .2
