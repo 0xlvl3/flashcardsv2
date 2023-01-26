@@ -16,20 +16,31 @@ class AddFlashcardScreen(Screen):
         user_question = self.manager.current_screen.ids.add_question.text
         user_answer = self.manager.current_screen.ids.add_answer.text
         uid = App.get_running_app().logged_token
+        found = False
 
-        user_flashcards.add_flashcards(deck, user_question, user_answer, uid)
+        # Question check for dub questions.
+
         deck_check = db_system.child(uid).child(deck).child("flashcards").get()
         data = deck_check.val()
-        pair = list(data.items())
-        for key, value in pair:
-            print(key)
-            print(value)
-
-        print(pair)
-
-        self.manager.current_screen.ids.add_label.text = (
-            f"{user_question} question added to {deck} deck, add another?"
-        )
+        if data is None:
+            pass
+        else:
+            pair = list(data.items())
+            for key, value in pair:
+                for k, v in value.items():
+                    if user_question in k:
+                        found = True
+                        self.manager.current_screen.ids.add_label.text = f"{user_question} question exists in {deck} deck? Try adding another."
+                        self.manager.current_screen.ids.add_question.text = ""
+                        self.manager.current_screen.ids.add_answer.text = ""
+                        break
+        if not found:
+            user_flashcards.add_flashcards(deck, user_question, user_answer, uid)
+            self.manager.current_screen.ids.add_label.text = (
+                f"{user_question} question added to {deck} deck! Add another?"
+            )
+            self.manager.current_screen.ids.add_question.text = ""
+            self.manager.current_screen.ids.add_answer.text = ""
 
     def return_home(self):
         """

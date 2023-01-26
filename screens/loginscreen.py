@@ -1,6 +1,7 @@
 from kivy.uix.screenmanager import Screen
 from fire_admin import decode_uid
 from fire_admin import auth_system
+from deck import user_deck
 from kivy.app import App
 import requests
 import json
@@ -35,6 +36,7 @@ class LoginScreen(Screen):
             print(f"\n{self.token}")
 
             self.get_token()
+            user_deck.create_deck(the_user, "start_deck")
 
             self.ids.popup.open()
 

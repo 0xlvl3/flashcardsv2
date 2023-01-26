@@ -43,9 +43,9 @@ class CreateDeckScreen(Screen):
 
                     # Block will create deck.
 
-                    if not found:
-                        user_deck.create_deck(_token, deck)
-                        self.manager.current_screen.ids.create_success.text = f"{_token} Your new deck {deck} is created! go back to the home screen and add flashcards!"
+                if not found:
+                    user_deck.create_deck(_token, deck)
+                    self.manager.current_screen.ids.create_success.text = f"{_token} Your new deck {deck} is created! go back to the home screen and add flashcards!"
             except Exception as e:
                 print(e)
 
