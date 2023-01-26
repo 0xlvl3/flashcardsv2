@@ -6,41 +6,41 @@ class HomeScreen(Screen):
     HomeScreen will be used to navigate the user.
     """
 
-    def switch_cards_screen(self):
+    def navigate_to_screen(self, screen_name):
         """
-        Function will take user to cards screen.
+        Function will take user to specified screen
         """
-        self.manager.current = "cards_screen"
+        self.manager.current = screen_name
 
     def create_deck_screen(self):
         """
         Function will take user to create deck screen.
         """
-        self.manager.current = "create_deck_screen"
+        self.navigate_to_screen("create_deck_screen")
 
     def go_to_add_flashcard(self):
         """
         Function will take user to add flashcard screen.
         """
-        self.manager.current = "add_flashcard_screen"
+        self.navigate_to_screen("add_flashcard_screen")
 
     def go_to_inspect_deck(self):
         """
         Function will take user to inspect deck screen.
         """
-        self.manager.current = "inspect_deck_screen"
+        self.navigate_to_screen("inspect_deck_screen")
 
     def go_to_delete(self):
         """
         Function will take user to delete deck screen.
         """
-        self.manager.current = "delete_deck_screen"
+        self.navigate_to_screen("delete_deck_screen")
 
     def go_to_play(self):
         """
         Function will take user to play deck screen.
         """
-        self.manager.current = "play_deck_screen"
+        self.navigate_to_screen("play_deck_screen")
 
 
 kv_homescreen = """

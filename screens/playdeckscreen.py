@@ -82,7 +82,6 @@ kv_playdeckscreen = """
             pos_hint: {'center_x': .5, 'center_y': .7}
             size_hint: .35, .1
         TextInput:
-            text: "Load deck"
             font_size: 18
             pos_hint: {'center_x': .5, 'center_y': .5}
             size_hint: .4, .07
@@ -98,7 +97,7 @@ kv_playdeckscreen = """
             on_press: root.play()
             on_release: popup.open()
         Button:
-            text: "Return to Homescreen"
+            text: "Home"
             font_size: 24
             pos_hint: {'center_x': .5, 'center_y': .15}
             size_hint: .35, .1
