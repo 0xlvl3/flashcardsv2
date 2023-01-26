@@ -2,6 +2,8 @@ from kivy.app import App
 from kivy.uix.screenmanager import Screen
 from flashcard import Flashcards
 from fire_admin import db_system
+import requests
+import json
 
 user_flashcards = Flashcards()
 
@@ -35,12 +37,19 @@ class AddFlashcardScreen(Screen):
                         self.manager.current_screen.ids.add_answer.text = ""
                         break
         if not found:
-            user_flashcards.add_flashcards(deck, user_question, user_answer, uid)
-            self.manager.current_screen.ids.add_label.text = (
-                f"{user_question} question added to {deck} deck! Add another?"
-            )
-            self.manager.current_screen.ids.add_question.text = ""
-            self.manager.current_screen.ids.add_answer.text = ""
+            try:
+                user_flashcards.add_flashcards(deck, user_question, user_answer, uid)
+                self.manager.current_screen.ids.add_label.text = (
+                    f"{user_question} question added to {deck} deck! Add another?"
+                )
+                self.manager.current_screen.ids.add_question.text = ""
+                self.manager.current_screen.ids.add_answer.text = ""
+
+            except requests.exceptions.HTTPError as e:
+                error_json = e.args[1]
+                error = json.loads(error_json)["error"]
+                message = error["message"]
+                self.manager.current_screen.ids.add_label.text = message
 
     def return_home(self):
         """
