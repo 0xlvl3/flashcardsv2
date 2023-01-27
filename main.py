@@ -1,5 +1,6 @@
 # Kivy / GUI.
 from kivy.app import App
+from kivymd.app import MDApp
 from kivy.uix.screenmanager import ScreenManager
 from kivy.lang import Builder
 
@@ -27,14 +28,13 @@ Builder.load_string(kv_addflashcardscreen)
 Builder.load_string(kv_inspectdeckscreen)
 Builder.load_string(kv_deletedeckscreen)
 Builder.load_string(kv_playdeckscreen)
-Builder.load_file("kv/frontend.kv")
 
 
 class RootWidget(ScreenManager):
-    pass
+    Builder.load_file("kv/root.kv")
 
 
-class MainApp(App):
+class MainApp(MDApp):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.logged_token = ""
