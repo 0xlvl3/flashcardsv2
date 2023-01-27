@@ -110,36 +110,37 @@ kv_playdeckscreen = """
 <PlayDeckScreen>:
     FloatLayout:
         id: play_screen
-        Label:
+        MDLabel:
             text: 'Deck Player'
-            font_size: 32
-            pos_hint: {'center_x': .5, 'center_y': .7}
-            size_hint: .4, .1
-        Label:
+            font_size: 48
+            pos_hint: {'center_x': .5, 'center_y': .75}
+            halign: 'center'
+        MDLabel:
             text: ''
             id: error
             font_size: 16
-            pos_hint: {'center_x': .5, 'center_y': .55}
-            size_hint: .4, .1
-        TextInput:
-            font_size: 16
+            pos_hint: {'center_x': .5, 'center_y': .6}
+            halign: 'center'
+        MDTextField:
+            mode: 'rectangle'
+            font_size: 18
             pos_hint: {'center_x': .5, 'center_y': .5}
-            size_hint: .4, .05
+            size_hint: .4, .11
             hint_text: "Deck to Play"
             id: deck_to_play
             write_tab: False
             multiline: False
-        Button:
+        MDFillRoundFlatButton:
             text: "Load deck"
             font_size: 24
             pos_hint: {'center_x': .5, 'center_y': .3}
-            size_hint: .35, .1
+            size_hint: .4, .1
             on_press: root.play()
-        Button:
+        MDFillRoundFlatButton:
             text: "Home"
             font_size: 24
             pos_hint: {'center_x': .5, 'center_y': .15}
-            size_hint: .35, .1
+            size_hint: .4, .1
             on_press: root.return_home()
         Popup:
             id: popup

@@ -28,7 +28,7 @@ kv_startscreen = """
             text: "Create Account"
             font_size: 24
             size_hint: .4, .1
-		    pos_hint: {'center_x': .5, 'center_y': .45}
+            pos_hint: {'center_x': .5, 'center_y': .45}
         MDFillRoundFlatButton:
             on_press: root.go_to_login()
             text: "Login"

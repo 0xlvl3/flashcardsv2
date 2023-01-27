@@ -71,33 +71,35 @@ kv_inspectdeckscreen = """
 <InspectDeckScreen>:
     FloatLayout:
         id: ins_screen
-        Label:
+        MDLabel:
             text: 'Deck Inspector'
-            font_size: 32
-            pos_hint: {'center_x': .5, 'center_y': .7}
-        Label:
+            font_size: 48
+            halign: 'center'
+            pos_hint: {'center_x': .5, 'center_y': .8}
+        MDLabel:
             text: ''
             id: error
             font_size: 16
-            pos_hint: {'center_x': .5, 'center_y': .55}
-            size_hint: .4, .05
-        TextInput:
+            pos_hint: {'center_x': .5, 'center_y': .6}
+            halign: 'center'
+        MDTextField:
+            mode: 'rectangle'
             multiline: False
             write_tab: False
             front_size: 18
             id: deck_to_inspect
             hint_text: 'Deck name'
             pos_hint: {'center_x': .5, 'center_y': .5}
-            size_hint: .4, .05
-        Button:
+            size_hint: .4, .11
+        MDFillRoundFlatButton:
             text: "Load deck"
             font_size: 24
-            pos_hint: {'center_x': .5, 'center_y': .35}
+            pos_hint: {'center_x': .5, 'center_y': .3}
             size_hint: .35, .1
             on_press: root.index_cards()
-        Button:
+        MDFillRoundFlatButton:
             text: "Home"
-            pos_hint:{'center_x': .5, 'center_y': .2}
+            pos_hint:{'center_x': .5, 'center_y': .15}
             font_size: 24
             size_hint: .35, .1
             on_press: root.return_home()

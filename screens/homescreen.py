@@ -48,11 +48,13 @@ kv_homescreen = """
     FloatLayout:
         MDLabel:
             text: 'Welcome User'
+            halign: 'center'
             font_size: 28
             pos_hint: {'center_x':.5, 'center_y':.85}
         MDLabel:
             text: 'Select an option below'
             font_size: 16
+            halign: 'center'
             pos_hint: {'center_x': .5, 'center_y': .8}
         MDFillRoundFlatButton:
             text: "Create Deck"

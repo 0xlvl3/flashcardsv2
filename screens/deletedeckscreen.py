@@ -59,34 +59,35 @@ kv_deletedeckscreen = """
 <DeleteDeckScreen>:
     FloatLayout:
         id: d_screen
-        Label:
+        MDLabel:
             text: "Delete Deck"
-            font_size: 32
-            pos_hint: {'center_x': .5, 'center_y': .7}
-            size_hint: .35, .1
-        Label:
+            font_size: 48
+            pos_hint: {'center_x': .5, 'center_y': .75}
+            halign: 'center'
+        MDLabel:
             text: ""
             id: error
             font_size: 16
-            pos_hint: {'center_x': .5, 'center_y': .55}
-            size_hint: .35, .1
-        TextInput:
+            pos_hint: {'center_x': .5, 'center_y': .6}
+            halign: 'center'
+        MDTextField:
+            mode: 'rectangle'
             id: loaded_deck
             hint_text: "Deck to Delete"
             font_size: 18
             pos_hint: {'center_x': .5, 'center_y': .5}
-            size_hint: .4, .05
-        Button:
+            size_hint: .4, .11
+        MDFillRoundFlatButton:
             text: "Delete"
             font_size: 24
             pos_hint: {'center_x': .5, 'center_y': .35}
-            size_hint: .35, .1
+            size_hint: .4, .1
             on_press: root.load_deck()
-        Button:
+        MDFillRoundFlatButton:
             text: "Home"
             font_size: 24
             pos_hint: {'center_x': .5, 'center_y': .2}
-            size_hint: .35, .1
+            size_hint: .4, .1
             on_press: root.return_home()
         Popup:
             id: popup

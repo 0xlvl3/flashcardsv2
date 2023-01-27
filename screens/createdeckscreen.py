@@ -70,39 +70,42 @@ class CreateDeckScreen(Screen):
 kv_createdeckscreen = """
 <CreateDeckScreen>:
     FloatLayout:
-        Label:
+        MDLabel:
             text: 'Create a Deck'
-            font_size: 28
+            halign: 'center'
+            font_size: 48
             pos_hint: {'center_x':.5, 'center_y':.7}
-        Label:
-            text: 'Name your deck'
+        MDLabel:
+            halign: 'center'
+            text: ''
             id: create_success
             font_size: 16
-            pos_hint: {'center_x': .5, 'center_y': .55}
-        TextInput:
+            pos_hint: {'center_x': .5, 'center_y': .6}
+        MDTextField:
+            mode: 'rectangle'
             hint_text: "Deck name"
             id: deck_to_create
 			multiline: False
 			write_tab: False
             font_size: 18
             pos_hint: {'center_x': .5, 'center_y': .5}
-            size_hint: .4, .05
-        Button:
+            size_hint: .4, .11
+        MDFillRoundFlatButton:
             text: "Create"
-            font_size: 20
+            font_size: 24
             pos_hint: {'center_x': .5, 'center_y': .35}
             size_hint: .4, .1
             on_press: root.create()
-        Button:
+        MDFillRoundFlatButton:
             text: "Home"
             pos_hint:{'center_x': .75, 'center_y': .2}
-            font_size: 20
+            font_size: 24
             size_hint: .4, 0.1
             on_press: root.return_home()
-        Button:
+        MDFillRoundFlatButton:
             text: "Add flashcards"
             pos_hint:{'center_x': .25, 'center_y': .2}
-            font_size: 20
+            font_size: 24
             size_hint: .4, 0.1
             on_press: root.go_to_add_flashcard()
 

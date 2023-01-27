@@ -2,7 +2,7 @@ from kivy.uix.screenmanager import Screen
 from fire_admin import decode_uid
 from fire_admin import auth_system
 from deck import user_deck
-from kivy.app import App
+from kivymd.app import MDApp
 import requests
 import json
 
@@ -30,12 +30,14 @@ class LoginScreen(Screen):
 
             self.token = user_logged["idToken"]
             the_user = decode_uid(self.token)
-            check = App.get_running_app().logged_token = the_user
+            check = MDApp.get_running_app().logged_token = the_user
 
             print("logged_token " + check)
             print(f"\n{self.token}")
 
+            print(self.ids)
             self.get_token()
+
             user_deck.create_deck(the_user, "start_deck")
 
             self.ids.popup.open()
@@ -105,6 +107,11 @@ kv_loginscreen = """
             size_hint: .35, .1
             on_press: root.login()
             on_release: root.get_token()
+        MDLabel:
+            font_size: 16
+            halign: 'center'
+            pos_hint: {'center_x': .5, 'center_y': .15}
+            text: 'Forgot password?'
         Popup:
             id: popup
             on_parent: if self.parent == l_screen: l_screen.remove_widget(self)
@@ -115,23 +122,17 @@ kv_loginscreen = """
             auto_dismiss: False
             FloatLayout:
                 id: popupcontent
-                MDLabel:
+                Label:
                     text: "Success!"
                     size_hint: .5, .3
-                    halign: 'center'
                     font_size: 16
-                    pos_hint: {'center_x': .5, 'center_y': .65}
-                MDFillRoundFlatButton:
+                    pos_hint: {'center_x': .5, 'center_y': .6}
+                Button:
                     text: "Home"
                     font_size: 24
-                    size_hint: .4, .1
+                    size_hint: .5, .3
                     pos_hint: {'center_x': .5, 'center_y': .5}
                     on_press:
                         root.go_to_home()
                         popup.dismiss()
-        MDLabel:
-            font_size: 16
-            halign: 'center'
-            pos_hint: {'center_x': .5, 'center_y': .15}
-            text: 'Forgot password?'
 """
