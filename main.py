@@ -1,5 +1,6 @@
 # Kivy / GUI.
 from kivy.app import App
+from kivymd.theming import ThemeManager
 from kivymd.app import MDApp
 from kivy.uix.screenmanager import ScreenManager
 from kivy.lang import Builder
@@ -40,6 +41,12 @@ class MainApp(MDApp):
         self.logged_token = ""
 
     def build(self):
+        self.theme_cls = ThemeManager()
+        self.theme_cls.primary_palette = "Green"
+        self.theme_cls.accent_palette = "Green"
+        self.theme_cls.theme_style = "Dark"
+        self.theme_cls.primary_hue = "A200"
+
         return RootWidget()
 
     def on_stop(self):

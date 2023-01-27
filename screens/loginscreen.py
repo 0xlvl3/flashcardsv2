@@ -68,38 +68,40 @@ kv_loginscreen = """
 <LoginScreen>:
     FloatLayout:
         id: l_screen
-        Label:
+        MDLabel:
             text: "Login"
             font_size: 48
-            size_hint: .2, .4
+            halign: 'center'
             pos_hint:{'center_x':0.5, 'center_y':0.75}
-        Label:
+        MDLabel:
             text: ''
-            id: error 
-            font_size: 20
-            size_hint: .2, .4
+            id: error
+            font_size: 16
+            halign: 'center'
             pos_hint:{'center_x':0.5, 'center_y':0.65}
-        TextInput:
+        MDTextField:
+            mode: 'rectangle'
             id: login_email
             multiline: False
             write_tab: False
             hint_text: "Email"
-            size_hint: .4, .05
-            font_size: 16
+            size_hint: .4, .11
+            font_size: 18
             pos_hint: {'center_x': .5, 'center_y': .55}
-        TextInput:
+        MDTextField:
+            mode: 'rectangle'
             id: login_password
             password: True
             multiline: False
             write_tab: False
             hint_text: "Password"
-            font_size: 16
-            size_hint: .4, .05
-            pos_hint: {'center_x': .5, 'center_y': .45}
-        Button:
+            font_size: 18
+            size_hint: .4, .11
+            pos_hint: {'center_x': .5, 'center_y': .4}
+        MDFillRoundFlatButton:
             text: "Submit"
             font_size: 24
-            pos_hint: {'center_x': .5, 'center_y': .3}
+            pos_hint: {'center_x': .5, 'center_y': .25}
             size_hint: .35, .1
             on_press: root.login()
             on_release: root.get_token()
@@ -113,22 +115,23 @@ kv_loginscreen = """
             auto_dismiss: False
             FloatLayout:
                 id: popupcontent
-                Label:
+                MDLabel:
                     text: "Success!"
                     size_hint: .5, .3
+                    halign: 'center'
                     font_size: 16
-                    pos_hint: {'center_x': .5, 'center_y': .6}
-                Button:
+                    pos_hint: {'center_x': .5, 'center_y': .65}
+                MDFillRoundFlatButton:
                     text: "Home"
                     font_size: 24
-                    size_hint: .5, .3
+                    size_hint: .4, .1
                     pos_hint: {'center_x': .5, 'center_y': .5}
                     on_press:
                         root.go_to_home()
                         popup.dismiss()
-        Label:
+        MDLabel:
             font_size: 16
-            size_hint: .4, .05
-            pos_hint: {'center_x': .5, 'center_y': .22}
+            halign: 'center'
+            pos_hint: {'center_x': .5, 'center_y': .15}
             text: 'Forgot password?'
 """

@@ -56,52 +56,55 @@ class CreateScreen(Screen):
 kv_createscreen = """
 <CreateScreen>:
     FloatLayout:
-        Label:
+        MDLabel:
             id: error
+            halign: 'center'
             text: ''
             font_size: 20
-            size_hint: .2, .4
-            pos_hint:{'center_x':0.5, 'center_y':0.7}
-        Label:
+            pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+        MDLabel:
             text: "Create Account"
+            halign: 'center'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.9}
             font_size: 48
-            size_hint: .2, .4
-            pos_hint:{'center_x':0.5, 'center_y':0.8}
-        TextInput:
+        MDTextField:
             id: username
             multiline: False
             write_tab: False
             hint_text: "Username"
-            font_size: 16
-            size_hint: .4, .05
-            pos_hint: {'center_x': .5, 'center_y': .65}
-        TextInput:
+            mode: 'rectangle'
+            font_size: 18
+            size_hint: .4, .11
+            pos_hint: {'center_x': .5, 'center_y': .7}
+        MDTextField:
+            mode: 'rectangle'
             id: user_email
             multiline: False
             write_tab: False
             hint_text: "Email"
-            size_hint: .4, .05
-            font_size: 16
+            size_hint: .4, .11
+            font_size: 18
             pos_hint: {'center_x': .5, 'center_y': .55}
-        TextInput:
+        MDTextField:
             id: user_password
             password: True
             multiline: False
             write_tab: False
+            mode: 'rectangle'
             hint_text: "Password"
-            font_size: 16
-            size_hint: .4, .05
-            pos_hint: {'center_x': .5, 'center_y': .45}
-        Button:
+            font_size: 18
+            size_hint: .4, .11
+            pos_hint: {'center_x': .5, 'center_y': .4}
+        MDFillRoundFlatButton:
             on_press: root.create()
             text: "Submit"
-            font_size: 20
-            pos_hint: {'center_x': .5, 'center_y': .3}
+            font_size: 24
+            pos_hint: {'center_x': .5, 'center_y': .25}
             size_hint: .4, .1
-        Button:
+        MDFillRoundFlatButton:
             text: "Home"
-            pos_hint:{'center_x': .5, 'center_y': .15}
-            font_size: 20
-            size_hint: .4, 0.1
+            pos_hint:{'center_x': .5, 'center_y': .10}
+            font_size: 24
+            size_hint: .4, .1
             on_press: root.return_home()
 """

@@ -18,18 +18,18 @@ class StartScreen(Screen):
 kv_startscreen = """
 <StartScreen>
     FloatLayout:
-        Label:
+        MDLabel:
             text: "kv Flashcards"
+            halign: 'center'
             font_size: 56
-            size_hint: .2, .4
             pos_hint:{'center_x': .5, 'center_y': .65}
-        Button:
+        MDFillRoundFlatButton:
             on_press: root.create_account()
             text: "Create Account"
             font_size: 24
             size_hint: .4, .1
 		    pos_hint: {'center_x': .5, 'center_y': .45}
-        Button:
+        MDFillRoundFlatButton:
             on_press: root.go_to_login()
             text: "Login"
             font_size: 24
