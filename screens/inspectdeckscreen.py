@@ -2,8 +2,6 @@ from kivy.uix.screenmanager import Screen
 from kivy.clock import Clock
 from kivy.app import App
 from deck import user_deck
-import requests
-import json
 
 
 class InspectDeckScreen(Screen):
@@ -29,22 +27,19 @@ class InspectDeckScreen(Screen):
             try:
                 self.flashcards_indexed = user_deck.inspect_deck(token, user_choice)
                 self.ins_index = 0
+
                 self.ids.popup.open()
-            except requests.exceptions.HTTPError as e:
-                error_json = e.args[1]
-                error = json.loads(error_json)["error"]
-                message = error["message"]
-                print(message)
+            except Exception as e:
+                self.update_text("deck_to_inspect", "")
+                e = f"Deck doesn't exist: {user_choice}"
+                self.update_text("error", e)
 
     def show_next(self):
         """
         Function will be used to iterate over our indexed flashcards through
         a button. When we press button we iterate bringing the next flashcard up.
         """
-        if len(self.flashcards_indexed) == 0:
-            print("No cards")
-            self.ids.popup.dismiss()
-        elif self.ins_index < len(self.flashcards_indexed):
+        if self.ins_index < len(self.flashcards_indexed):
             card_index, question, answer = self.flashcards_indexed[self.ins_index]
             self.manager.current_screen.ids.question.text = (
                 f"{card_index} {question} {answer}"
@@ -68,6 +63,7 @@ class InspectDeckScreen(Screen):
         """
         Function will return the user back to the home screen.
         """
+        self.update_text("error", "")
         self.manager.current = "home_screen"
 
 

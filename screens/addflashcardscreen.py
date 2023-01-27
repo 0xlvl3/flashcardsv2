@@ -70,6 +70,7 @@ class AddFlashcardScreen(Screen):
         Function will take user to home screen.
         """
         self.update_text("add_label", "Deck you wish to add card to.")
+        self.update_text("deck_to_add_card", "")
         self.manager.current = "home_screen"
 
 

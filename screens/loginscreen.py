@@ -108,7 +108,7 @@ kv_loginscreen = """
             on_parent: if self.parent == l_screen: l_screen.remove_widget(self)
             title: 'Successful Login'
             content: popupcontent
-            size_hint: .5, .5
+            size_hint: .7, .7
             pos_hint: {'center_x': .5, 'center_y': .5}
             auto_dismiss: False
             FloatLayout:

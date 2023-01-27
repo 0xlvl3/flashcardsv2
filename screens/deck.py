@@ -43,8 +43,7 @@ class Deck:
             return flashcards_indexed
 
         except Exception as e:
-            e = "You've entered a deck that doesn't exist"
-            print(e)
+            raise e
 
 
 # user_deck is used within multiple screens.
