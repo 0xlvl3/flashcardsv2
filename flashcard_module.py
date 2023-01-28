@@ -1,5 +1,7 @@
 from fire_admin import db_system
 from datetime import datetime
+import requests
+import json
 
 
 class Flashcards:
@@ -8,20 +10,27 @@ class Flashcards:
     Such as add_flashcards, play_deck and remove_flashcard.
     """
 
-    def __init__(self):
-        pass
-
     def add_flashcards(self, deck, user_question, user_answer, user_code):
         """
         Function will add a flashcard to a user specified deck.
         Flashcard will take question and answer as data.
         """
-        data = {user_question: user_answer}
-        current_time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
 
-        db_system.child(user_code).child(deck).child("flashcards").child(
-            current_time
-        ).set(data)
+        try:
+            data = {user_question: user_answer}
+            current_time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+
+            db_system.child(user_code).child(deck).child("flashcards").child(
+                current_time
+            ).set(data)
+            return "success"
+        except requests.exceptions.HTTPError as e:
+            error_json = e.args[1]
+            error = json.loads(error_json)["error"]
+            if "Invalid data" in error:
+                return "Invalid data"
+            else:
+                return
 
     def play_deck(self, deck):
         """
@@ -91,7 +100,7 @@ class Flashcards:
             print(e)
 
         # Question check for dub questions.
-        def check_for_exisiting_question(self, uid, deck, question):
+        def check_for_existing_question(self, uid, deck, question):
 
             deck_check = db_system.child(uid).child(deck).child("flashcards").get()
             data = deck_check.val()
@@ -104,6 +113,3 @@ class Flashcards:
                         if question == k:
                             return True
                     return False
-
-
-user_flashcards = Flashcards()

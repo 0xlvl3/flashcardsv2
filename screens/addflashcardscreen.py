@@ -1,6 +1,6 @@
 from kivymd.app import MDApp
 from kivy.uix.screenmanager import Screen
-from flashcard import user_flashcards
+from flashcard_module import Flashcards
 from fire_admin import db_system
 from helper import get_text
 from helper import update_text
@@ -8,6 +8,8 @@ from helper import go_to_screen
 from constants import HOME_SCREEN
 import requests
 import json
+
+user_flashcards = Flashcards()
 
 
 class AddFlashcardScreen(Screen):
@@ -39,25 +41,27 @@ class AddFlashcardScreen(Screen):
             update_text(self, "add_question", "")
             update_text(self, "add_answer", "")
         else:
-            try:
-                user_flashcards.add_flashcards(deck, user_question, user_answer, uid)
-                self.update_text(
+            message = user_flashcards.add_flashcards(
+                deck, user_question, user_answer, USER_TOKEN
+            )
+            if message == "success":
+
+                update_text(
+                    self,
                     "add_label",
                     f"{user_question} question added to {deck} deck! Add another?",
                 )
-                self.update_text("add_question", "")
-                self.update_text("add_answer", "")
+                update_text(self, "add_question", "")
+                update_text(self, "add_answer", "")
 
-            except requests.exceptions.HTTPError as e:
-                error_json = e.args[1]
-                error = json.loads(error_json)["error"]
-                if "Invalid data" in error:
-                    self.update_text(
-                        "add_label",
-                        "Please place data in all fields and try again.",
-                    )
-                else:
-                    self.update_text("add_label", error)
+            elif message == "Invalid data":
+                update_text(
+                    self,
+                    "add_label",
+                    "Please place data in all fields and try again.",
+                )
+            else:
+                print("ll")
 
     def return_home(self):
         """

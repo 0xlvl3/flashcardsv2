@@ -1,5 +1,4 @@
 from fire_admin import db_system
-from helper import update_text
 
 
 class Deck:
