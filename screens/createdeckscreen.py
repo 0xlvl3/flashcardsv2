@@ -1,34 +1,36 @@
-from kivy.app import App
+from kivymd.app import MDApp
 from kivy.uix.screenmanager import Screen
 from deck import user_deck
 from fire_admin import db_system
+from helper import update_text
+from helper import get_text
+from helper import go_to_screen
+from constants import HOME_SCREEN
+from constants import ADD_FLASHCARD_SCREEN
 
 
 class CreateDeckScreen(Screen):
-    def update_text(self, widget_id, message):
-        self.manager.current_screen.ids[widget_id].text = message
-
-    def get_text(self, widget_id):
-        return self.manager.current_screen.ids[widget_id].text
+    def __init__(self, **kw):
+        super().__init__(**kw)
 
     def create(self):
         """
         Function will take user input and create a deck.
         """
-        _token = App.get_running_app().logged_token
+        USER_TOKEN = MDApp.get_running_app().TOKEN
 
         # Will check for empty value.
         # Bug if there is no value and user creates it will clear all decks.
 
-        deck = self.get_text("deck_to_create")
+        deck = get_text(self, "deck_to_create")
         if deck == "":
-            self.update_text("create_success", "Try again no deck was specified")
+            update_text(self, "create_success", "Try again no deck was specified")
         else:
             try:
                 # This block will check to see if deck already exists.
 
-                print(_token)
-                deck_check = db_system.child(_token).get()
+                print(USER_TOKEN)
+                deck_check = db_system.child(USER_TOKEN).get()
                 data = deck_check.val()
                 keys = list(data.keys())
                 found = False
@@ -36,19 +38,20 @@ class CreateDeckScreen(Screen):
                     if deck == key:
                         found = True
                         print(key)
-                        self.update_text("create_success", f"{deck} already exists!")
-                        self.update_text("deck_to_create", "")
+                        update_text(self, "create_success", f"{deck} already exists!")
+                        update_text(self, "deck_to_create", "")
                         break
 
                     # Block will create deck.
 
                 if not found:
-                    user_deck.create_deck(_token, deck)
-                    self.update_text(
+                    user_deck.create_deck(USER_TOKEN, deck)
+                    update_text(
+                        self,
                         "create_success",
-                        f"{_token} Your new deck {deck} is created! go back to the home screen and add flashcards!",
+                        f"{USER_TOKEN} Your new deck {deck} is created! go back to the home screen and add flashcards!",
                     )
-                    self.update_text("deck_to_create", "")
+                    update_text(self, "deck_to_create", "")
             except Exception as e:
                 print(e)
 
@@ -56,15 +59,15 @@ class CreateDeckScreen(Screen):
         """
         Function will take user to home screen.
         """
-        self.update_text("create_success", "")
-        self.manager.current = "home_screen"
+        update_text(self, "create_success", "")
+        go_to_screen(self, HOME_SCREEN)
 
     def go_to_add_flashcard(self):
         """
         Function will take user to add flashcard screen.
         """
-        self.update_text("create_success", "")
-        self.manager.current = "add_flashcard_screen"
+        update_text(self, "create_success", "")
+        go_to_screen(self, ADD_FLASHCARD_SCREEN)
 
 
 kv_createdeckscreen = """

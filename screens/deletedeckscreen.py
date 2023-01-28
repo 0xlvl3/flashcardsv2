@@ -1,6 +1,8 @@
 from kivy.app import App
 from kivy.uix.screenmanager import Screen
 from deck import user_deck
+from helper import update_text
+from helper import get_text
 
 
 # -- Todo
@@ -9,23 +11,19 @@ from deck import user_deck
 
 
 class DeleteDeckScreen(Screen):
-    def update_text(self, widget_id, message):
-        self.manager.current_screen.ids[widget_id].text = message
-
-    def get_text(self, widget_id):
-        return self.manager.current_screen.ids[widget_id].text
-
     def load_deck(self):
-        self.empty_check = self.get_text("error")
-        loaded_deck = self.get_text("loaded_deck")
+        self.empty_check = get_text(self, "error")
+        loaded_deck = get_text(self, "loaded_deck")
         if loaded_deck == "":
-            self.update_text(
+            update_text(
+                self,
                 "error",
                 "Please add a deck name to delete.",
             )
         else:
 
-            self.update_text(
+            update_text(
+                self,
                 "confirm",
                 f"Are you sure you want to delete {loaded_deck}?",
             )
@@ -39,8 +37,8 @@ class DeleteDeckScreen(Screen):
         """
         token = App.get_running_app().logged_token
         user_deck.delete_deck(token, self.deck)
-        self.update_text("loaded_deck", "")
-        self.update_text("error", "")
+        update_text(self, "loaded_deck", "")
+        update_text(self, "error", "")
 
     def return_home(self):
         """
@@ -49,9 +47,9 @@ class DeleteDeckScreen(Screen):
         if self.empty_check == "":
             pass
         else:
-            self.update_text("error", "")
+            update_text(self, "error", "")
 
-        self.update_text("loaded_deck", "")
+        update_text(self, "loaded_deck", "")
         self.manager.current = "home_screen"
 
 
@@ -65,7 +63,7 @@ kv_deletedeckscreen = """
             pos_hint: {'center_x': .5, 'center_y': .75}
             halign: 'center'
         MDLabel:
-            text: ""
+            text: "Please add a deck name to delete."
             id: error
             font_size: 16
             pos_hint: {'center_x': .5, 'center_y': .6}

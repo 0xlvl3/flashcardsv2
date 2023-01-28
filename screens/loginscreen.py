@@ -1,19 +1,18 @@
+from kivymd.app import MDApp
 from kivy.uix.screenmanager import Screen
 from fire_admin import decode_uid
-from fire_admin import auth_system
+from fire_admin import user_login
+from helper import get_text
+from helper import update_text
+from helper import go_to_screen
+from constants import HOME_SCREEN
 from deck import user_deck
-from kivymd.app import MDApp
-import requests
-import json
 
 
 class LoginScreen(Screen):
     def __init__(self, **kw):
         super().__init__(**kw)
         self.token = ""
-
-    def error_message(self, message):
-        self.manager.current_screen.ids.error.text = message
 
     def get_token(self):
         return self.token
@@ -23,47 +22,29 @@ class LoginScreen(Screen):
         Function will authenticate users who have already created an account.
         """
         print("Logging in")
-        email = self.manager.current_screen.ids.login_email.text
-        password = self.manager.current_screen.ids.login_password.text
-        try:
-            user_logged = auth_system.sign_in_with_email_and_password(email, password)
+        email = get_text(self, "login_email")
+        password = get_text(self, "login_password")
 
-            self.token = user_logged["idToken"]
-            the_user = decode_uid(self.token)
-            check = MDApp.get_running_app().logged_token = the_user
+        # Login.
+        message, user_data = user_login(email, password)
+        if message == "success":
+            self.token = user_data["idToken"]
+            USER_TOKEN = decode_uid(self.token)
+            check = MDApp.get_running_app().TOKEN = USER_TOKEN
 
             print("logged_token " + check)
-            print(f"\n{self.token}")
 
-            print(self.ids)
             self.get_token()
 
-            user_deck.create_deck(the_user, "start_deck")
+            user_deck.create_deck(USER_TOKEN, "start_deck")
 
             self.ids.popup.open()
-
-        except requests.exceptions.HTTPError as e:
-            error_json = e.args[1]
-            error = json.loads(error_json)["error"]
-            message = error["message"]
-            if "INVALID_EMAIL" in message:
-                self.error_message("Invalid email, please try again.")
-            elif "MISSING_PASSWORD" in message:
-                self.error_message("Password is missing from field.")
-            elif "INVALID_PASSWORD" in message:
-                self.error_message("Password is incorrect, please try again.")
-            elif "EMAIL_NOT_FOUND" in message:
-                self.error_message("Email incorrect.")
-            elif "TOO_MANY_ATTEMPTS_TRY_LATER" in message:
-                self.error_message(
-                    "Access temporarily disabled due to too many failed attempts. Please try again later."
-                )
-            else:
-                print(message)
+        else:
+            update_text(self, "error", message)
 
     def go_to_home(self):
-        self.manager.current = "home_screen"
-        self.manager.get_screen("home_screen").token = self.token
+        go_to_screen(self, HOME_SCREEN)
+        self.manager.get_screen(HOME_SCREEN).token = self.token
 
 
 kv_loginscreen = """
@@ -122,15 +103,15 @@ kv_loginscreen = """
             auto_dismiss: False
             FloatLayout:
                 id: popupcontent
-                Label:
+                MDLabel:
                     text: "Success!"
-                    size_hint: .5, .3
+                    halign: 'center'
                     font_size: 16
-                    pos_hint: {'center_x': .5, 'center_y': .6}
-                Button:
+                    pos_hint: {'center_x': .5, 'center_y': .65}
+                MDFillRoundFlatButton:
                     text: "Home"
                     font_size: 24
-                    size_hint: .5, .3
+                    size_hint: .4, .1
                     pos_hint: {'center_x': .5, 'center_y': .5}
                     on_press:
                         root.go_to_home()

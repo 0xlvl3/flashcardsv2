@@ -1,4 +1,10 @@
 from kivy.uix.screenmanager import Screen
+from helper import go_to_screen
+from constants import CREATE_DECK_SCREEN
+from constants import ADD_FLASHCARD_SCREEN
+from constants import INSPECT_DECK_SCREEN
+from constants import PLAY_DECK_SCREEN
+from constants import DELETE_DECK_SCREEN
 
 
 class HomeScreen(Screen):
@@ -6,41 +12,35 @@ class HomeScreen(Screen):
     HomeScreen will be used to navigate the user.
     """
 
-    def navigate_to_screen(self, screen_name):
-        """
-        Function will take user to specified screen
-        """
-        self.manager.current = screen_name
-
-    def create_deck_screen(self):
+    def go_to_create_deck(self):
         """
         Function will take user to create deck screen.
         """
-        self.navigate_to_screen("create_deck_screen")
+        go_to_screen(self, CREATE_DECK_SCREEN)
 
     def go_to_add_flashcard(self):
         """
         Function will take user to add flashcard screen.
         """
-        self.navigate_to_screen("add_flashcard_screen")
+        go_to_screen(self, ADD_FLASHCARD_SCREEN)
 
     def go_to_inspect_deck(self):
         """
         Function will take user to inspect deck screen.
         """
-        self.navigate_to_screen("inspect_deck_screen")
+        go_to_screen(self, INSPECT_DECK_SCREEN)
 
     def go_to_delete(self):
         """
         Function will take user to delete deck screen.
         """
-        self.navigate_to_screen("delete_deck_screen")
+        go_to_screen(self, DELETE_DECK_SCREEN)
 
     def go_to_play(self):
         """
         Function will take user to play deck screen.
         """
-        self.navigate_to_screen("play_deck_screen")
+        go_to_screen(self, PLAY_DECK_SCREEN)
 
 
 kv_homescreen = """
@@ -61,7 +61,7 @@ kv_homescreen = """
             font_size: 20
             pos_hint: {'center_x': .5, 'center_y': .7}
             size_hint: .35, .07
-            on_press: root.create_deck_screen()
+            on_press: root.go_to_create_deck()
         MDFillRoundFlatButton:
             text: "Add Flashcards"
             font_size: 20

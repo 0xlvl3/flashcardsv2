@@ -37,7 +37,7 @@ class RootWidget(ScreenManager):
 class MainApp(MDApp):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.logged_token = ""
+        self.TOKEN = ""
 
     def build(self):
         self.theme_cls = ThemeManager()
@@ -51,7 +51,6 @@ class MainApp(MDApp):
     def on_stop(self):
         home_screen = self.root.get_screen("home_screen")
         user_token = home_screen.token
-        print(f"This is from the log out screen: {user_token}")
         logout(user_token)
 
 

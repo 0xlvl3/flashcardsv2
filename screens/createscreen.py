@@ -1,7 +1,10 @@
 from kivy.uix.screenmanager import Screen
+from helper import update_text
+from helper import get_text
+from helper import go_to_screen
+from constants import LOGIN_SCREEN
+from constants import START_SCREEN
 from fire_admin import signup
-import requests
-import json
 
 
 class CreateScreen(Screen):
@@ -9,48 +12,34 @@ class CreateScreen(Screen):
         super().__init__(**kw)
         self.username = ""
 
-    def error_message(self, message):
-        self.manager.current_screen.ids.error.text = message
-
     def create(self):
         """
         Function will create a user giving them authentication and
         will a backend for Decks to be saved that are created by that
         user.
         """
-        self.username = self.manager.current_screen.ids.username.text
-        email = self.manager.current_screen.ids.user_email.text
-        password = self.manager.current_screen.ids.user_password.text
+        self.username = get_text(self, "username")
+        email = get_text(self, "user_email")
+        password = get_text(self, "user_password")
 
-        try:
-            self.user = signup(email, password)
+        message = self.user = signup(email, password)
+        if message == "success":
             print("Account created")
-            self.manager.current = "login_screen"
-        except requests.exceptions.HTTPError as e:
-            error_json = e.args[1]
-            error = json.loads(error_json)["error"]
-            message = error["message"]
-            if message == "INVALID_EMAIL":
-                self.error_message("Invalid email, please try again")
-            elif message == "MISSING_PASSWORD":
-                self.error_message(
-                    "Password missing, password should be at least 6 characters"
-                )
-            elif message == "EMAIL_EXISTS":
-                self.error_message("Email is already registered")
-            elif "WEAK_PASSWORD" in message:
-                self.error_message("Password should be at least 6 characters")
-            else:
-                self.error_message(message)
+            go_to_screen(self, LOGIN_SCREEN)
+        else:
+            update_text(self, "error", message)
 
     def go_to_login(self):
-        self.manager.current = "login_screen"
+        """
+        Function will take user to the login screen.
+        """
+        go_to_screen(self, LOGIN_SCREEN)
 
-    def return_home(self):
+    def return_to_start(self):
         """
         Function will return the user back to the start screen.
         """
-        self.manager.current = "start_screen"
+        go_to_screen(self, START_SCREEN)
 
 
 kv_createscreen = """
@@ -106,5 +95,5 @@ kv_createscreen = """
             pos_hint:{'center_x': .5, 'center_y': .10}
             font_size: 24
             size_hint: .4, .1
-            on_press: root.return_home()
+            on_press: root.return_to_start()
 """
