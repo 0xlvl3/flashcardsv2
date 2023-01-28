@@ -1,6 +1,6 @@
 from kivy.app import App
 from kivy.uix.screenmanager import Screen
-from deck import user_deck
+from deck_module import user_deck
 
 # -- Todo
 # Fix up how play works, refactor the buttons and how it works in popup.

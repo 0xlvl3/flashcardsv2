@@ -1,4 +1,5 @@
 from fire_admin import db_system
+from helper import update_text
 
 
 class Deck:
@@ -13,6 +14,15 @@ class Deck:
         within backend database.
         """
         db_system.child(uid).child(deck).set("flashcards")
+
+    def check_for_known_deck(self, uid, deck):
+        deck_check = db_system.child(uid).get()
+        data = deck_check.val()
+        keys = list(data.keys())
+        for key in keys:
+            if deck == key:
+                return True
+        return False
 
     def delete_deck(self, uid, deck):
         """

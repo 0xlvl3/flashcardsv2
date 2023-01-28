@@ -1,6 +1,6 @@
 from kivy.app import App
 from kivy.uix.screenmanager import Screen
-from deck import user_deck
+from deck_module import user_deck
 from helper import update_text
 from helper import get_text
 

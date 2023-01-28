@@ -18,11 +18,16 @@ class CreateScreen(Screen):
         will a backend for Decks to be saved that are created by that
         user.
         """
+
+        # Field inputs to be used in creation of account.
+
         self.username = get_text(self, "username")
         email = get_text(self, "user_email")
         password = get_text(self, "user_password")
 
+        # If sucess create account, otherwise error will appear in id: error.
         message = self.user = signup(email, password)
+
         if message == "success":
             print("Account created")
             go_to_screen(self, LOGIN_SCREEN)

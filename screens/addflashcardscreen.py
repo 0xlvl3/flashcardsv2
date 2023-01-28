@@ -1,79 +1,63 @@
-from kivy.app import App
+from kivymd.app import MDApp
 from kivy.uix.screenmanager import Screen
-from flashcard import Flashcards
+from flashcard import user_flashcards
 from fire_admin import db_system
+from helper import get_text
+from helper import update_text
+from helper import go_to_screen
+from constants import HOME_SCREEN
 import requests
 import json
 
-user_flashcards = Flashcards()
-
 
 class AddFlashcardScreen(Screen):
-    def update_text(self, widget_id, message):
-        self.manager.current_screen.ids[widget_id].text = message
-
-    def get_text(self, widget_id):
-        return self.manager.current_screen.ids[widget_id].text
-
     def add_flashcard_to(self):
         """
         Function will take user input for a deck, then a question and answer
         to add to that specified deck.
         """
-        deck = self.get_text("deck_to_add_card")
-        user_question = self.get_text("add_question")
-        user_answer = self.get_text("add_answer")
-        uid = App.get_running_app().logged_token
-        found = False
+
+        deck = get_text(self, "deck_to_add_card")
+        user_question = get_text(self, "add_question")
+        user_answer = get_text(self, "add_answer")
+        USER_TOKEN = MDApp.get_running_app().TOKEN
 
         if deck == "":
-            self.update_text(
+            update_text(
+                self,
                 "add_label",
                 "No deck specified, add a existing deck and try again.",
             )
+        elif user_flashcards.check_for_existing_question(
+            USER_TOKEN, deck, user_question
+        ):
+            update_text(
+                self,
+                "add_label",
+                f"{user_question} question exists in {deck} deck? Try adding another.",
+            )
+            update_text(self, "add_question", "")
+            update_text(self, "add_answer", "")
         else:
+            try:
+                user_flashcards.add_flashcards(deck, user_question, user_answer, uid)
+                self.update_text(
+                    "add_label",
+                    f"{user_question} question added to {deck} deck! Add another?",
+                )
+                self.update_text("add_question", "")
+                self.update_text("add_answer", "")
 
-            # Question check for dub questions.
-
-            deck_check = db_system.child(uid).child(deck).child("flashcards").get()
-            data = deck_check.val()
-            if data is None:
-                pass
-            else:
-                pair = list(data.items())
-                for key, value in pair:
-                    for k, v in value.items():
-                        if user_question == k:
-                            found = True
-                            self.update_text(
-                                "add_label",
-                                f"{user_question} question exists in {deck} deck? Try adding another.",
-                            )
-                            self.update_text("add_question", "")
-                            self.update_text("add_answer", "")
-                            break
-            if not found:
-                try:
-                    user_flashcards.add_flashcards(
-                        deck, user_question, user_answer, uid
-                    )
+            except requests.exceptions.HTTPError as e:
+                error_json = e.args[1]
+                error = json.loads(error_json)["error"]
+                if "Invalid data" in error:
                     self.update_text(
                         "add_label",
-                        f"{user_question} question added to {deck} deck! Add another?",
+                        "Please place data in all fields and try again.",
                     )
-                    self.update_text("add_question", "")
-                    self.update_text("add_answer", "")
-
-                except requests.exceptions.HTTPError as e:
-                    error_json = e.args[1]
-                    error = json.loads(error_json)["error"]
-                    if "Invalid data" in error:
-                        self.update_text(
-                            "add_label",
-                            "Please place data in all fields and try again.",
-                        )
-                    else:
-                        self.update_text("add_label", error)
+                else:
+                    self.update_text("add_label", error)
 
     def return_home(self):
         """

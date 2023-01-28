@@ -1,7 +1,6 @@
 from kivymd.app import MDApp
 from kivy.uix.screenmanager import Screen
-from deck import user_deck
-from fire_admin import db_system
+from deck_module import user_deck
 from helper import update_text
 from helper import get_text
 from helper import go_to_screen
@@ -23,37 +22,26 @@ class CreateDeckScreen(Screen):
         # Bug if there is no value and user creates it will clear all decks.
 
         deck = get_text(self, "deck_to_create")
+
         if deck == "":
             update_text(self, "create_success", "Try again no deck was specified")
+
+        # We check if deck is known.
+
+        elif user_deck.check_for_known_deck(USER_TOKEN, deck):
+            update_text(self, "create_success", f"{deck} already exists!")
+            update_text(self, "deck_to_create", "")
+
+        # Else block will create deck.
+
         else:
-            try:
-                # This block will check to see if deck already exists.
-
-                print(USER_TOKEN)
-                deck_check = db_system.child(USER_TOKEN).get()
-                data = deck_check.val()
-                keys = list(data.keys())
-                found = False
-                for key in keys:
-                    if deck == key:
-                        found = True
-                        print(key)
-                        update_text(self, "create_success", f"{deck} already exists!")
-                        update_text(self, "deck_to_create", "")
-                        break
-
-                    # Block will create deck.
-
-                if not found:
-                    user_deck.create_deck(USER_TOKEN, deck)
-                    update_text(
-                        self,
-                        "create_success",
-                        f"{USER_TOKEN} Your new deck {deck} is created! go back to the home screen and add flashcards!",
-                    )
-                    update_text(self, "deck_to_create", "")
-            except Exception as e:
-                print(e)
+            user_deck.create_deck(USER_TOKEN, deck)
+            update_text(
+                self,
+                "create_success",
+                f"{USER_TOKEN} Your new deck {deck} is created! go back to the home screen and add flashcards!",
+            )
+            update_text(self, "deck_to_create", "")
 
     def return_home(self):
         """

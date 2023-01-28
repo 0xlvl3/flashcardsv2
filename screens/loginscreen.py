@@ -6,7 +6,7 @@ from helper import get_text
 from helper import update_text
 from helper import go_to_screen
 from constants import HOME_SCREEN
-from deck import user_deck
+from deck_module import user_deck
 
 
 class LoginScreen(Screen):
@@ -35,6 +35,8 @@ class LoginScreen(Screen):
             print("logged_token " + check)
 
             self.get_token()
+
+            # Here we create a deck to initialize the users database.
 
             user_deck.create_deck(USER_TOKEN, "start_deck")
 

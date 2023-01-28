@@ -1,7 +1,7 @@
 from kivy.uix.screenmanager import Screen
 from kivy.clock import Clock
 from kivy.app import App
-from deck import user_deck
+from deck_module import user_deck
 
 
 class InspectDeckScreen(Screen):

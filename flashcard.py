@@ -90,16 +90,20 @@ class Flashcards:
             e = "You've entered a deck that doesn't exist"
             print(e)
 
+        # Question check for dub questions.
+        def check_for_exisiting_question(self, uid, deck, question):
 
-# Add flashcards.
-# user_input = input("What deck: ")
-# flashcard.add_flashcards(user_input)
+            deck_check = db_system.child(uid).child(deck).child("flashcards").get()
+            data = deck_check.val()
+            if data is None:
+                pass
+            else:
+                pair = list(data.items())
+                for key, value in pair:
+                    for k, v in value.items():
+                        if question == k:
+                            return True
+                    return False
 
-# Play flashcards.
-# user_input = input("Which deck will we play? ")
-# flashcard.play_deck(user_input)
 
-
-# Remove a flashcard.
-# user_input = input("Which deck do you want to delete cards from? ")
-# flashcard.remove_flashcard(user_input)
+user_flashcards = Flashcards()
