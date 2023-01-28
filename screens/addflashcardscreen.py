@@ -24,12 +24,17 @@ class AddFlashcardScreen(Screen):
         user_answer = get_text(self, "add_answer")
         USER_TOKEN = MDApp.get_running_app().TOKEN
 
+        # Block will check for empty deck value.
+
         if deck == "":
             update_text(
                 self,
                 "add_label",
                 "No deck specified, add a existing deck and try again.",
             )
+
+        # Block will check to see if user_question exists in deck specified.
+
         elif user_flashcards.check_for_existing_question(
             USER_TOKEN, deck, user_question
         ):
@@ -40,8 +45,10 @@ class AddFlashcardScreen(Screen):
             )
             update_text(self, "add_question", "")
             update_text(self, "add_answer", "")
+
+        # Block will run add_flashcard adding flashcard to specified deck
         else:
-            message = user_flashcards.add_flashcards(
+            message = user_flashcards.add_flashcard(
                 deck, user_question, user_answer, USER_TOKEN
             )
             if message == "success":
@@ -67,9 +74,9 @@ class AddFlashcardScreen(Screen):
         """
         Function will take user to home screen.
         """
-        self.update_text("add_label", "Deck you wish to add card to.")
-        self.update_text("deck_to_add_card", "")
-        self.manager.current = "home_screen"
+        update_text(self, "add_label", "Deck you wish to add card to.")
+        update_text(self, "deck_to_add_card", "")
+        go_to_screen(self, "home_screen")
 
 
 kv_addflashcardscreen = """

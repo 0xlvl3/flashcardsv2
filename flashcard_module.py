@@ -10,7 +10,21 @@ class Flashcards:
     Such as add_flashcards, play_deck and remove_flashcard.
     """
 
-    def add_flashcards(self, deck, user_question, user_answer, user_code):
+    # Question check for dub questions.
+    def check_for_existing_question(self, uid, deck, question):
+        deck_check = db_system.child(uid).child(deck).child("flashcards").get()
+        data = deck_check.val()
+        if data is None:
+            pass
+        else:
+            pair = list(data.items())
+            for key, value in pair:
+                for k, v in value.items():
+                    if question == k:
+                        return True
+                return False
+
+    def add_flashcard(self, deck, user_question, user_answer, user_code):
         """
         Function will add a flashcard to a user specified deck.
         Flashcard will take question and answer as data.
@@ -98,18 +112,3 @@ class Flashcards:
         except Exception as e:
             e = "You've entered a deck that doesn't exist"
             print(e)
-
-        # Question check for dub questions.
-        def check_for_existing_question(self, uid, deck, question):
-
-            deck_check = db_system.child(uid).child(deck).child("flashcards").get()
-            data = deck_check.val()
-            if data is None:
-                pass
-            else:
-                pair = list(data.items())
-                for key, value in pair:
-                    for k, v in value.items():
-                        if question == k:
-                            return True
-                    return False
