@@ -38,10 +38,14 @@ class MainApp(MDApp):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.TOKEN = ""
+        self.THEME = "Dark"
 
     def build(self):
         self.theme_cls = ThemeManager()
-        self.THEME = self.theme_cls.theme_style = "Dark"
+        self.theme_cls.primary_palette = "Green"
+        self.theme_cls.accent_palette = "Green"
+        self.theme_cls.theme_style = self.THEME
+        self.theme_cls.primary_hue = "A200"
         return RootWidget()
 
     def on_stop(self):

@@ -6,21 +6,20 @@ from kivymd.theming import ThemeManager
 class StartScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.CURRENT_THEME = MDApp.get_running_app().THEME
         self.theme_cls = ThemeManager()
-        self.theme_cls.primary_palette = "Green"
-        self.theme_cls.accent_palette = "Green"
-        self.theme_cls.theme_style = "Dark"
-        self.theme_cls.primary_hue = "A200"
+        self.CURRENT_THEME = MDApp.get_running_app().THEME
 
     def change_theme(self):
         """
         Function to switch between light and dark theme
         """
+        print(self.CURRENT_THEME)
         if self.CURRENT_THEME == "Light":
             self.CURRENT_THEME = "Dark"
+            self.theme_cls.theme_style = "Dark"
         else:
             self.CURRENT_THEME = "Light"
+            self.theme_cls.theme_style = "Light"
 
     def create_account(self):
         """
