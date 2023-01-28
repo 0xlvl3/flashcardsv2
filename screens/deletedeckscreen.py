@@ -1,33 +1,33 @@
-from kivy.app import App
 from kivy.uix.screenmanager import Screen
 from deck_module import user_deck
 from helper import update_text
 from helper import get_text
-
-
-# -- Todo
-# Get references for decks and check if deck exists before it opens
-# popup to confirm delete.
+from helper import go_to_screen
+from helper import get_token
+from constants import HOME_SCREEN
 
 
 class DeleteDeckScreen(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.deck = ""
+
     def load_deck(self):
         self.empty_check = get_text(self, "error")
         loaded_deck = get_text(self, "loaded_deck")
-        if loaded_deck == "":
+        if not loaded_deck:
             update_text(
                 self,
                 "error",
                 "Please add a deck name to delete.",
             )
         else:
-
+            self.deck = loaded_deck
             update_text(
                 self,
                 "confirm",
                 f"Are you sure you want to delete {loaded_deck}?",
             )
-            self.deck = loaded_deck
             self.ids.popup.open()
 
     def confirm_delete_deck(self):
@@ -35,22 +35,19 @@ class DeleteDeckScreen(Screen):
         """
         Function will delete a specified user deck.
         """
-        USER_TOKEN = App.get_running_app().TOKEN
+        USER_TOKEN = get_token()
         user_deck.delete_deck(USER_TOKEN, self.deck)
         update_text(self, "loaded_deck", "")
         update_text(self, "error", f"{self.deck} deleted!")
+        self.deck = ""
 
     def return_home(self):
         """
         Function will return user to the home screen.
         """
-        if self.empty_check == "":
-            pass
-        else:
-            update_text(self, "error", "")
-
+        update_text(self, "error", "")
         update_text(self, "loaded_deck", "")
-        self.manager.current = "home_screen"
+        go_to_screen(self, HOME_SCREEN)
 
 
 kv_deletedeckscreen = """

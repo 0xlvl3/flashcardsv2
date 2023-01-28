@@ -39,32 +39,32 @@ class MainApp(MDApp):
         super().__init__(**kwargs)
         self.TOKEN = ""
         self.theme_cls = ThemeManager()
-        self.CURRENT_THEME = "Dark"
-        self.CURRENT_PRIMARY = "Green"
-        self.CURRENT_ACCENT = "Green"
-        self.PRIMARY_HUE = "A200"
+        self.current_theme = "Dark"
+        self.current_primary = "Green"
+        self.current_accent = "Green"
+        self.primary_hue = "A200"
         self.set_theme()
 
     def set_theme(self):
-        self.theme_cls.primary_palette = self.CURRENT_PRIMARY
-        self.theme_cls.accent_palette = self.CURRENT_ACCENT
-        self.theme_cls.theme_style = self.CURRENT_THEME
-        self.theme_cls.primary_hue = self.PRIMARY_HUE
+        self.theme_cls.primary_palette = self.current_primary
+        self.theme_cls.accent_palette = self.current_accent
+        self.theme_cls.theme_style = self.current_theme
+        self.theme_cls.primary_hue = self.primary_hue
 
     def change_theme(self):
-        if self.CURRENT_THEME == "Light":
-            self.CURRENT_THEME = "Dark"
-            self.CURRENT_PRIMARY = "Green"
-            self.CURRENT_ACCENT = "Green"
-            self.PRIMARY_HUE = "A200"
+        if self.current_theme == "Light":
+            self.current_theme = "Dark"
+            self.current_primary = "Green"
+            self.current_accent = "Green"
+            self.primary_hue = "A200"
         else:
-            self.CURRENT_THEME = "Light"
-            self.CURRENT_PRIMARY = "Red"
-            self.CURRENT_ACCENT = "Red"
-            self.PRIMARY_HUE = "300"
-        print(f"Value changing {self.CURRENT_THEME}")
-        print(f"Value changing {self.CURRENT_PRIMARY}")
-        print(f"Value changing {self.PRIMARY_HUE}")
+            self.current_theme = "Light"
+            self.current_primary = "Red"
+            self.current_accent = "Red"
+            self.primary_hue = "300"
+        print(f"Value changing {self.current_theme}")
+        print(f"Value changing {self.current_primary}")
+        print(f"Value changing {self.primary_hue}")
         self.set_theme()
 
     def build(self):
