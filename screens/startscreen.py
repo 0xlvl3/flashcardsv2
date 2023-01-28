@@ -1,25 +1,30 @@
 from kivy.uix.screenmanager import Screen
 from kivymd.app import MDApp
-from kivymd.theming import ThemeManager
 
 
 class StartScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.theme_cls = ThemeManager()
-        self.CURRENT_THEME = MDApp.get_running_app().THEME
+        self.main_app = MDApp.get_running_app()
 
     def change_theme(self):
         """
         Function to switch between light and dark theme
         """
-        print(self.CURRENT_THEME)
-        if self.CURRENT_THEME == "Light":
-            self.CURRENT_THEME = "Dark"
-            self.theme_cls.theme_style = "Dark"
+        print(self.main_app.CURRENT_THEME)
+        print(self.main_app.CURRENT_PRIMARY)
+        print(self.main_app.CURRENT_ACCENT)
+        print(self.main_app.PRIMARY_HUE)
+        if self.main_app.CURRENT_THEME == "Light":
+            self.main_app.CURRENT_THEME = "Dark"
+            self.main_app.CURRENT_PRIMARY = "Green"
+            self.main_app.CURRENT_ACCENT = "Green"
+            self.main_app.PRIMARY_HUE = "A200"
         else:
-            self.CURRENT_THEME = "Light"
-            self.theme_cls.theme_style = "Light"
+            self.main_app.CURRENT_THEME = "Light"
+            self.main_app.CURRENT_PRIMARY = "Red"
+            self.main_app.CURRENT_ACCENT = "Red"
+            self.main_app.PRIMARY_HUE = "A200"
 
     def create_account(self):
         """
