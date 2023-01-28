@@ -1,38 +1,37 @@
 from kivy.uix.screenmanager import Screen
 from kivy.clock import Clock
-from kivy.app import App
+from helper import get_text
+from helper import update_text
+from helper import go_to_screen
+from helper import get_token
+from constants import HOME_SCREEN
 from deck_module import user_deck
 
 
 class InspectDeckScreen(Screen):
-    def update_text(self, widget_id, message):
-        self.manager.current_screen.ids[widget_id].text = message
-
-    def get_text(self, widget_id):
-        return self.manager.current_screen.ids[widget_id].text
-
     def index_cards(self):
         """
         Function will load user specified deck, deck will be saved to
         an index that will be iterated over.
         """
-        user_choice = self.get_text("deck_to_inspect")
-        token = App.get_running_app().logged_token
-        # self.manager.current_screen.ids.load_deck.text = f"{user_choice} deck loaded"
+        user_choice = get_text(self, "deck_to_inspect")
+        USER_TOKEN = get_token()
         if user_choice == "":
-            self.update_text(
-                "error", "Text field is empty, please enter a deck and try again."
+            update_text(
+                self, "error", "Text field is empty, please enter a deck and try again."
             )
         else:
             try:
-                self.flashcards_indexed = user_deck.inspect_deck(token, user_choice)
+                self.flashcards_indexed = user_deck.inspect_deck(
+                    USER_TOKEN, user_choice
+                )
                 self.ins_index = 0
 
                 self.ids.popup.open()
             except Exception as e:
-                self.update_text("deck_to_inspect", "")
+                update_text(self, "deck_to_inspect", "")
                 e = f"Deck doesn't exist: {user_choice}"
-                self.update_text("error", e)
+                update_text(self, "error", e)
 
     def show_next(self):
         """
@@ -41,13 +40,13 @@ class InspectDeckScreen(Screen):
         """
         if self.ins_index < len(self.flashcards_indexed):
             card_index, question, answer = self.flashcards_indexed[self.ins_index]
-            self.manager.current_screen.ids.question.text = (
-                f"{card_index} {question} {answer}"
-            )
+            update_text(self, "question", f"{card_index} {question} {answer}")
             self.ins_index += 1
         else:
-            self.update_text(
-                "question", "All flashcards have been shown. Resetting please wait."
+            update_text(
+                self,
+                "question",
+                "All flashcards have been shown. Resetting please wait.",
             )
             Clock.schedule_once(self.reset_flashcards, 2)
 
@@ -55,16 +54,16 @@ class InspectDeckScreen(Screen):
         """
         Function is used at the end of card loop, placed in Clock callback.
         """
-        self.manager.current_screen.ids.deck_to_inspect.text = ""
-        self.update_text("error", "")
+        update_text(self, "deck_to_inspect", "")
+        update_text(self, "error", "")
         self.ids.popup.dismiss()
 
     def return_home(self):
         """
         Function will return the user back to the home screen.
         """
-        self.update_text("error", "")
-        self.manager.current = "home_screen"
+        update_text(self, "error", "")
+        go_to_screen(self, HOME_SCREEN)
 
 
 kv_inspectdeckscreen = """

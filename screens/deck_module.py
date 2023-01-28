@@ -36,16 +36,16 @@ class Deck:
         """
         try:
             flashcards_indexed = []
-            ins = db_system.child(uid).child(deck).child("flashcards").get()
-            card_total = len(list(ins.val()))
+            deck_choice = db_system.child(uid).child(deck).child("flashcards").get()
+            card_total = len(list(deck_choice.val()))
             index = 0
             card_count = 0
 
             while index != card_total:
-                start = list(ins.val().keys())[index]
+                start = list(deck_choice.val().keys())[index]
                 card_count += 1
                 index += 1
-                flashcards = ins.val()[start]
+                flashcards = deck_choice.val()[start]
                 for key, value in flashcards.items():
                     flashcards_indexed.append((card_count, key, value))
 

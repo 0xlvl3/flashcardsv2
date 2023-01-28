@@ -5,6 +5,7 @@ from fire_admin import db_system
 from helper import get_text
 from helper import update_text
 from helper import go_to_screen
+from helper import get_token
 from constants import HOME_SCREEN
 import requests
 import json
@@ -22,7 +23,7 @@ class AddFlashcardScreen(Screen):
         deck = get_text(self, "deck_to_add_card")
         user_question = get_text(self, "add_question")
         user_answer = get_text(self, "add_answer")
-        USER_TOKEN = MDApp.get_running_app().TOKEN
+        USER_TOKEN = get_token()
 
         # Block will check for empty deck value.
 
