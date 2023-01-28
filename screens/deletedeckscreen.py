@@ -30,15 +30,15 @@ class DeleteDeckScreen(Screen):
             self.deck = loaded_deck
             self.ids.popup.open()
 
-    def gui_delete_deck(self):
+    def confirm_delete_deck(self):
         # Will take loaded deck and delete in popup
         """
         Function will delete a specified user deck.
         """
-        token = App.get_running_app().logged_token
-        user_deck.delete_deck(token, self.deck)
+        USER_TOKEN = App.get_running_app().TOKEN
+        user_deck.delete_deck(USER_TOKEN, self.deck)
         update_text(self, "loaded_deck", "")
-        update_text(self, "error", "")
+        update_text(self, "error", f"{self.deck} deleted!")
 
     def return_home(self):
         """
@@ -108,7 +108,7 @@ kv_deletedeckscreen = """
                     font_size: 24
                     size_hint: .3, .15
                     pos_hint: {'center_x': .5, 'center_y': .5}
-                    on_press: root.gui_delete_deck()
+                    on_press: root.confirm_delete_deck()
                     on_release: popup.dismiss()
                 Button:
                     text: "X"

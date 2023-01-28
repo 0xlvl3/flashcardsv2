@@ -1,34 +1,35 @@
-from kivy.app import App
 from kivy.uix.screenmanager import Screen
 from deck_module import user_deck
+from helper import get_text
+from helper import update_text
+from helper import go_to_screen
+from helper import get_token
+from constants import HOME_SCREEN
 
 # -- Todo
 # Fix up how play works, refactor the buttons and how it works in popup.
 
 
 class PlayDeckScreen(Screen):
-    def update_text(self, widget_id, message):
-        self.manager.current_screen.ids[widget_id].text = message
-
-    def get_text(self, widget_id):
-        return self.manager.current_screen.ids[widget_id].text
-
     def play(self):
         """
         Function will load deck and place it within an indexed array.
         """
-        user_choice = self.get_text("deck_to_play")
-        token = App.get_running_app().logged_token
+        user_choice = get_text(self, "deck_to_play")
+        USER_TOKEN = get_token()
 
         if user_choice == "":
-            self.update_text(
+            update_text(
+                self,
                 "error",
                 "Please choose a deck, field is empty.",
             )
-            self.update_text("deck_to_play", "")
+            update_text(self, "deck_to_play", "")
         else:
             try:
-                self.flashcards_indexed = user_deck.inspect_deck(token, user_choice)
+                self.flashcards_indexed = user_deck.inspect_deck(
+                    USER_TOKEN, user_choice
+                )
                 self.index = 0
                 self.correct = 0
                 self.incorrect = 0
@@ -39,39 +40,44 @@ class PlayDeckScreen(Screen):
                         self.question,
                         self.answer,
                     ) = self.flashcards_indexed[self.index]
-                    self.update_text(
+                    update_text(
+                        self,
                         "question_message",
                         f"{user_choice} loaded. Click next to start!",
                     )
-                    self.update_text("error", "")
+                    update_text(self, "error", "")
 
                     self.ids.popup.open()
                 else:
-                    self.update_text(
+                    update_text(
+                        self,
                         "question_message",
                         "All flashcards have been shown.",
                     )
-                    self.update_text(
+                    update_text(
+                        self,
                         "after_answer",
                         "Click the x to the right to exit.",
                     )
             except Exception as e:
-                self.update_text("deck_to_play", "")
+                update_text(self, "deck_to_play", "")
                 e = f"Deck doesn't exist: {user_choice}"
-                self.update_text("error", e)
+                update_text(self, "error", e)
 
     def check_answer(self):
         """
         Function will check to see if answer is equal to the user input.
         """
-        user_answer = self.get_text("answer")
+        user_answer = get_text(self, "answer")
         if user_answer == self.answer:
-            self.update_text("after_answer", f"Correct! answer was {self.answer}")
-            self.update_text("answer", "")
+            update_text(self, "after_answer", f"Correct! answer was {self.answer}")
+            update_text(self, "answer", "")
             self.correct += 1
         else:
-            self.update_text("after_answer", f"Incorrect the answer was: {self.answer}")
-            self.update_text("answer", "")
+            update_text(
+                self, "after_answer", f"Incorrect the answer was: {self.answer}"
+            )
+            update_text(self, "answer", "")
             self.incorrect += 1
 
     def next_card(self):
@@ -82,13 +88,16 @@ class PlayDeckScreen(Screen):
             self.card_index, self.question, self.answer = self.flashcards_indexed[
                 self.index
             ]
-            self.update_text(
-                "question_message", f"{self.card_index}. Question: {self.question}"
+            update_text(
+                self,
+                "question_message",
+                f"{self.card_index}. Question: {self.question}",
             )
-            self.update_text("after_answer", "What is the answer?")
+            update_text(self, "after_answer", "What is the answer?")
             self.index += 1
         else:
-            self.update_text(
+            update_text(
+                self,
                 "question_message",
                 f"""
              All flashcards have been shown.
@@ -96,14 +105,14 @@ class PlayDeckScreen(Screen):
         To go back to the deck load screen, hit the x.
 """,
             )
-            self.update_text("after_answer", "")
-            self.update_text("deck_to_play", "")
+            update_text(self, "after_answer", "")
+            update_text(self, "deck_to_play", "")
 
     def return_home(self):
         """
         Function will take user to the home screen.
         """
-        self.manager.current = "home_screen"
+        go_to_screen(self, HOME_SCREEN)
 
 
 kv_playdeckscreen = """
