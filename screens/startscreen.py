@@ -3,28 +3,9 @@ from kivymd.app import MDApp
 
 
 class StartScreen(Screen):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.main_app = MDApp.get_running_app()
-
     def change_theme(self):
-        """
-        Function to switch between light and dark theme
-        """
-        print(self.main_app.CURRENT_THEME)
-        print(self.main_app.CURRENT_PRIMARY)
-        print(self.main_app.CURRENT_ACCENT)
-        print(self.main_app.PRIMARY_HUE)
-        if self.main_app.CURRENT_THEME == "Light":
-            self.main_app.CURRENT_THEME = "Dark"
-            self.main_app.CURRENT_PRIMARY = "Green"
-            self.main_app.CURRENT_ACCENT = "Green"
-            self.main_app.PRIMARY_HUE = "A200"
-        else:
-            self.main_app.CURRENT_THEME = "Light"
-            self.main_app.CURRENT_PRIMARY = "Red"
-            self.main_app.CURRENT_ACCENT = "Red"
-            self.main_app.PRIMARY_HUE = "A200"
+        self.main_app = MDApp.get_running_app()
+        self.main_app.change_theme()
 
     def create_account(self):
         """
@@ -49,6 +30,7 @@ kv_startscreen = """
             size_hint: .35, .07
             on_press: root.change_theme()
         MDLabel:
+            id: heading
             text: "kv Flashcards"
             halign: 'center'
             font_size: 56

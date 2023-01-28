@@ -38,15 +38,34 @@ class MainApp(MDApp):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.TOKEN = ""
+        self.theme_cls = ThemeManager()
         self.CURRENT_THEME = "Dark"
         self.CURRENT_PRIMARY = "Green"
         self.CURRENT_ACCENT = "Green"
         self.PRIMARY_HUE = "A200"
-        self.theme_cls = ThemeManager()
+        self.set_theme()
+
+    def set_theme(self):
         self.theme_cls.primary_palette = self.CURRENT_PRIMARY
         self.theme_cls.accent_palette = self.CURRENT_ACCENT
         self.theme_cls.theme_style = self.CURRENT_THEME
         self.theme_cls.primary_hue = self.PRIMARY_HUE
+
+    def change_theme(self):
+        if self.CURRENT_THEME == "Light":
+            self.CURRENT_THEME = "Dark"
+            self.CURRENT_PRIMARY = "Green"
+            self.CURRENT_ACCENT = "Green"
+            self.PRIMARY_HUE = "A200"
+        else:
+            self.CURRENT_THEME = "Light"
+            self.CURRENT_PRIMARY = "Red"
+            self.CURRENT_ACCENT = "Red"
+            self.PRIMARY_HUE = "300"
+        print(f"Value changing {self.CURRENT_THEME}")
+        print(f"Value changing {self.CURRENT_PRIMARY}")
+        print(f"Value changing {self.PRIMARY_HUE}")
+        self.set_theme()
 
     def build(self):
         return RootWidget()
