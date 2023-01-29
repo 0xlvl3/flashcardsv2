@@ -7,6 +7,8 @@ from kivy.lang import Builder
 # Logout will log user out when application closes through on_stop.
 from fire_admin import logout
 
+from helper import set_theme
+
 # Screens imports.
 from screens.startscreen import kv_startscreen
 from screens.createscreen import kv_createscreen
@@ -38,34 +40,7 @@ class MainApp(MDApp):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.TOKEN = ""
-        self.theme_cls = ThemeManager()
-        self.current_theme = "Dark"
-        self.current_primary = "Green"
-        self.current_accent = "Green"
-        self.primary_hue = "A200"
-        self.set_theme()
-
-    def set_theme(self):
-        self.theme_cls.primary_palette = self.current_primary
-        self.theme_cls.accent_palette = self.current_accent
-        self.theme_cls.theme_style = self.current_theme
-        self.theme_cls.primary_hue = self.primary_hue
-
-    def change_theme(self):
-        if self.current_theme == "Light":
-            self.current_theme = "Dark"
-            self.current_primary = "Green"
-            self.current_accent = "Green"
-            self.primary_hue = "A200"
-        else:
-            self.current_theme = "Light"
-            self.current_primary = "Red"
-            self.current_accent = "Red"
-            self.primary_hue = "300"
-        print(f"Value changing {self.current_theme}")
-        print(f"Value changing {self.current_primary}")
-        print(f"Value changing {self.primary_hue}")
-        self.set_theme()
+        self.theme = set_theme(self, "Dark", "Green", "Green", "300")
 
     def build(self):
         return RootWidget()

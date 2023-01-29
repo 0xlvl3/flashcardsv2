@@ -4,8 +4,7 @@ from kivymd.app import MDApp
 
 class StartScreen(Screen):
     def change_theme(self):
-        self.main_app = MDApp.get_running_app()
-        self.main_app.change_theme()
+        pass
 
     def create_account(self):
         """
