@@ -1,4 +1,5 @@
 from kivy.uix.screenmanager import Screen
+from kivy.lang import Builder
 from helper import update_text
 from helper import get_text
 from helper import go_to_screen
@@ -102,3 +103,5 @@ kv_createscreen = """
             size_hint: .4, .1
             on_press: root.return_to_start()
 """
+
+Builder.load_string(kv_createscreen)

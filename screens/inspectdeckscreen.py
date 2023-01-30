@@ -1,11 +1,19 @@
+# Kivy imports.
 from kivy.uix.screenmanager import Screen
+from kivy.lang import Builder
 from kivy.clock import Clock
+
+# Module imports.
+from deck_module import user_deck
+
+# Helper functions.
 from helper import get_text
 from helper import update_text
 from helper import go_to_screen
 from helper import get_token
+
+# Constants.
 from constants import HOME_SCREEN
-from deck_module import user_deck
 
 
 class InspectDeckScreen(Screen):
@@ -16,16 +24,26 @@ class InspectDeckScreen(Screen):
         """
         user_choice = get_text(self, "deck_to_inspect")
         USER_TOKEN = get_token()
+
+        # If no input in field from user on submit this block runs.
+
         if user_choice == "":
             update_text(
                 self, "error", "Text field is empty, please enter a deck and try again."
             )
+
+        # Input exists it will run the try block.
+
         else:
+
+            # Block will index cards if deck exists. Then open the inspect deck window.
+            # If deck doesn't exist it will error.
+
             try:
                 self.flashcards_indexed = user_deck.inspect_deck(
                     USER_TOKEN, user_choice
                 )
-                self.ins_index = 0
+                self.inspect_index = 0
 
                 self.ids.popup.open()
             except Exception as e:
@@ -36,12 +54,12 @@ class InspectDeckScreen(Screen):
     def show_next(self):
         """
         Function will be used to iterate over our indexed flashcards through
-        a button. When we press button we iterate bringing the next flashcard up.
+        the next button.
         """
-        if self.ins_index < len(self.flashcards_indexed):
-            card_index, question, answer = self.flashcards_indexed[self.ins_index]
+        if self.inspect_index < len(self.flashcards_indexed):
+            card_index, question, answer = self.flashcards_indexed[self.inspect_index]
             update_text(self, "question", f"{card_index} {question} {answer}")
-            self.ins_index += 1
+            self.inspect_index += 1
         else:
             update_text(
                 self,
@@ -52,7 +70,7 @@ class InspectDeckScreen(Screen):
 
     def reset_flashcards(self, time):
         """
-        Function is used at the end of card loop, placed in Clock callback.
+        Function is used at the end of card loop, placed in Clock callback will dismiss window when done.
         """
         update_text(self, "deck_to_inspect", "")
         update_text(self, "error", "")
@@ -131,3 +149,6 @@ kv_inspectdeckscreen = """
                     pos_hint: {'center_x': .975, 'center_y': .96}
                     on_press: popup.dismiss()
 """
+
+
+Builder.load_string(kv_inspectdeckscreen)

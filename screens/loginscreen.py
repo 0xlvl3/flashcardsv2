@@ -1,13 +1,23 @@
+# Kivy imports.
 from kivymd.app import MDApp
+from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen
+
+# Firebase imports.
 from fire_admin import auth_system
 from fire_admin import decode_uid
 from fire_admin import user_login
+
+# Module imports.
+from deck_module import user_deck
+
+# Helper functions.
 from helper import get_text
 from helper import update_text
 from helper import go_to_screen
+
+# Constants.
 from constants import HOME_SCREEN
-from deck_module import user_deck
 
 
 class LoginScreen(Screen):
@@ -37,7 +47,7 @@ class LoginScreen(Screen):
             USER_TOKEN = decode_uid(self.token)
             check = MDApp.get_running_app().TOKEN = USER_TOKEN
 
-            print("logged_token " + check)
+            print("log token" + check)
 
             self.get_token()
 
@@ -124,3 +134,5 @@ kv_loginscreen = """
                         root.go_to_home()
                         popup.dismiss()
 """
+
+Builder.load_string(kv_loginscreen)

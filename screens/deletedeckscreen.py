@@ -1,15 +1,23 @@
+# Kivy imports.
 from kivy.uix.screenmanager import Screen
+from kivy.lang import Builder
+
+# Module imports.
 from deck_module import user_deck
+
+# Helper functions.
 from helper import update_text
 from helper import get_text
 from helper import go_to_screen
 from helper import get_token
+
+# Constants.
 from constants import HOME_SCREEN
 
 
 class DeleteDeckScreen(Screen):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, **kw):
+        super().__init__(**kw)
         self.deck = ""
 
     def load_deck(self):
@@ -114,3 +122,5 @@ kv_deletedeckscreen = """
                     pos_hint: {'center_x': .975, 'center_y': .96}
                     on_press: popup.dismiss()
 """
+
+Builder.load_string(kv_deletedeckscreen)

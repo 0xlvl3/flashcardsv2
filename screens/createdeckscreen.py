@@ -1,17 +1,22 @@
+# Kivy imports.
 from kivymd.app import MDApp
+from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen
+
+# Module imports.
 from deck_module import user_deck
+
+# Helper functions.
 from helper import update_text
 from helper import get_text
 from helper import go_to_screen
+
+# Constants.
 from constants import HOME_SCREEN
 from constants import ADD_FLASHCARD_SCREEN
 
 
 class CreateDeckScreen(Screen):
-    def __init__(self, **kw):
-        super().__init__(**kw)
-
     def create(self):
         """
         Function will take user input and create a deck.
@@ -101,3 +106,6 @@ kv_createdeckscreen = """
             on_press: root.go_to_add_flashcard()
 
 """
+
+
+Builder.load_string(kv_createdeckscreen)

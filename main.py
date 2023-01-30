@@ -8,28 +8,17 @@ from fire_admin import logout
 
 
 # Screens imports.
-from screens.startscreen import kv_startscreen
-from screens.createscreen import kv_createscreen
-from screens.loginscreen import kv_loginscreen
-from screens.homescreen import kv_homescreen
-from screens.createdeckscreen import kv_createdeckscreen
-from screens.addflashcardscreen import kv_addflashcardscreen
-from screens.inspectdeckscreen import kv_inspectdeckscreen
-from screens.deletedeckscreen import kv_deletedeckscreen
-from screens.playdeckscreen import kv_playdeckscreen
+from screens.startscreen import StartScreen
+from screens.createscreen import CreateScreen
+from screens.loginscreen import LoginScreen
+from screens.homescreen import HomeScreen
+from screens.createdeckscreen import CreateDeckScreen
+from screens.addflashcardscreen import AddFlashcardScreen
+from screens.inspectdeckscreen import InspectDeckScreen
+from screens.deletedeckscreen import DeleteDeckScreen
+from screens.playdeckscreen import PlayDeckScreen
 
 # Root kv file.
-Builder.load_string(kv_startscreen)
-Builder.load_string(kv_createscreen)
-Builder.load_string(kv_loginscreen)
-Builder.load_string(kv_homescreen)
-Builder.load_string(kv_createdeckscreen)
-Builder.load_string(kv_addflashcardscreen)
-Builder.load_string(kv_inspectdeckscreen)
-Builder.load_string(kv_deletedeckscreen)
-Builder.load_string(kv_playdeckscreen)
-
-
 class RootWidget(ScreenManager):
     Builder.load_file("kv/root.kv")
 

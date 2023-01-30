@@ -1,4 +1,5 @@
 from kivy.uix.screenmanager import Screen
+from kivy.lang import Builder
 
 
 class StartScreen(Screen):
@@ -41,3 +42,5 @@ kv_startscreen = """
             pos_hint: {'center_x': .5, 'center_y': .3}
             size_hint: .4, .1
 """
+
+Builder.load_string(kv_startscreen)

@@ -1,9 +1,18 @@
+# Kivy imports.
 from kivy.uix.screenmanager import Screen
+from kivy.lang import Builder
+
+# Module imports.
 from deck_module import user_deck
+
+# Helper functions.
 from helper import get_text
 from helper import update_text
 from helper import go_to_screen
 from helper import get_token
+from helper import show_button
+
+# Constants.
 from constants import HOME_SCREEN
 
 
@@ -77,16 +86,15 @@ class PlayDeckScreen(Screen):
             update_text(self, "after_answer", f"Correct! answer was {self.answer}")
             update_text(self, "answer", "")
             self.correct += 1
-            self.ids.check_btn.opacity = 0
-            self.ids.next_btn.opacity = 1
+            show_button(self, "check_btn", "next_btn")
+
         else:
             update_text(
                 self, "after_answer", f"Incorrect the answer was: {self.answer}"
             )
             update_text(self, "answer", "")
             self.incorrect += 1
-            self.ids.check_btn.opacity = 0
-            self.ids.next_btn.opacity = 1
+            show_button(self, "check_btn", "next_btn")
 
     def next_card(self):
         """
@@ -104,8 +112,8 @@ class PlayDeckScreen(Screen):
             )
             update_text(self, "after_answer", "What is the answer?")
             self.index += 1
-            self.ids.check_btn.opacity = 1
-            self.ids.next_btn.opacity = 0
+            show_button(self, "next_btn", "check_btn")
+
         else:
             update_text(
                 self,
@@ -216,3 +224,5 @@ kv_playdeckscreen = """
                     pos_hint: {'center_x': .975, 'center_y': .96}
                     on_press: popup.dismiss()
 """
+
+Builder.load_string(kv_playdeckscreen)

@@ -1,5 +1,11 @@
+# Kivy imports.
 from kivy.uix.screenmanager import Screen
+from kivy.lang import Builder
+
+# Helper functions.
 from helper import go_to_screen
+
+# Constants.
 from constants import CREATE_DECK_SCREEN
 from constants import ADD_FLASHCARD_SCREEN
 from constants import INSPECT_DECK_SCREEN
@@ -93,3 +99,5 @@ kv_homescreen = """
             size_hint: .35, .07
             on_press: app.stop()
 """
+
+Builder.load_string(kv_homescreen)
