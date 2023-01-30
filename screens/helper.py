@@ -1,6 +1,15 @@
 from kivymd.app import MDApp
 
 
+def switch_theme(screen, current_theme):
+    if current_theme == "Dark":
+        print("DDDarrrk")
+        screen.theme_cls.theme_style = "Dark"
+    else:
+        print("Lightttt")
+        screen.theme_cls.theme_style = "Light"
+
+
 def get_token():
     """
     Function gets the user token that is currently using the application.

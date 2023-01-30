@@ -58,6 +58,10 @@ class CreateScreen(MDScreen):
 kv_createscreen = """
 <CreateScreen>:
     MDFloatLayout:
+        MDSwitch:
+            pos_hint: {'center_x': .05, 'center_y': .05}
+            width: dp(45)
+            on_active: app.check(self, self.active)
         MDLabel:
             id: error
             halign: 'center'
