@@ -1,11 +1,7 @@
 from kivy.uix.screenmanager import Screen
-from kivymd.app import MDApp
 
 
 class StartScreen(Screen):
-    def change_theme(self):
-        pass
-
     def create_account(self):
         """
         Function take user to create account screen.
@@ -22,12 +18,10 @@ class StartScreen(Screen):
 kv_startscreen = """
 <StartScreen>
     FloatLayout:
-        MDFillRoundFlatButton:
-            text: "change theme"
-            font_size: 20
-            pos_hint: {'center_x': .2, 'center_y': .9}
-            size_hint: .35, .07
-            on_press: root.change_theme()
+        MDSwitch:
+            pos_hint: {'center_x': .1, 'center_y': .9}
+            width: dp(45)
+            on_active: app.check(*args)
         MDLabel:
             id: heading
             text: "kv Flashcards"

@@ -118,7 +118,7 @@ kv_inspectdeckscreen = """
                     font_size: 18
                     pos_hint: {'center_x': .5, 'center_y': .7}
                     size_hint: .2, .2
-                Button:
+                MDFillRoundFlatButton:
                     text: "Go next"
                     font_size: 24
                     size_hint: .5, .2

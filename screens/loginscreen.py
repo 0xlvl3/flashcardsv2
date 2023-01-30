@@ -1,5 +1,6 @@
 from kivymd.app import MDApp
 from kivy.uix.screenmanager import Screen
+from fire_admin import auth_system
 from fire_admin import decode_uid
 from fire_admin import user_login
 from helper import get_text
@@ -26,8 +27,12 @@ class LoginScreen(Screen):
         password = get_text(self, "login_password")
 
         # Login.
-        message, user_data = user_login(email, password)
+        message = user_login(email, password)
         if message == "success":
+
+            # On success user will login again to get data.
+
+            user_data = auth_system.sign_in_with_email_and_password(email, password)
             self.token = user_data["idToken"]
             USER_TOKEN = decode_uid(self.token)
             check = MDApp.get_running_app().TOKEN = USER_TOKEN

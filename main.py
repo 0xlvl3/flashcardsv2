@@ -1,5 +1,4 @@
 # Kivy / GUI.
-from kivymd.theming import ThemeManager
 from kivymd.app import MDApp
 from kivy.uix.screenmanager import ScreenManager
 from kivy.lang import Builder
@@ -7,7 +6,6 @@ from kivy.lang import Builder
 # Logout will log user out when application closes through on_stop.
 from fire_admin import logout
 
-from helper import set_theme
 
 # Screens imports.
 from screens.startscreen import kv_startscreen
@@ -40,9 +38,25 @@ class MainApp(MDApp):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.TOKEN = ""
-        self.theme = set_theme(self, "Dark", "Green", "Green", "300")
+
+    def check(self, checkbox, value):
+        if value:
+            print("true")
+            self.set_theme("Dark", "Orange", "Orange")
+        if not value:
+            print("false")
+            self.set_theme("Light", "Green", "Green")
+
+    def set_theme(self, theme, primary, accent):
+        self.theme_cls.theme_style = theme
+        self.theme_cls.primary_palette = primary
+        self.theme_cls.accent_palette = accent
 
     def build(self):
+        self.theme_cls.theme_style = "Dark"
+        self.theme_cls.primary_palette = "LightGreen"
+        self.theme_cls.accent_palette = "LightGreen"
+        self.theme_cls.primary_hue = "A200"
         return RootWidget()
 
     def on_stop(self):

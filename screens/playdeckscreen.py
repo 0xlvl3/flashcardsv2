@@ -6,9 +6,6 @@ from helper import go_to_screen
 from helper import get_token
 from constants import HOME_SCREEN
 
-# -- Todo
-# Fix up how play works, refactor the buttons and how it works in popup.
-
 
 class PlayDeckScreen(Screen):
     def play(self):
@@ -18,6 +15,8 @@ class PlayDeckScreen(Screen):
         user_choice = get_text(self, "deck_to_play")
         USER_TOKEN = get_token()
 
+        # Check to see if user has text in field.
+
         if user_choice == "":
             update_text(
                 self,
@@ -26,6 +25,9 @@ class PlayDeckScreen(Screen):
             )
             update_text(self, "deck_to_play", "")
         else:
+
+            # Index the deck that user entered and start play popup.
+
             try:
                 self.flashcards_indexed = user_deck.inspect_deck(
                     USER_TOKEN, user_choice
@@ -48,6 +50,7 @@ class PlayDeckScreen(Screen):
                     update_text(self, "error", "")
 
                     self.ids.popup.open()
+                    self.ids.next_btn.opacity = 1
                 else:
                     update_text(
                         self,
@@ -67,22 +70,28 @@ class PlayDeckScreen(Screen):
     def check_answer(self):
         """
         Function will check to see if answer is equal to the user input.
+        Will give back a string if correct or incorrect and show next_btn and hide check_btn.
         """
         user_answer = get_text(self, "answer")
         if user_answer == self.answer:
             update_text(self, "after_answer", f"Correct! answer was {self.answer}")
             update_text(self, "answer", "")
             self.correct += 1
+            self.ids.check_btn.opacity = 0
+            self.ids.next_btn.opacity = 1
         else:
             update_text(
                 self, "after_answer", f"Incorrect the answer was: {self.answer}"
             )
             update_text(self, "answer", "")
             self.incorrect += 1
+            self.ids.check_btn.opacity = 0
+            self.ids.next_btn.opacity = 1
 
     def next_card(self):
         """
-        Function will go to the next card in the indexed array.
+        Function will go to the next card in the indexed array after check_answer complete.
+        Will hide check_btn and show next_btn
         """
         if self.index < len(self.flashcards_indexed):
             self.card_index, self.question, self.answer = self.flashcards_indexed[
@@ -95,6 +104,8 @@ class PlayDeckScreen(Screen):
             )
             update_text(self, "after_answer", "What is the answer?")
             self.index += 1
+            self.ids.check_btn.opacity = 1
+            self.ids.next_btn.opacity = 0
         else:
             update_text(
                 self,
@@ -107,11 +118,13 @@ class PlayDeckScreen(Screen):
             )
             update_text(self, "after_answer", "")
             update_text(self, "deck_to_play", "")
+            self.ids.next_btn.opacity = 0
 
     def return_home(self):
         """
         Function will take user to the home screen.
         """
+        update_text(self, "error", "")
         go_to_screen(self, HOME_SCREEN)
 
 
@@ -180,17 +193,21 @@ kv_playdeckscreen = """
                     font_size: 16
                     pos_hint: {'center_x': .5, 'center_y': .5}
                     size_hint: .7, .1
-                Button:
+                MDFillRoundFlatButton:
+                    id: next_btn
                     text: "Next"
                     font_size: 20
-                    size_hint: .3, .15
+                    size_hint: .35, .1
                     pos_hint: {'center_x': .75, 'center_y': .2}
+                    opacity: 1
                     on_press: root.next_card()
-                Button:
+                MDFillRoundFlatButton:
+                    id: check_btn
                     text: "Check Answer"
                     font_size: 20
-                    size_hint: .3, .15
+                    size_hint: .35, .1
                     pos_hint: {'center_x': .25, 'center_y': .2}
+                    opacity: 0
                     on_press: root.check_answer()
                 Button:
                     text: "X"
