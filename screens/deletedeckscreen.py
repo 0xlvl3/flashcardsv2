@@ -1,5 +1,5 @@
 # Kivy imports.
-from kivy.uix.screenmanager import Screen
+from kivymd.uix.screen import MDScreen
 from kivy.lang import Builder
 
 # Module imports.
@@ -15,7 +15,7 @@ from helper import get_token
 from constants import HOME_SCREEN
 
 
-class DeleteDeckScreen(Screen):
+class DeleteDeckScreen(MDScreen):
     def __init__(self, **kw):
         super().__init__(**kw)
         self.deck = ""
@@ -60,7 +60,7 @@ class DeleteDeckScreen(Screen):
 
 kv_deletedeckscreen = """
 <DeleteDeckScreen>:
-    FloatLayout:
+    MDFloatLayout:
         id: d_screen
         MDLabel:
             text: "Delete Deck"

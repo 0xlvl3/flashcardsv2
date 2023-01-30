@@ -1,8 +1,11 @@
-from kivy.uix.screenmanager import Screen
+from kivymd.uix.screen import MDScreen
 from kivy.lang import Builder
 
 
-class StartScreen(Screen):
+class StartScreen(MDScreen):
+    def __init__(self, **kw):
+        super().__init__(**kw)
+
     def create_account(self):
         """
         Function take user to create account screen.

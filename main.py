@@ -1,11 +1,10 @@
 # Kivy / GUI.
 from kivymd.app import MDApp
-from kivy.uix.screenmanager import ScreenManager
+from kivymd.uix.screenmanager import MDScreenManager
 from kivy.lang import Builder
 
 # Logout will log user out when application closes through on_stop.
 from fire_admin import logout
-
 
 # Screens imports.
 from screens.startscreen import StartScreen
@@ -19,7 +18,7 @@ from screens.deletedeckscreen import DeleteDeckScreen
 from screens.playdeckscreen import PlayDeckScreen
 
 # Root kv file.
-class RootWidget(ScreenManager):
+class RootWidget(MDScreenManager):
     Builder.load_file("kv/root.kv")
 
 

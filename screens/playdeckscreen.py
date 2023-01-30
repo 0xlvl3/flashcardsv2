@@ -1,5 +1,5 @@
 # Kivy imports.
-from kivy.uix.screenmanager import Screen
+from kivymd.uix.screen import MDScreen
 from kivy.lang import Builder
 
 # Module imports.
@@ -16,7 +16,7 @@ from helper import show_button
 from constants import HOME_SCREEN
 
 
-class PlayDeckScreen(Screen):
+class PlayDeckScreen(MDScreen):
     def play(self):
         """
         Function will load deck and place it within an indexed array.
@@ -138,7 +138,7 @@ class PlayDeckScreen(Screen):
 
 kv_playdeckscreen = """
 <PlayDeckScreen>:
-    FloatLayout:
+    MDFloatLayout:
         id: play_screen
         MDLabel:
             text: 'Deck Player'

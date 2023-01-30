@@ -1,7 +1,7 @@
 # Kivy imports.
 from kivymd.app import MDApp
 from kivy.lang import Builder
-from kivy.uix.screenmanager import Screen
+from kivymd.uix.screen import MDScreen
 
 # Module imports.
 from deck_module import user_deck
@@ -16,7 +16,7 @@ from constants import HOME_SCREEN
 from constants import ADD_FLASHCARD_SCREEN
 
 
-class CreateDeckScreen(Screen):
+class CreateDeckScreen(MDScreen):
     def create(self):
         """
         Function will take user input and create a deck.
@@ -65,7 +65,7 @@ class CreateDeckScreen(Screen):
 
 kv_createdeckscreen = """
 <CreateDeckScreen>:
-    FloatLayout:
+    MDFloatLayout:
         MDLabel:
             text: 'Create a Deck'
             halign: 'center'

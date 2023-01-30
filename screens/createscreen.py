@@ -1,14 +1,21 @@
-from kivy.uix.screenmanager import Screen
+# Kivy imports.
+from kivymd.uix.screen import MDScreen
 from kivy.lang import Builder
+
+# Helper functions.
 from helper import update_text
 from helper import get_text
 from helper import go_to_screen
-from constants import LOGIN_SCREEN
-from constants import START_SCREEN
+
+# Firebase imports.
 from fire_admin import signup
 
+# Constants.
+from constants import LOGIN_SCREEN
+from constants import START_SCREEN
 
-class CreateScreen(Screen):
+
+class CreateScreen(MDScreen):
     def __init__(self, **kw):
         super().__init__(**kw)
         self.username = ""
@@ -50,7 +57,7 @@ class CreateScreen(Screen):
 
 kv_createscreen = """
 <CreateScreen>:
-    FloatLayout:
+    MDFloatLayout:
         MDLabel:
             id: error
             halign: 'center'

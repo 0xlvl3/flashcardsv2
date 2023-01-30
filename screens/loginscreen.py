@@ -1,7 +1,7 @@
 # Kivy imports.
 from kivymd.app import MDApp
 from kivy.lang import Builder
-from kivy.uix.screenmanager import Screen
+from kivymd.uix.screen import MDScreen
 
 # Firebase imports.
 from fire_admin import auth_system
@@ -20,7 +20,7 @@ from helper import go_to_screen
 from constants import HOME_SCREEN
 
 
-class LoginScreen(Screen):
+class LoginScreen(MDScreen):
     def __init__(self, **kw):
         super().__init__(**kw)
         self.token = ""
@@ -66,7 +66,7 @@ class LoginScreen(Screen):
 
 kv_loginscreen = """
 <LoginScreen>:
-    FloatLayout:
+    MDFloatLayout:
         id: l_screen
         MDLabel:
             text: "Login"

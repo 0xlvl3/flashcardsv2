@@ -1,6 +1,6 @@
 # Kivy imports.
 from kivy.lang import Builder
-from kivy.uix.screenmanager import Screen
+from kivymd.uix.screen import MDScreen
 
 # Modules.
 from flashcard_module import Flashcards
@@ -15,7 +15,7 @@ from helper import get_token
 from constants import HOME_SCREEN
 
 
-class AddFlashcardScreen(Screen):
+class AddFlashcardScreen(MDScreen):
     def __init__(self, **kw):
         super().__init__(**kw)
         self.user_flashcards = Flashcards()
@@ -96,7 +96,7 @@ class AddFlashcardScreen(Screen):
 
 kv_addflashcardscreen = """
 <AddFlashcardScreen>:
-    FloatLayout:
+    MDFloatLayout:
         MDLabel:
             halign: 'center'
             text: 'Add Flashcards'

@@ -1,5 +1,5 @@
 # Kivy imports.
-from kivy.uix.screenmanager import Screen
+from kivymd.uix.screen import MDScreen
 from kivy.lang import Builder
 from kivy.clock import Clock
 
@@ -16,7 +16,7 @@ from helper import get_token
 from constants import HOME_SCREEN
 
 
-class InspectDeckScreen(Screen):
+class InspectDeckScreen(MDScreen):
     def index_cards(self):
         """
         Function will load user specified deck, deck will be saved to
@@ -86,7 +86,7 @@ class InspectDeckScreen(Screen):
 
 kv_inspectdeckscreen = """
 <InspectDeckScreen>:
-    FloatLayout:
+    MDFloatLayout:
         id: ins_screen
         MDLabel:
             text: 'Deck Inspector'

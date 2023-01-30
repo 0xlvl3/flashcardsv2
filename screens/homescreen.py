@@ -1,5 +1,5 @@
 # Kivy imports.
-from kivy.uix.screenmanager import Screen
+from kivymd.uix.screen import MDScreen
 from kivy.lang import Builder
 
 # Helper functions.
@@ -13,7 +13,7 @@ from constants import PLAY_DECK_SCREEN
 from constants import DELETE_DECK_SCREEN
 
 
-class HomeScreen(Screen):
+class HomeScreen(MDScreen):
     """
     HomeScreen will be used to navigate the user.
     """
@@ -51,7 +51,7 @@ class HomeScreen(Screen):
 
 kv_homescreen = """
 <HomeScreen>:
-    FloatLayout:
+    MDFloatLayout:
         MDLabel:
             text: 'Welcome User'
             halign: 'center'
