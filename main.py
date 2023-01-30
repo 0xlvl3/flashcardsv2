@@ -30,11 +30,21 @@ class MainApp(MDApp):
         super().__init__(**kwargs)
         self.TOKEN = ""
 
+    def set_theme(self):
+        self.theme_cls.theme_style = (
+            "Dark" if self.theme_cls.theme_style == "Light" else "Light"
+        )
+        self.theme_cls.primary_palette = (
+            "Orange" if self.theme_cls.primary_palette == "Green" else "Green"
+        )
+
     def check(self, checkbox, value):
         if value:
-            switch_theme(self, "Dark")
+            print("Dark")
+            MDApp.get_running_app().set_theme()
         if not value:
-            switch_theme(self, "Light")
+            print("Light")
+            MDApp.get_running_app().set_theme()
 
     def build(self):
         return RootWidget()

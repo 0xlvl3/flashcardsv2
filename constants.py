@@ -1,6 +1,7 @@
 # Screen constants.
 
 START_SCREEN = "start_screen"
+CREATE_SCREEN = "create_screen"
 LOGIN_SCREEN = "login_screen"
 HOME_SCREEN = "home_screen"
 CREATE_DECK_SCREEN = "create_deck_screen"
