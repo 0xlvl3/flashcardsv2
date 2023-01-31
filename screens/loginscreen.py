@@ -2,6 +2,7 @@
 from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivymd.uix.screen import MDScreen
+from kivymd.uix.dialog import MDDialog
 
 # Firebase imports.
 from fire_admin import auth_system
@@ -18,6 +19,10 @@ from helper import go_to_screen
 
 # Constants.
 from constants import HOME_SCREEN
+
+
+class LoginDialog(MDDialog):
+    pass
 
 
 class LoginScreen(MDScreen):
@@ -55,7 +60,9 @@ class LoginScreen(MDScreen):
 
             user_deck.create_deck(USER_TOKEN, "start_deck")
 
-            self.ids.popup.open()
+            pu = LoginDialog()
+            pu.open()
+
         else:
             update_text(self, "error", message)
 
@@ -65,9 +72,33 @@ class LoginScreen(MDScreen):
 
 
 kv_loginscreen = """
+#:import Factory kivy.factory.Factory
+
+<LoginDialog>:
+    size_hint: .7, .7
+    id: popup
+    title: 'Successful Login'
+    content: popupcontent
+    auto_dismiss: False
+    MDFloatLayout:
+        id: popupcontent
+        MDLabel:
+            text: "Success!"
+            halign: 'center'
+            font_size: 16
+            pos_hint: {'center_x': .5, 'center_y': .65}
+        MDRaisedButton:
+            text: "Home"
+            font_size: 24
+            size_hint: .4, .1
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            on_press:
+                login_screen.go_to_home()
+                popup.dismiss()
+
+
 <LoginScreen>:
     MDFloatLayout:
-        id: l_screen
         MDLabel:
             text: "Login"
             font_size: 48
@@ -98,7 +129,7 @@ kv_loginscreen = """
             font_size: 18
             size_hint: .4, .11
             pos_hint: {'center_x': .5, 'center_y': .4}
-        MDFillRoundFlatButton:
+        MDRaisedButton:
             text: "Submit"
             font_size: 24
             pos_hint: {'center_x': .5, 'center_y': .25}
@@ -110,29 +141,6 @@ kv_loginscreen = """
             halign: 'center'
             pos_hint: {'center_x': .5, 'center_y': .15}
             text: 'Forgot password?'
-        Popup:
-            id: popup
-            on_parent: if self.parent == l_screen: l_screen.remove_widget(self)
-            title: 'Successful Login'
-            content: popupcontent
-            size_hint: .7, .7
-            pos_hint: {'center_x': .5, 'center_y': .5}
-            auto_dismiss: False
-            FloatLayout:
-                id: popupcontent
-                MDLabel:
-                    text: "Success!"
-                    halign: 'center'
-                    font_size: 16
-                    pos_hint: {'center_x': .5, 'center_y': .65}
-                MDFillRoundFlatButton:
-                    text: "Home"
-                    font_size: 24
-                    size_hint: .4, .1
-                    pos_hint: {'center_x': .5, 'center_y': .5}
-                    on_press:
-                        root.go_to_home()
-                        popup.dismiss()
 """
 
 Builder.load_string(kv_loginscreen)
