@@ -3,6 +3,7 @@ from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.dialog import MDDialog
+from kivymd.uix.button import MDRaisedButton
 
 # Firebase imports.
 from fire_admin import auth_system
@@ -21,14 +22,23 @@ from helper import go_to_screen
 from constants import HOME_SCREEN
 
 
-class LoginDialog(MDDialog):
-    pass
-
-
 class LoginScreen(MDScreen):
     def __init__(self, **kw):
         super().__init__(**kw)
         self.token = ""
+
+        # Success popup.
+        self.dialog = MDDialog(
+            auto_dismiss=False,
+            title="Successful login!",
+            text="Click home button to go to home menu.",
+            buttons=[
+                MDRaisedButton(
+                    text="HOME",
+                    on_press=lambda x: self.go_to_home(x),
+                ),
+            ],
+        )
 
     def get_token(self):
         return self.token
@@ -60,43 +70,20 @@ class LoginScreen(MDScreen):
 
             user_deck.create_deck(USER_TOKEN, "start_deck")
 
-            pu = LoginDialog()
-            pu.open()
+            # pu = LoginDialog()
+            # pu.open()
+            self.dialog.open()
 
         else:
             update_text(self, "error", message)
 
-    def go_to_home(self):
+    def go_to_home(self, x):
         go_to_screen(self, HOME_SCREEN)
         self.manager.get_screen(HOME_SCREEN).token = self.token
+        self.dialog.dismiss()
 
 
 kv_loginscreen = """
-#:import Factory kivy.factory.Factory
-
-<LoginDialog>:
-    size_hint: .7, .7
-    id: popup
-    title: 'Successful Login'
-    content: popupcontent
-    auto_dismiss: False
-    MDFloatLayout:
-        id: popupcontent
-        MDLabel:
-            text: "Success!"
-            halign: 'center'
-            font_size: 16
-            pos_hint: {'center_x': .5, 'center_y': .65}
-        MDRaisedButton:
-            text: "Home"
-            font_size: 24
-            size_hint: .4, .1
-            pos_hint: {'center_x': .5, 'center_y': .5}
-            on_press:
-                login_screen.go_to_home()
-                popup.dismiss()
-
-
 <LoginScreen>:
     MDFloatLayout:
         MDLabel:
