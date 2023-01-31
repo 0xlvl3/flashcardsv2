@@ -20,6 +20,7 @@ from screens.inspectdeckscreen import InspectDeckScreen
 from screens.deletedeckscreen import DeleteDeckScreen
 from screens.playdeckscreen import PlayDeckScreen
 
+
 # Root kv file.
 class RootWidget(MDScreenManager):
     Builder.load_file("kv/root.kv")
@@ -30,23 +31,22 @@ class MainApp(MDApp):
         super().__init__(**kwargs)
         self.TOKEN = ""
 
-    def set_theme(self):
-        self.theme_cls.theme_style = (
-            "Dark" if self.theme_cls.theme_style == "Light" else "Light"
-        )
-        self.theme_cls.primary_palette = (
-            "Orange" if self.theme_cls.primary_palette == "Green" else "Green"
-        )
+    def set_theme(self, theme, primary, accent):
+        self.theme_cls.theme_style = theme
+        self.theme_cls.primary_palette = primary
+        self.theme_cls.accent_palette = accent
 
     def check(self, checkbox, value):
         if value:
             print("Dark")
-            MDApp.get_running_app().set_theme()
+            MDApp.get_running_app().set_theme("Dark", "LightGreen", "LightGreen")
         if not value:
             print("Light")
-            MDApp.get_running_app().set_theme()
+            MDApp.get_running_app().set_theme("Light", "Orange", "Orange")
 
     def build(self):
+        self.set_theme("Light", "Orange", "Orange")
+        self.theme_cls.primary_hue = "A400"
         return RootWidget()
 
     def on_stop(self):
@@ -55,4 +55,5 @@ class MainApp(MDApp):
         logout(user_token)
 
 
-MainApp().run()
+if __name__ == "__main__":
+    MainApp().run()

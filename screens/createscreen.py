@@ -1,7 +1,6 @@
 # Kivy imports.
 from kivymd.uix.screen import MDScreen
 from kivy.lang import Builder
-from kivymd.uix.floatlayout import MDFloatLayout
 
 # Helper functions.
 from helper import update_text

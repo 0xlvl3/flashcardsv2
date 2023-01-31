@@ -25,7 +25,7 @@ class StartScreen(MDScreen):
 
 kv_startscreen = """
 <StartScreen>
-    FloatLayout:
+    MDFloatLayout:
         MDSwitch:
             pos_hint: {'center_x': .05, 'center_y': .05}
             width: dp(45)
