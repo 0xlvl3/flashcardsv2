@@ -1,9 +1,7 @@
 # Kivy imports.
 from kivymd.uix.screen import MDScreen
 from kivy.lang import Builder
-from kivymd.uix.button import MDRaisedButton
-from kivymd.uix.dialog import MDDialog
-from kivymd.uix.label import MDLabel
+from kivy.clock import Clock
 
 # Module imports.
 from deck_module import user_deck
@@ -27,11 +25,6 @@ class InspectDeckScreen(MDScreen):
         user_choice = get_text(self, "deck_to_inspect")
         USER_TOKEN = get_token()
 
-        # Inspector Popup.
-        self.dialog = MDDialog(
-            auto_dismiss=False, title="Success", id="question", text=""
-        )
-
         # If no input in field from user on submit this block runs.
 
         if user_choice == "":
@@ -50,15 +43,9 @@ class InspectDeckScreen(MDScreen):
                 self.flashcards_indexed = user_deck.inspect_deck(
                     USER_TOKEN, user_choice
                 )
-
-                print(self.flashcards_indexed)
-
                 self.inspect_index = 0
-                print(self.inspect_index)
 
-                print(self.dialog.open())
-                self.dialog.open()
-
+                self.ids.popup.open()
             except Exception as e:
                 update_text(self, "deck_to_inspect", "")
                 e = f"Deck doesn't exist: {user_choice}"
@@ -77,8 +64,17 @@ class InspectDeckScreen(MDScreen):
             update_text(
                 self,
                 "question",
-                "All flashcards have been shown. Click button to exit.",
+                "All flashcards have been shown. Resetting please wait.",
             )
+            Clock.schedule_once(self.reset_flashcards, 2)
+
+    def reset_flashcards(self, time):
+        """
+        Function is used at the end of card loop, placed in Clock callback will dismiss window when done.
+        """
+        update_text(self, "deck_to_inspect", "")
+        update_text(self, "error", "")
+        self.ids.popup.dismiss()
 
     def return_home(self):
         """
@@ -91,6 +87,7 @@ class InspectDeckScreen(MDScreen):
 kv_inspectdeckscreen = """
 <InspectDeckScreen>:
     MDFloatLayout:
+        id: ins_screen
         MDLabel:
             text: 'Deck Inspector'
             font_size: 48
@@ -123,6 +120,34 @@ kv_inspectdeckscreen = """
             font_size: 24
             size_hint: .35, .1
             on_press: root.return_home()
+        Popup:
+            id: popup
+            on_parent: if self.parent == ins_screen: ins_screen.remove_widget(self)
+            title: 'Deck Inspector'
+            content: popupcontent
+            size_hint: .7, .7
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            auto_dismiss: False
+            FloatLayout:
+                id:popupcontent
+                Label:
+                    text: 'Deck loaded! click next to see first card'
+                    id: question
+                    font_size: 18
+                    pos_hint: {'center_x': .5, 'center_y': .7}
+                    size_hint: .2, .2
+                MDRaisedButton:
+                    text: "Go next"
+                    font_size: 24
+                    size_hint: .5, .2
+                    pos_hint: {'center_x': .5, 'center_y': .4}
+                    on_press: root.show_next()
+                MDRaisedButton:
+                    text: "X"
+                    font_size: 18
+                    size_hint: .05, .05
+                    pos_hint: {'center_x': .945, 'center_y': .94}
+                    on_press: popup.dismiss()
 """
 
 

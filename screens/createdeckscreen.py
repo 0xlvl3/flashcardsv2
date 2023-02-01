@@ -86,19 +86,19 @@ kv_createdeckscreen = """
             font_size: 18
             pos_hint: {'center_x': .5, 'center_y': .5}
             size_hint: .4, .11
-        MDFillRoundFlatButton:
+        MDRaisedButton:
             text: "Create"
             font_size: 24
             pos_hint: {'center_x': .5, 'center_y': .35}
             size_hint: .4, .1
             on_press: root.create()
-        MDFillRoundFlatButton:
+        MDRaisedButton:
             text: "Home"
             pos_hint:{'center_x': .75, 'center_y': .2}
             font_size: 24
             size_hint: .4, 0.1
             on_press: root.return_home()
-        MDFillRoundFlatButton:
+        MDRaisedButton:
             text: "Add flashcards"
             pos_hint:{'center_x': .25, 'center_y': .2}
             font_size: 24

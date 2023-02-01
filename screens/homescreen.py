@@ -52,6 +52,10 @@ class HomeScreen(MDScreen):
 kv_homescreen = """
 <HomeScreen>:
     MDFloatLayout:
+        MDSwitch:
+            pos_hint: {'center_x': .05, 'center_y': .05}
+            width: dp(45)
+            on_active: app.check(self, self.active)
         MDLabel:
             text: 'Welcome User'
             halign: 'center'
@@ -62,37 +66,37 @@ kv_homescreen = """
             font_size: 16
             halign: 'center'
             pos_hint: {'center_x': .5, 'center_y': .8}
-        MDFillRoundFlatButton:
+        MDRaisedButton:
             text: "Create Deck"
             font_size: 20
             pos_hint: {'center_x': .5, 'center_y': .7}
             size_hint: .35, .07
             on_press: root.go_to_create_deck()
-        MDFillRoundFlatButton:
+        MDRaisedButton:
             text: "Add Flashcards"
             font_size: 20
             pos_hint: {'center_x': .5, 'center_y': .6}
             size_hint: .35, .07
             on_press: root.go_to_add_flashcard()
-        MDFillRoundFlatButton:
+        MDRaisedButton:
             text: "Inspect Deck"
             font_size: 20
             pos_hint: {'center_x': .5, 'center_y': .5}
             size_hint: .35, .07
             on_press: root.go_to_inspect_deck()
-        MDFillRoundFlatButton:
+        MDRaisedButton:
             text: "Play Deck"
             font_size: 20
             pos_hint: {'center_x': .5, 'center_y': .4}
             size_hint: .35, .07
             on_press: root.go_to_play()
-        MDFillRoundFlatButton:
+        MDRaisedButton:
             text: "Delete Deck"
             font_size: 20
             pos_hint: {'center_x': .5, 'center_y': .3}
             size_hint: .35, .07
             on_press: root.go_to_delete()
-        MDFillRoundFlatButton:
+        MDRaisedButton:
             text: "Exit Application"
             font_size: 20
             pos_hint: {'center_x': .5, 'center_y': .1}

@@ -14,6 +14,10 @@ from fire_admin import signup
 from constants import LOGIN_SCREEN
 from constants import START_SCREEN
 
+# Todo
+# --
+# Connect usernames to tokens.
+
 
 class CreateScreen(MDScreen):
     def __init__(self, **kw):
@@ -58,10 +62,6 @@ class CreateScreen(MDScreen):
 kv_createscreen = """
 <CreateScreen>:
     MDFloatLayout:
-        MDSwitch:
-            pos_hint: {'center_x': .05, 'center_y': .05}
-            width: dp(45)
-            on_active: app.check(self, self.active)
         MDLabel:
             id: error
             halign: 'center'
@@ -101,13 +101,13 @@ kv_createscreen = """
             font_size: 18
             size_hint: .4, .11
             pos_hint: {'center_x': .5, 'center_y': .4}
-        MDFillRoundFlatButton:
+        MDRaisedButton:
             on_press: root.create()
             text: "Submit"
             font_size: 24
             pos_hint: {'center_x': .5, 'center_y': .25}
             size_hint: .4, .1
-        MDFillRoundFlatButton:
+        MDRaisedButton:
             text: "Home"
             pos_hint:{'center_x': .5, 'center_y': .10}
             font_size: 24

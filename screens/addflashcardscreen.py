@@ -135,13 +135,13 @@ kv_addflashcardscreen = """
             font_size: 18
             pos_hint: {'center_x': .5, 'center_y': .35}
             size_hint: .8, .11
-        MDFillRoundFlatButton:
+        MDRaisedButton:
             text: "Home"
             pos_hint:{'center_x': .75, 'center_y': .2}
             font_size: 24
             size_hint: .4, 0.1
             on_press: root.return_home()
-        MDFillRoundFlatButton:
+        MDRaisedButton:
             text: "Add flashcard"
             on_press: root.add_flashcard_to()
             pos_hint:{'center_x': .25, 'center_y': .2}

@@ -1,7 +1,11 @@
+# Kivy imports.
 from kivymd.uix.screen import MDScreen
-from kivymd.app import MDApp
 from kivy.lang import Builder
+
+# Helper functions.
 from helper import go_to_screen
+
+# Constants.
 from constants import CREATE_SCREEN
 from constants import LOGIN_SCREEN
 
@@ -36,7 +40,7 @@ kv_startscreen = """
             halign: 'center'
             font_size: 56
             pos_hint:{'center_x': .5, 'center_y': .65}
-        MDFillRoundFlatButton:
+        MDRaisedButton:
             on_press: root.create_account()
             text_color: [0, 0, 0, 1]
             id: 'create_btn'
@@ -44,7 +48,7 @@ kv_startscreen = """
             font_size: 24
             size_hint: .4, .1
             pos_hint: {'center_x': .5, 'center_y': .45}
-        MDFillRoundFlatButton:
+        MDRaisedButton:
             on_press: root.go_to_login()
             text: "Login"
             font_size: 24

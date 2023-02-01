@@ -6,9 +6,6 @@ from kivy.lang import Builder
 # Logout will log user out when application closes through on_stop.
 from fire_admin import logout
 
-# Helper function.
-from helper import switch_theme
-
 # Screens imports.
 from screens.startscreen import StartScreen
 from screens.createscreen import CreateScreen

@@ -1,6 +1,8 @@
 # Kivy imports.
 from kivymd.uix.screen import MDScreen
 from kivy.lang import Builder
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.button import MDRaisedButton
 
 # Module imports.
 from deck_module import user_deck
@@ -18,7 +20,32 @@ from constants import HOME_SCREEN
 class DeleteDeckScreen(MDScreen):
     def __init__(self, **kw):
         super().__init__(**kw)
+        self.dialog = None
         self.deck = ""
+
+    # Dialog confirmation window for deletion.
+
+    def confirm_window(self):
+        if not self.dialog:
+            self.dialog = MDDialog(
+                auto_dismiss=False,
+                title="Confirmation window",
+                text="This deck will not be recoverable, click confirm to delete, cancel to exit.",
+                buttons=[
+                    MDRaisedButton(
+                        text="Confirm",
+                        on_press=self.confirm_delete_deck,
+                        on_release=self.close_dialog,
+                    ),
+                    MDRaisedButton(
+                        text="Cancel",
+                        on_press=self.close_dialog,
+                    ),
+                ],
+            )
+        self.dialog.open()
+
+    # Will load the deck.
 
     def load_deck(self):
         self.empty_check = get_text(self, "error")
@@ -29,16 +56,10 @@ class DeleteDeckScreen(MDScreen):
                 "error",
                 "Please add a deck name to delete.",
             )
-        else:
+        if loaded_deck:
             self.deck = loaded_deck
-            update_text(
-                self,
-                "confirm",
-                f"Are you sure you want to delete {loaded_deck}?",
-            )
-            self.ids.popup.open()
 
-    def confirm_delete_deck(self):
+    def confirm_delete_deck(self, *args):
         # Will take loaded deck and delete in popup
         """
         Function will delete a specified user deck.
@@ -48,6 +69,11 @@ class DeleteDeckScreen(MDScreen):
         update_text(self, "loaded_deck", "")
         update_text(self, "error", f"{self.deck} deleted!")
         self.deck = ""
+
+    # Will close the confirmation dialog.
+
+    def close_dialog(self, obj):
+        self.dialog.dismiss()
 
     def return_home(self):
         """
@@ -80,47 +106,19 @@ kv_deletedeckscreen = """
             font_size: 18
             pos_hint: {'center_x': .5, 'center_y': .5}
             size_hint: .4, .11
-        MDFillRoundFlatButton:
+        MDRaisedButton:
             text: "Delete"
             font_size: 24
             pos_hint: {'center_x': .5, 'center_y': .35}
             size_hint: .4, .1
-            on_press: root.load_deck()
-        MDFillRoundFlatButton:
+            on_press:
+                root.load_deck()
+                root.confirm_window()
+        MDRaisedButton:
             text: "Home"
             font_size: 24
             pos_hint: {'center_x': .5, 'center_y': .2}
             size_hint: .4, .1
             on_press: root.return_home()
-        Popup:
-            id: popup
-            on_parent: if self.parent == d_screen: d_screen.remove_widget(self)
-            title: 'Deck Player'
-            content: popupcontent
-            size_hint: .75, .75
-            pos_hint: {'center_x': .5, 'center_y': .5}
-            auto_dismiss: False
-            FloatLayout:
-                id:popupcontent
-                Label:
-                    id: confirm
-                    text: 'Delete deck'
-                    font_size: 24
-                    pos_hint: {'center_x': .5, 'center_y': .8}
-                    size_hint: .2, .2
-                Button:
-                    text: "Confirm"
-                    font_size: 24
-                    size_hint: .3, .15
-                    pos_hint: {'center_x': .5, 'center_y': .5}
-                    on_press: root.confirm_delete_deck()
-                    on_release: popup.dismiss()
-                Button:
-                    text: "X"
-                    font_size: 20
-                    size_hint: .05, .07
-                    pos_hint: {'center_x': .975, 'center_y': .96}
-                    on_press: popup.dismiss()
 """
-
 Builder.load_string(kv_deletedeckscreen)

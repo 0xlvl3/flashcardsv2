@@ -160,13 +160,13 @@ kv_playdeckscreen = """
             id: deck_to_play
             write_tab: False
             multiline: False
-        MDFillRoundFlatButton:
+        MDRaisedButton:
             text: "Load deck"
             font_size: 24
             pos_hint: {'center_x': .5, 'center_y': .3}
             size_hint: .4, .1
             on_press: root.play()
-        MDFillRoundFlatButton:
+        MDRaisedButton:
             text: "Home"
             font_size: 24
             pos_hint: {'center_x': .5, 'center_y': .15}
@@ -180,7 +180,7 @@ kv_playdeckscreen = """
             size_hint: .8, .8
             pos_hint: {'center_x': .5, 'center_y': .5}
             auto_dismiss: False
-            FloatLayout:
+            MDFloatLayout:
                 id:popupcontent
                 Label:
                     text: 'Deck loaded'
@@ -191,17 +191,25 @@ kv_playdeckscreen = """
                     text: 'Deck'
                     id: question_message
                     font_size: 24
-                    pos_hint: {'center_x': .5, 'center_y': .8}
+                    pos_hint: {'center_x': .5, 'center_y': .75}
                     size_hint: .2, .2
-                TextInput:
+                MDTextField:
                     id: answer
                     write_tab: False
                     multiline: False
-                    hint_text: 'Answer here'
-                    font_size: 16
+                    mode: 'rectangle'
+                    text_color_normal: 'white'
+                    text_color_focus: 'white'
+                    set_text_color_normal: 'white'
+                    line_color_focus: "white"
+                    line_color_normal: 'white'
+                    helper_text_color_normal: 'white'
+                    helper_text_color_focus: 'white'
+                    helper_text: 'Answer here'
+                    helper_text_mode: 'persistent'
+                    font_size: 18
                     pos_hint: {'center_x': .5, 'center_y': .5}
-                    size_hint: .7, .1
-                MDFillRoundFlatButton:
+                MDRaisedButton:
                     id: next_btn
                     text: "Next"
                     font_size: 20
@@ -209,7 +217,7 @@ kv_playdeckscreen = """
                     pos_hint: {'center_x': .75, 'center_y': .2}
                     opacity: 1
                     on_press: root.next_card()
-                MDFillRoundFlatButton:
+                MDRaisedButton:
                     id: check_btn
                     text: "Check Answer"
                     font_size: 20
@@ -217,11 +225,11 @@ kv_playdeckscreen = """
                     pos_hint: {'center_x': .25, 'center_y': .2}
                     opacity: 0
                     on_press: root.check_answer()
-                Button:
+                MDRaisedButton:
                     text: "X"
-                    font_size: 20
-                    size_hint: .05, .07
-                    pos_hint: {'center_x': .975, 'center_y': .96}
+                    font_size: 18
+                    size_hint: .02, .02
+                    pos_hint: {'center_x': .95, 'center_y': .95}
                     on_press: popup.dismiss()
 """
 
