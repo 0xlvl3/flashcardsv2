@@ -1,3 +1,5 @@
+# Isn't it a duplication? constants.py in the main folder has the same data.
+
 # Screen constants.
 
 START_SCREEN = "start_screen"
