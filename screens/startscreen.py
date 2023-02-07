@@ -6,8 +6,10 @@ from kivy.lang import Builder
 from helper import go_to_screen
 
 # Constants.
-from constants import CREATE_SCREEN
-from constants import LOGIN_SCREEN
+from constants import (
+    CREATE_SCREEN,
+    LOGIN_SCREEN
+)
 
 
 class StartScreen(MDScreen):
