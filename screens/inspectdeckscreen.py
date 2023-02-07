@@ -7,10 +7,12 @@ from kivy.clock import Clock
 from deck_module import user_deck
 
 # Helper functions.
-from helper import get_text
-from helper import update_text
-from helper import go_to_screen
-from helper import get_token
+from helper import (
+    get_text,
+    update_text,
+    go_to_screen,
+    get_token
+)
 
 # Constants.
 from constants import HOME_SCREEN
@@ -27,7 +29,7 @@ class InspectDeckScreen(MDScreen):
 
         # If no input in field from user on submit this block runs.
 
-        if user_choice == "":
+        if not user_choice:
             update_text(
                 self, "error", "Text field is empty, please enter a deck and try again."
             )
@@ -46,7 +48,7 @@ class InspectDeckScreen(MDScreen):
                 self.inspect_index = 0
 
                 self.ids.popup.open()
-            except Exception as e:
+            except Exception as e:  # it is very risky to catch exceptions like that
                 update_text(self, "deck_to_inspect", "")
                 e = f"Deck doesn't exist: {user_choice}"
                 update_text(self, "error", e)

@@ -7,13 +7,17 @@ from kivymd.uix.screen import MDScreen
 from deck_module import user_deck
 
 # Helper functions.
-from helper import update_text
-from helper import get_text
-from helper import go_to_screen
+from helper import (
+	update_text,
+	get_text,
+	go_to_screen
+)
 
 # Constants.
-from constants import HOME_SCREEN
-from constants import ADD_FLASHCARD_SCREEN
+from constants import (
+	HOME_SCREEN,
+	ADD_FLASHCARD_SCREEN
+)
 
 
 class CreateDeckScreen(MDScreen):
@@ -28,7 +32,7 @@ class CreateDeckScreen(MDScreen):
 
         deck = get_text(self, "deck_to_create")
 
-        if deck == "":
+        if not deck:
             update_text(self, "create_success", "Try again no deck was specified")
 
         # We check if deck is known.

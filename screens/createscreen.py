@@ -3,16 +3,20 @@ from kivymd.uix.screen import MDScreen
 from kivy.lang import Builder
 
 # Helper functions.
-from helper import update_text
-from helper import get_text
-from helper import go_to_screen
+from helper import (
+    update_text,
+    get_text,
+    go_to_screen
+)
 
 # Firebase imports.
 from fire_admin import signup
 
 # Constants.
-from constants import LOGIN_SCREEN
-from constants import START_SCREEN
+from constants import (
+    LOGIN_SCREEN,
+    START_SCREEN
+)
 
 # Todo
 # --

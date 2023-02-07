@@ -6,17 +6,21 @@ from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDRaisedButton
 
 # Firebase imports.
-from fire_admin import auth_system
-from fire_admin import decode_uid
-from fire_admin import user_login
+from fire_admin import (
+    auth_system,
+    decode_uid,
+    user_login
+)
 
 # Module imports.
 from deck_module import user_deck
 
 # Helper functions.
-from helper import get_text
-from helper import update_text
-from helper import go_to_screen
+from helper import (
+    get_text,
+    update_text,
+    go_to_screen
+)
 
 # Constants.
 from constants import HOME_SCREEN

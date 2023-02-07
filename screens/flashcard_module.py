@@ -109,6 +109,6 @@ class Flashcards:
                     else:
                         pass
 
-        except Exception as e:
+        except Exception as e:  # it is better to catch exact exceptions like on line 41
             e = "You've entered a deck that doesn't exist"
             print(e)
