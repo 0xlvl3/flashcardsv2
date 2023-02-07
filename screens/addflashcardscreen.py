@@ -6,10 +6,12 @@ from kivymd.uix.screen import MDScreen
 from flashcard_module import Flashcards
 
 # Helper functions.
-from helper import get_text
-from helper import update_text
-from helper import go_to_screen
-from helper import get_token
+from helper import (
+    get_text,
+    update_text,
+    go_to_screen,
+    get_token
+)
 
 # Constants.
 from constants import HOME_SCREEN
@@ -33,7 +35,7 @@ class AddFlashcardScreen(MDScreen):
 
         # Block will check for empty deck value.
 
-        if deck == "":
+        if not deck:
             update_text(
                 self,
                 "error",
