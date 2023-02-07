@@ -6,11 +6,13 @@ from kivy.lang import Builder
 from deck_module import user_deck
 
 # Helper functions.
-from helper import get_text
-from helper import update_text
-from helper import go_to_screen
-from helper import get_token
-from helper import show_button
+from helper import (
+    get_text,
+    update_text,
+    go_to_screen,
+    get_token, 
+    show_button
+)
 
 # Constants.
 from constants import HOME_SCREEN
@@ -26,7 +28,7 @@ class PlayDeckScreen(MDScreen):
 
         # Check to see if user has text in field.
 
-        if user_choice == "":
+        if not user_choice:
             update_text(
                 self,
                 "error",
@@ -71,7 +73,7 @@ class PlayDeckScreen(MDScreen):
                         "after_answer",
                         "Click the x to the right to exit.",
                     )
-            except Exception as e:
+            except Exception as e:  # It is very risky to catch all exceptions (see extended description)
                 update_text(self, "deck_to_play", "")
                 e = f"Deck doesn't exist: {user_choice}"
                 update_text(self, "error", e)
