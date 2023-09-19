@@ -6,11 +6,13 @@ from kivy.lang import Builder
 from helper import go_to_screen
 
 # Constants.
-from constants import CREATE_DECK_SCREEN
-from constants import ADD_FLASHCARD_SCREEN
-from constants import INSPECT_DECK_SCREEN
-from constants import PLAY_DECK_SCREEN
-from constants import DELETE_DECK_SCREEN
+from constants import (
+    CREATE_DECK_SCREEN,
+    ADD_FLASHCARD_SCREEN,
+    INSPECT_DECK_SCREEN,
+    PLAY_DECK_SCREEN,
+    DELETE_DECK_SCREEN
+)
 
 
 class HomeScreen(MDScreen):

@@ -51,7 +51,7 @@ class Deck:
 
             return flashcards_indexed
 
-        except Exception as e:
+        except Exception as e:  # Try to catch exact exceptions - otherwise it is very risky
             raise e
 
 

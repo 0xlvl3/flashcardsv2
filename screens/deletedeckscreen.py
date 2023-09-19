@@ -8,10 +8,12 @@ from kivymd.uix.button import MDRaisedButton
 from deck_module import user_deck
 
 # Helper functions.
-from helper import update_text
-from helper import get_text
-from helper import go_to_screen
-from helper import get_token
+from helper import (
+    update_text,
+    get_text,
+    go_to_screen,
+    get_token
+)
 
 # Constants.
 from constants import HOME_SCREEN
@@ -56,7 +58,7 @@ class DeleteDeckScreen(MDScreen):
                 "error",
                 "Please add a deck name to delete.",
             )
-        if loaded_deck:
+        else:  # Works the same, but is (arguably) more straightforward
             self.deck = loaded_deck
 
     def confirm_delete_deck(self, *args):
